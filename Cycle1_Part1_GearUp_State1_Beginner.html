@@ -1,0 +1,2321 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cycle 1 · Part 1: Gear Up! — State 1 Beginner · Alaska Is Melting</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Mitr:wght@500;600&family=IBM+Plex+Sans+Thai:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ice:#EAF4FB; --snow:#FFFFFF; --glacier:#1B5E8C; --deep:#000000;
+  --acc:#1B5E8C; --acc-l:#E3F0FC;
+  --aurora:#0B7A66; --aurora-l:#E4F7F1; --sunset:#E07A2F; --sunset-l:#FFEBDC;
+  --berry:#B04A66; --berry-l:#FFE9EC; --gold:#B8860B; --gold-l:#FFF3D6;
+  --line:#7BA5C7; --mut:#374151;
+  --r:16px; --sh:0 4px 14px rgba(14,58,87,.08);
+  font-family:'IBM Plex Sans Thai',system-ui,sans-serif;
+}
+*{box-sizing:border-box; margin:0; padding:0;}
+html{scroll-behavior:smooth;}
+body{background:linear-gradient(180deg,#DFF0FA 0%, var(--ice) 240px); color:var(--deep); line-height:1.6; padding-bottom:70px;}
+b{display:block;}
+button{font-family:inherit; cursor:pointer;}
+input,textarea,select{font-family:inherit; color:var(--deep);}
+
+header{background:linear-gradient(135deg,#FDE68A 0%, #FCD34D 60%, #F59E0B 100%); color:#000; padding:24px 18px 58px; position:relative; overflow:hidden;} header .sub{color:#000 !important;}
+header .bg-ice{position:absolute; inset:auto 0 -2px 0; height:46px; background:
+  radial-gradient(60px 40px at 12% 100%, var(--ice) 98%, transparent),
+  radial-gradient(90px 52px at 34% 100%, var(--ice) 98%, transparent),
+  radial-gradient(70px 44px at 58% 100%, var(--ice) 98%, transparent),
+  radial-gradient(110px 56px at 85% 100%, var(--ice) 98%, transparent);}
+.hero{max-width:880px; margin:0 auto; position:relative;}
+.kicker{font-size:.78rem; letter-spacing:.14em; text-transform:uppercase; opacity:.85; margin-bottom:6px;}
+h1{font-family:'Mitr',sans-serif; font-weight:600; font-size:clamp(1.4rem,4.4vw,2.05rem); line-height:1.25;}
+h1 .em{color:#000; text-shadow:0 1px 2px rgba(255,255,255,.6);}
+.sub{margin-top:7px; font-size:.9rem; opacity:.95;}
+.statechip{display:inline-flex; align-items:center; gap:8px; background:var(--acc); color:#fff; border-radius:99px; padding:5px 15px; font-size:.83rem; font-weight:700; margin-top:10px; box-shadow:0 2px 8px rgba(0,0,0,.2); border:1px solid rgba(255,255,255,.35);}
+
+.wrap{max-width:880px; margin:-32px auto 0; padding:0 14px; position:relative;}
+
+/* ---------- LEARNER (compact) ---------- */
+.learner{background:var(--snow); border:1px solid var(--line); border-left:5px solid var(--acc); border-radius:var(--r); box-shadow:var(--sh); padding:12px 14px; margin-bottom:14px;}
+.learner h2{font-family:'Mitr',sans-serif; font-size:.95rem; margin-bottom:8px;}
+.lgrid{display:grid; grid-template-columns:repeat(3,1fr); gap:8px;}
+@media (max-width:640px){.lgrid{grid-template-columns:repeat(2,1fr);}}
+.lgrid label{font-size:.72rem; color:var(--mut); display:flex; flex-direction:column; gap:2px;}
+.lgrid input{border:1.5px solid var(--line); border-radius:9px; padding:6px 10px; font-size:.83rem;}
+.lgrid input:focus{outline:2px solid var(--acc); border-color:var(--acc);}
+.caution{background:#FFF8E6; border:1.5px solid #E8CF8C; border-radius:10px; padding:8px 11px; font-size:.74rem; margin-top:9px; color:#7A5B10; line-height:1.55;}
+.caution b{display:inline; color:#000;}
+
+/* ---------- TRAIL ---------- */
+.trail{background:var(--snow); border:1px solid var(--line); border-radius:var(--r); box-shadow:var(--sh); padding:14px 14px; margin-bottom:14px;}
+.trail h2{font-family:'Mitr',sans-serif; font-size:1rem; display:flex; align-items:center; justify-content:space-between; gap:8px; flex-wrap:wrap;}
+.done-count{font-size:.78rem; background:var(--aurora-l); color:var(--aurora); padding:3px 12px; border-radius:99px; font-weight:700;}
+.floes{display:grid; grid-template-columns:repeat(3,1fr); gap:9px; margin-top:10px;}
+@media (max-width:640px){.floes{grid-template-columns:repeat(2,1fr);}}
+.floe{background:linear-gradient(180deg,#F4FAFF,#E3F1FB); border:2px solid var(--line); border-radius:13px; padding:9px 8px; text-align:center; transition:.18s;}
+.floe:hover{transform:translateY(-2px); border-color:var(--acc);}
+.floe .no{font-family:'Mitr',sans-serif; font-size:1.1rem; color:var(--acc);}
+.floe .nm{font-size:.76rem; font-weight:700; line-height:1.3; margin-top:2px;}
+.floe .tm{font-size:.68rem; color:var(--mut); margin-top:2px;}
+.floe.ok{background:linear-gradient(180deg,#E9FBF4,#D8F5EA); border-color:var(--aurora);}
+.floe.ok .no::after{content:" 🏅";}
+.trail .note{font-size:.74rem; color:var(--mut); margin-top:8px;}
+
+/* ---------- HOWTO (compact) ---------- */
+.howto{background:var(--snow); border:1px solid var(--line); border-radius:var(--r); box-shadow:var(--sh); padding:12px 14px; margin-bottom:14px; font-size:.78rem;}
+.howto h2{font-family:'Mitr',sans-serif; font-size:.95rem; margin-bottom:6px;}
+.howto .goalbar{background:var(--aurora-l); border-left:4px solid var(--aurora); border-radius:9px; padding:7px 11px; margin-bottom:8px;}
+.howto .goalbar b{display:inline; color:var(--aurora);}
+.howto .modeline{color:var(--mut); line-height:1.6;}
+.howto .modeline b{display:inline; color:#000;}
+
+/* ---------- STEPS ---------- */
+.step{display:none; animation:fade .25s ease;}
+.step.show{display:block;}
+@keyframes fade{from{opacity:0; transform:translateY(6px);} to{opacity:1; transform:none;}}
+.card{background:var(--snow); border:1px solid var(--line); border-radius:var(--r); box-shadow:var(--sh); padding:16px 16px; margin-bottom:12px;}
+.stephead{display:flex; gap:11px; align-items:center; margin-bottom:6px;}
+.stepnum{font-family:'Mitr',sans-serif; font-size:1.2rem; color:#fff; background:var(--acc); width:40px; height:40px; border-radius:11px; display:grid; place-items:center; flex:none;}
+.stephead h2{font-family:'Mitr',sans-serif; font-size:1.08rem; line-height:1.3;}
+.stephead .en{font-size:.76rem; color:#000; font-family:'IBM Plex Sans Thai'; font-weight:500; display:block;}
+.meta{display:flex; gap:7px; flex-wrap:wrap; margin:4px 0 9px;}
+.chip{font-size:.72rem; font-weight:700; padding:3px 11px; border-radius:99px;}
+.chip.time{background:var(--gold-l); color:var(--gold);}
+.chip.pair{background:var(--berry-l); color:var(--berry);}
+.chip.solo{background:#E8F0FE; color:var(--glacier);}
+.obj{background:#F0F7FD; border-left:4px solid var(--glacier); border-radius:9px; padding:7px 11px; font-size:.78rem; margin-bottom:8px; line-height:1.55;}
+.obj b{display:inline; color:#000;}
+details.stp{background:#FBFDFF; border:1px dashed var(--line); border-radius:9px; padding:6px 11px; font-size:.78rem; margin-bottom:11px;}
+details.stp summary{cursor:pointer; font-weight:700; color:#000;}
+details.stp ol{padding-left:19px; margin-top:5px;}
+details.stp li{margin:2px 0;}
+
+/* ---------- ACTIVITY UI ---------- */
+.bank{display:grid; grid-template-columns:repeat(3,1fr); gap:8px; margin:9px 0;}
+@media (max-width:680px){.bank{grid-template-columns:1fr;}}
+.bankbox{border-radius:11px; padding:8px 11px; font-size:.76rem; line-height:1.55;}
+.bankbox h4{font-size:.78rem; margin-bottom:2px;}
+.bankbox.c1{background:#E3F0FC; color:var(--glacier);}
+.bankbox.c2{background:var(--sunset-l); color:#A2551B;}
+.bankbox.c3{background:var(--aurora-l); color:var(--aurora);}
+.vchips{display:flex; flex-wrap:wrap; gap:6px; margin:8px 0;}
+.vchip{background:#fff; border:1.5px solid var(--line); border-radius:99px; padding:4px 12px; font-size:.76rem; font-weight:600;}
+.vchip i{font-style:normal; color:var(--mut); font-weight:500;}
+
+.writebox{background:#FBFDFF; border:1.5px solid var(--line); border-radius:12px; padding:11px 12px; margin:10px 0;}
+.writebox .wq{font-size:.83rem; font-weight:700; margin-bottom:6px;}
+.writebox .wsrc{background:#EFF6FC; border-radius:8px; padding:6px 10px; font-size:.82rem; margin-bottom:8px;}
+.writebox .hint{font-size:.73rem; color:var(--mut); margin-bottom:6px;}
+.tx{width:100%; border:1.5px solid var(--line); border-radius:10px; padding:9px 11px; font-size:.88rem; min-height:52px; resize:vertical; background:#fff;}
+.tx:focus{outline:2px solid var(--acc); border-color:var(--acc);}
+.tx.pass{border-color:var(--aurora); background:#F4FCF9;}
+.checkbtn{border:none; border-radius:9px; padding:7px 15px; font-size:.8rem; font-weight:700; background:var(--acc); color:#fff; margin-top:7px;}
+.checkbtn:hover{filter:brightness(.92);}
+.fb{font-size:.8rem; font-weight:700; margin-top:7px; min-height:1.1em; line-height:1.5;}
+.fb.ok{color:var(--aurora);}
+.fb.no{color:var(--berry);}
+
+.quiz .q{background:#FBFDFF; border:1px solid var(--line); border-radius:11px; padding:10px 11px; margin-bottom:8px;}
+.quiz .q p{font-size:.83rem; font-weight:700; margin-bottom:7px;}
+.opts{display:flex; flex-wrap:wrap; gap:7px;}
+.opt{background:#fff; border:2px solid var(--line); border-radius:9px; padding:5px 11px; font-size:.79rem; transition:.15s;}
+.opt.ok{border-color:var(--aurora); background:var(--aurora-l); color:var(--aurora); font-weight:700;}
+.opt.no{border-color:var(--berry); background:var(--berry-l); color:var(--berry);}
+
+.srow{display:flex; gap:8px; align-items:flex-start; background:#FBFDFF; border:1.5px solid var(--line); border-radius:11px; padding:9px 10px; margin-bottom:8px; flex-wrap:wrap;}
+.srow.locked{border-color:var(--aurora); background:#F4FCF9;}
+.srow .stext{flex:1 1 300px; font-size:.83rem;}
+.srow .rbtns{display:flex; gap:5px; flex-wrap:wrap;}
+.rb{border:1.5px solid var(--line); background:#fff; border-radius:99px; padding:3px 10px; font-size:.72rem; font-weight:700; transition:.15s;}
+.rb.ok{background:var(--aurora); border-color:var(--aurora); color:#fff; pointer-events:none;}
+.rb.shake{animation:shake .3s;}
+@keyframes shake{25%{transform:translateX(-4px);}75%{transform:translateX(4px);}}
+
+.pm{display:grid; grid-template-columns:1fr 1fr; gap:10px; margin:10px 0;}
+@media (max-width:640px){.pm{grid-template-columns:1fr;}}
+.pmcol{border:2px solid var(--line); border-radius:12px; padding:10px;}
+.pmcol.g{border-color:#9CC4E8; background:#F4F9FE;}
+.pmcol.l{border-color:#F0C09A; background:#FFF9F3;}
+.pmcol h4{font-size:.8rem; margin-bottom:7px;}
+.pmcol .stem{font-size:.74rem; color:var(--mut); margin:6px 0 3px;}
+
+.chain{display:flex; flex-direction:column; gap:4px; margin:9px 0;}
+.chain .arrow{text-align:center; font-size:.75rem; color:var(--berry); font-weight:700;}
+.chainrow{display:flex; gap:8px; align-items:center;}
+.chainrow .cl{flex:none; font-size:.72rem; font-weight:700; color:#000; width:52px;}
+.chainrow input{flex:1;}
+
+.bp{display:flex; flex-direction:column; gap:6px; margin:10px 0;}
+.bprow{display:flex; gap:8px; align-items:center; background:#FBFDFF; border:1.5px solid var(--line); border-radius:11px; padding:8px 10px; flex-wrap:wrap;}
+.bprow .bl{flex:none; width:96px; font-size:.73rem; font-weight:700;}
+.bprow input,.bprow textarea{flex:1 1 200px;}
+.bpconn{display:flex; align-items:center; gap:8px; padding-left:20px;}
+.bpconn .cl{font-size:.71rem; color:var(--berry); font-weight:700;}
+.bpconn select{border:1.5px solid var(--line); border-radius:8px; padding:4px 9px; font-size:.78rem; background:#fff;}
+.balance{font-size:.78rem; font-weight:700; margin-top:6px;}
+
+.tabs{display:flex; gap:6px; flex-wrap:wrap; margin-bottom:11px;}
+.tab{background:#EFF6FC; border:2px solid transparent; color:var(--glacier); border-radius:99px; padding:5px 13px; font-size:.78rem; font-weight:700;}
+.tab.on{background:var(--acc); color:#fff;}
+.pane{display:none;}
+.pane.show{display:block; animation:fade .2s;}
+.pool{display:flex; flex-wrap:wrap; gap:7px; margin:10px 0;}
+.tokenchip{background:#fff; border:2px solid var(--glacier); color:var(--deep); border-radius:99px; padding:5px 13px; font-size:.8rem; font-weight:600; transition:.15s;}
+.tokenchip.sel{background:var(--glacier); color:#fff;}
+.tokenchip.gone{display:none;}
+.tokenchip.shake{animation:shake .3s;}
+.buckets{display:grid; grid-template-columns:repeat(2,1fr); gap:9px;}
+@media (max-width:640px){.buckets{grid-template-columns:1fr;}}
+.bucket{border:2px dashed var(--line); border-radius:11px; padding:9px; min-height:88px; background:#FBFDFF; transition:.15s;}
+.bucket h4{font-size:.78rem; margin-bottom:5px;}
+.bucket .drop{display:flex; flex-wrap:wrap; gap:5px;}
+.bucket .drop span{background:var(--aurora-l); color:var(--aurora); font-size:.72rem; font-weight:700; padding:3px 9px; border-radius:99px;}
+.bucket.armed{border-color:var(--acc); background:#EFF7FE;}
+.matchgrid{display:grid; grid-template-columns:1fr 1fr; gap:10px;}
+.mcol{display:flex; flex-direction:column; gap:7px;}
+.mitem{background:#fff; border:2px solid var(--line); border-radius:9px; padding:7px 9px; font-size:.79rem; font-weight:600; text-align:left; transition:.15s;}
+.mitem.sel{border-color:var(--acc); background:#EFF7FE;}
+.mitem.done{border-color:var(--aurora); background:var(--aurora-l); color:var(--aurora); pointer-events:none;}
+.mitem.shake{animation:shake .3s;}
+.memgrid{display:grid; grid-template-columns:repeat(4,1fr); gap:8px; margin:10px 0;}
+@media (max-width:640px){.memgrid{grid-template-columns:repeat(3,1fr);}}
+.mc{border:2px solid var(--line); border-radius:11px; min-height:64px; padding:6px; font-size:.72rem; font-weight:700; background:var(--glacier); color:#fff; display:grid; place-items:center; text-align:center; transition:.18s;}
+.mc.open{background:#fff; color:var(--deep); border-color:var(--acc);}
+.mc.done{background:var(--aurora-l); color:var(--aurora); border-color:var(--aurora); pointer-events:none;}
+.mc.shake{animation:shake .3s;}
+.xr .s{border-radius:6px; padding:1px 3px; cursor:pointer; transition:.15s;}
+.xr .s:hover{outline:2px solid var(--acc);}
+.xr .s.op{background:#FFD9E8; outline:none;}
+.xr .s.dim{opacity:.55;}
+.crow{display:flex; gap:8px; align-items:flex-start; background:#FBFDFF; border:1.5px solid var(--line); border-radius:11px; padding:8px 10px; margin-bottom:7px; flex-wrap:wrap;}
+.crow .stext{flex:1 1 280px; font-size:.81rem;}
+.crow.cT{background:#E3F0FC; border-color:#7FB3DE;}
+.crow.cE{background:#E4F7F1; border-color:#7FCDB4;}
+.crow.cX{background:var(--sunset-l); border-color:#EFB07E;}
+.factory{border:2px solid var(--line); border-radius:13px; padding:11px; margin:10px 0;}
+.factory.fg{border-color:#9CC4E8; background:#F4F9FE;}
+.factory.fl{border-color:#F0C09A; background:#FFF9F3;}
+.factory h4{font-size:.82rem; margin-bottom:7px;}
+.factory .flabel{font-size:.73rem; font-weight:700; color:#000; margin:7px 0 3px;}
+.autob{border:none; border-radius:9px; padding:6px 13px; font-size:.77rem; font-weight:700; background:var(--gold-l); color:var(--gold); border:1.5px solid #E4C878; margin-top:6px;}
+.outwarn{background:#FFF8E6; border:1.5px solid #E8CF8C; border-radius:10px; padding:8px 11px; font-size:.78rem; color:#7A5B10; margin-bottom:9px;}
+.outwarn b{display:inline; color:#000;}
+.pairshare{background:var(--berry-l); border-left:4px solid var(--berry); border-radius:9px; padding:8px 11px; font-size:.78rem; margin-top:10px;}
+.pairshare b{display:inline; color:var(--berry);}
+
+.checklist{display:flex; flex-direction:column; gap:7px; margin-top:9px;}
+.ck{display:flex; gap:9px; align-items:flex-start; background:#FBFDFF; border:1px solid var(--line); border-radius:9px; padding:8px 11px; font-size:.8rem;}
+.ck input{width:17px; height:17px; margin-top:2px; accent-color:var(--aurora);}
+
+.navrow{display:flex; justify-content:space-between; gap:10px; margin:4px 0 18px; flex-wrap:wrap;}
+.navL{display:flex; gap:8px; flex-wrap:wrap;}
+.btn{border:none; border-radius:11px; padding:9px 16px; font-size:.85rem; font-weight:700; transition:.15s;}
+.btn.p{background:var(--acc); color:#fff;}
+.btn.p:hover{filter:brightness(.9);}
+.btn.o{background:#fff; color:var(--glacier); border:2px solid var(--line);}
+.btn.g{background:var(--aurora); color:#fff; width:100%;}
+.btn.g:disabled{background:#B9D8CE; cursor:not-allowed;}
+
+.finish{background:linear-gradient(135deg,var(--aurora) 0%, #12A184 100%); color:#fff; border-radius:var(--r); padding:16px; text-align:center; display:none; margin-bottom:14px;}
+.finish.show{display:block; animation:fade .3s;}
+.finish h3{font-family:'Mitr',sans-serif; font-size:1.1rem;}
+.finish a{display:inline-block; background:#fff; color:var(--aurora); border-radius:11px; padding:8px 16px; font-weight:700; text-decoration:none; margin-top:9px; font-size:.85rem;}
+
+/* ---------- SUMMARY ---------- */
+.sumhead{background:linear-gradient(135deg,var(--acc) 0%, var(--glacier) 100%); color:#fff; border-radius:var(--r); padding:16px; text-align:center; margin-bottom:12px;}
+.sumhead h2{font-family:'Mitr',sans-serif; font-size:1.15rem;}
+.sumhead p{font-size:.82rem; opacity:.95; margin-top:3px;}
+.pctwrap{display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-bottom:11px;}
+@media (max-width:640px){.pctwrap{grid-template-columns:1fr;}}
+.pctcard{background:#FBFDFF; border:1px solid var(--line); border-radius:12px; padding:12px; text-align:center;}
+.pctcard .big{font-family:'Mitr',sans-serif; font-size:1.9rem; color:var(--acc);}
+.pctcard .lbl{font-size:.76rem; color:var(--mut); font-weight:700;}
+.pctbar{height:11px; background:#E3EEF7; border-radius:99px; overflow:hidden; margin-top:7px;}
+.pctbar span{display:block; height:100%; background:linear-gradient(90deg,var(--acc),var(--aurora)); border-radius:99px; transition:width .6s;}
+.badgegrid{display:grid; grid-template-columns:repeat(3,1fr); gap:7px; margin:9px 0;}
+@media (max-width:640px){.badgegrid{grid-template-columns:repeat(2,1fr);}}
+.bdg{border:1.5px solid var(--line); border-radius:11px; padding:7px; text-align:center; font-size:.71rem; font-weight:700; background:#FBFDFF; color:var(--mut);}
+.bdg.got{border-color:var(--aurora); background:var(--aurora-l); color:var(--aurora);}
+.bdg .ic{font-size:1.1rem; display:block;}
+.praise{background:var(--aurora-l); border-left:4px solid var(--aurora); border-radius:9px; padding:9px 11px; font-size:.83rem; margin:9px 0; color:#085C4E;}
+.advice{background:#F0F7FD; border-left:4px solid var(--glacier); border-radius:9px; padding:9px 11px; font-size:.8rem; margin:9px 0;}
+.advice ul{padding-left:18px;}
+.suminfo{background:#FBFDFF; border:1px dashed var(--line); border-radius:9px; padding:9px 11px; font-size:.79rem; margin:9px 0;}
+.mywork{background:#FFFDF5; border:1.5px solid #E4C878; border-radius:12px; padding:11px 12px; margin:10px 0;}
+.mywork h3{font-family:'Mitr',sans-serif; font-size:.92rem; color:#000; margin-bottom:7px;}
+.mywork .wk{background:#fff; border:1px solid #EADFB8; border-radius:9px; padding:7px 10px; font-size:.8rem; margin-bottom:6px;}
+.mywork .wk b{display:inline; color:#000;}
+
+footer{text-align:center; font-size:.72rem; color:var(--mut); padding:18px 14px;}
+
+/* ---------- STRONG ACTIVITY FRAMES (กรอบสีเข้มรายกิจกรรม) ---------- */
+.card.ac1{border:2.5px solid #1B5E8C;} .card.ac1 .stepnum{background:#1B5E8C;} .card.ac1 .obj{border-left-color:#1B5E8C;}
+.card.ac2{border:2.5px solid #0B7A66;} .card.ac2 .stepnum{background:#0B7A66;} .card.ac2 .obj{border-left-color:#0B7A66;}
+.card.ac3{border:2.5px solid #5B4AA8;} .card.ac3 .stepnum{background:#5B4AA8;} .card.ac3 .obj{border-left-color:#5B4AA8;}
+.card.ac4{border:2.5px solid #C05621;} .card.ac4 .stepnum{background:#C05621;} .card.ac4 .obj{border-left-color:#C05621;}
+.card.ac5{border:2.5px solid #B04A66;} .card.ac5 .stepnum{background:#B04A66;} .card.ac5 .obj{border-left-color:#B04A66;}
+/* ---------- MISSIONS (ภารกิจเรียงต่อกัน คลิกกรอบแล้วกิจกรรมตามมา) ---------- */
+details.mission{border:2.5px solid var(--line); border-radius:13px; margin-bottom:11px; background:#fff; overflow:hidden;}
+details.mission>summary{cursor:pointer; list-style:none; padding:10px 13px; font-weight:700; font-size:.88rem; color:#fff; display:flex; align-items:center; gap:8px;}
+details.mission>summary::-webkit-details-marker{display:none;}
+details.mission>summary .mstat{margin-left:auto; font-size:.75rem; background:rgba(255,255,255,.25); padding:2px 10px; border-radius:99px;}
+details.mission .mbody{padding:11px 13px;}
+details.m1{border-color:#D6336C;} details.m1>summary{background:#D6336C;}
+details.m2{border-color:#0B7A66;} details.m2>summary{background:#0B7A66;}
+details.m3{border-color:#B8860B;} details.m3>summary{background:#B8860B;}
+details.m4{border-color:#5B4AA8;} details.m4>summary{background:#5B4AA8;}
+/* ---------- ROBOT POP-UP ---------- */
+.robotwrap{position:fixed; inset:0; background:rgba(14,58,87,.35); z-index:98; display:none;}
+.robotwrap.show{display:block;}
+.robot{position:fixed; bottom:18px; left:50%; transform:translateX(-50%); width:calc(100% - 28px); max-width:540px; background:#fff; border:2.5px solid var(--aurora); border-radius:16px; padding:13px 15px; box-shadow:0 10px 30px rgba(14,58,87,.3); z-index:99; display:flex; gap:11px; align-items:flex-start; animation:pop .3s ease;}
+@keyframes pop{from{transform:translate(-50%,20px); opacity:0;} to{transform:translate(-50%,0); opacity:1;}}
+.robot .rico{font-size:1.9rem; flex:none;}
+.robot .rtxt{font-size:.84rem; line-height:1.6;}
+.robot .rtxt b{display:inline; color:var(--aurora);}
+.robot button{border:none; background:var(--aurora); color:#fff; border-radius:10px; padding:7px 14px; font-size:.8rem; font-weight:700; margin-top:7px;}
+/* ---------- LIKERT (Self-Assessment) ---------- */
+.likert{background:#FBFDFF; border:1.5px solid var(--line); border-radius:11px; padding:9px 11px; margin-bottom:8px;}
+.likert p{font-size:.83rem; font-weight:700; margin-bottom:6px;}
+.lkrow{display:flex; gap:6px; flex-wrap:wrap; align-items:center;}
+.lk{border:2px solid var(--line); background:#fff; border-radius:10px; padding:5px 11px; font-size:.79rem; font-weight:700; transition:.15s;}
+.lk.on{background:var(--aurora); border-color:var(--aurora); color:#fff;}
+.lkscale{font-size:.7rem; color:var(--mut); margin-top:3px;}
+.dimbox{background:#F3F0FC; border-left:4px solid #5B4AA8; border-radius:10px; padding:9px 12px; font-size:.79rem; margin:9px 0; line-height:1.7;}
+.dimbox b{display:inline; color:#000;}
+.samp{background:#FFF; border:1.5px dashed var(--line); border-radius:9px; padding:7px 10px; font-size:.82rem; font-style:italic; margin-bottom:7px;}
+
+
+/* ---------- ac6 (Self-Assessment renumbered) ---------- */
+.card.ac6{border:2.5px solid #0E7490;} .card.ac6 .stepnum{background:#0E7490;} .card.ac6 .obj{border-left-color:#0E7490;}
+/* ---------- DUEL (Paragraph A vs B) ---------- */
+.duelwrap{display:grid; grid-template-columns:1fr 1fr; gap:9px; margin:10px 0;}
+@media (max-width:640px){.duelwrap{grid-template-columns:1fr;}}
+.duelpara{border:2px solid var(--line); border-radius:12px; padding:10px 11px; font-size:.8rem; line-height:1.7; background:#FBFDFF;}
+.duelpara h5{font-size:.78rem; margin-bottom:5px; color:var(--mut);}
+.duelq{background:#FBFDFF; border:1.5px solid var(--line); border-radius:11px; padding:9px 11px; margin-bottom:8px;}
+.duelq p{font-size:.82rem; font-weight:700; margin-bottom:7px;}
+.duelbtns{display:flex; gap:8px;}
+.duelbtn{flex:1; border:2px solid var(--line); background:#fff; border-radius:10px; padding:7px 10px; font-size:.82rem; font-weight:700;}
+.duelbtn.ok{border-color:var(--aurora); background:var(--aurora-l); color:var(--aurora);}
+.duelbtn.no{border-color:var(--berry); background:var(--berry-l); color:var(--berry);}
+/* ---------- DRAG & DROP (Structure Hunt) ---------- */
+.dndlabels{display:flex; flex-wrap:wrap; gap:7px; margin:9px 0;}
+.dndlabel{background:var(--acc); color:#fff; border-radius:99px; padding:6px 14px; font-size:.78rem; font-weight:700; cursor:grab; transition:.15s; border:2px solid transparent;}
+.dndlabel.sel{outline:3px solid var(--gold); transform:scale(1.05);}
+.dndlabel.used{opacity:.3; pointer-events:none;}
+.dndpara{border:2px solid var(--line); border-radius:12px; padding:12px; font-size:.84rem; line-height:2.1; background:#FBFDFF;}
+.dndzone{display:inline; border-radius:6px; padding:2px 4px; cursor:pointer; transition:.15s; border-bottom:3px dashed var(--line);}
+.dndzone.over{background:#FFF3D6;}
+.dndzone.placed{border-bottom:3px solid var(--aurora); background:var(--aurora-l);}
+.dndzone.wrong{animation:shake .3s; border-bottom-color:var(--berry);}
+.dndtag{font-size:.68rem; font-weight:700; color:#fff; background:var(--acc); border-radius:6px; padding:1px 6px; margin-right:4px;}
+.paratabs{display:flex; gap:6px; margin-bottom:9px;}
+.paratab{background:#EFF6FC; border:2px solid transparent; color:var(--glacier); border-radius:99px; padding:5px 13px; font-size:.76rem; font-weight:700;}
+.paratab.on{background:var(--acc); color:#fff;}
+.paratab.done{background:var(--aurora-l); color:var(--aurora); border-color:var(--aurora);}
+/* ---------- SOCRATIC DIALOGUE ---------- */
+.chatbox{background:#F5FAFE; border:1.5px solid var(--line); border-radius:13px; padding:12px; max-height:420px; overflow-y:auto; margin-bottom:10px;}
+.msg{display:flex; gap:8px; margin-bottom:10px; align-items:flex-start;}
+.msg.bot .bub{background:#fff; border:1.5px solid var(--line);}
+.msg.me{flex-direction:row-reverse;}
+.msg.me .bub{background:var(--acc); color:#fff;}
+.msg .ico{font-size:1.3rem; flex:none;}
+.msg .bub{border-radius:12px; padding:8px 12px; font-size:.83rem; line-height:1.55; max-width:78%;}
+.chatopts{display:flex; flex-direction:column; gap:7px; margin-top:4px;}
+.chatopt{background:#fff; border:2px solid var(--acc); color:var(--acc); border-radius:10px; padding:8px 12px; font-size:.82rem; font-weight:600; text-align:left;}
+.chatopt:hover{background:var(--acc-l);}
+.chatinput{display:flex; gap:8px;}
+.chatinput input{flex:1; border:1.5px solid var(--line); border-radius:10px; padding:8px 11px; font-size:.85rem;}
+.chatinput button{border:none; background:var(--acc); color:#fff; border-radius:10px; padding:8px 16px; font-weight:700; font-size:.83rem;}
+/* ---------- FLOWCHART OUTPUT ---------- */
+.flow{display:flex; flex-direction:column; gap:0; margin:10px 0;}
+.flownode{border:2.5px solid var(--line); border-radius:12px; padding:9px 13px; font-size:.82rem; background:#fff; position:relative;}
+.flownode b{display:block; font-size:.72rem; color:var(--mut); margin-bottom:2px; text-transform:uppercase; letter-spacing:.04em;}
+.flownode.n1{border-color:#1B5E8C;} .flownode.n2{border-color:#0B7A66;} .flownode.n3{border-color:#C05621;} .flownode.n4{border-color:#B04A66;} .flownode.n5{border-color:#5B4AA8;}
+.flowarrow{text-align:center; font-size:1.1rem; color:var(--mut); padding:2px 0;}
+/* ---------- SCORE REPORT ---------- */
+.scoretable{width:100%; border-collapse:collapse; font-size:.8rem; margin:9px 0;}
+.scoretable th,.scoretable td{border:1px solid var(--line); padding:7px 9px; text-align:left;}
+.scoretable th{background:#F0F7FD; color:var(--glacier); font-size:.76rem;}
+.scoretable td.num{text-align:center; font-weight:700;}
+.scoretable tr.total{background:var(--aurora-l); font-weight:700;}
+
+
+/* ---------- CONSTRUCTION MISSION (fill sentences+connectors) ---------- */
+.constrpara{border:2px solid var(--line); border-radius:12px; padding:12px; font-size:.85rem; line-height:2.3; background:#FBFDFF;}
+.blank{display:inline-block; min-width:70px; border-bottom:3px dashed var(--berry); padding:2px 8px; margin:2px; border-radius:6px; cursor:pointer; color:var(--mut); font-size:.78rem;}
+.blank.active{border-bottom-color:var(--gold); background:#FFF8E0; animation:pulse 1.2s infinite;}
+.blank.filled{border-bottom:3px solid var(--aurora); background:var(--aurora-l); color:var(--deep); cursor:default;}
+.blank.filled.conn{background:#FFEAD0; border-bottom-color:var(--sunset);}
+@keyframes pulse{0%,100%{box-shadow:0 0 0 0 rgba(184,134,11,.35);} 50%{box-shadow:0 0 0 6px rgba(184,134,11,0);}}
+.chippool{display:flex; flex-wrap:wrap; gap:8px; margin:11px 0;}
+.chip-content{background:#E3F0FC; border:2px solid #7FB3DE; color:var(--glacier); border-radius:10px; padding:6px 12px; font-size:.78rem; font-weight:600; cursor:grab;}
+.chip-conn{background:#FFEAD0; border:2px solid #EFB07E; color:#A2551B; border-radius:99px; padding:6px 14px; font-size:.78rem; font-weight:700; cursor:grab;}
+.chip-content.used,.chip-conn.used{display:none;}
+.chip-content.shake,.chip-conn.shake{animation:shake .35s;}
+
+/* ---------- AI COACH ---------- */
+.coachcard{background:linear-gradient(135deg,#0E7490,#14B8A6); color:#fff; border-radius:14px; padding:13px 15px; margin-bottom:14px; display:flex; gap:11px; align-items:center;}
+.coachcard .cico{font-size:2rem;}
+.coachcard .ctxt{font-size:.82rem; line-height:1.55;}
+.coachcard .ctxt b{display:block; font-size:.9rem; margin-bottom:2px;}
+.coachwrap{position:fixed; inset:0; background:rgba(14,58,87,.35); z-index:98; display:none;}
+.coachwrap.show{display:block;}
+.coachpop{position:fixed; bottom:18px; left:50%; transform:translateX(-50%); width:calc(100% - 28px); max-width:540px; background:#fff; border:2.5px solid #0E7490; border-radius:16px; padding:13px 15px; box-shadow:0 10px 30px rgba(14,58,87,.3); z-index:99; display:flex; gap:11px; align-items:flex-start; animation:pop .3s ease;}
+.coachpop .cico{font-size:1.9rem; flex:none;}
+.coachpop .ctxt{font-size:.84rem; line-height:1.6;}
+.coachpop .ctxt b{display:inline; color:#000;}
+.coachpop button{border:none; background:#0E7490; color:#fff; border-radius:10px; padding:7px 14px; font-weight:700; font-size:.8rem; margin-top:7px;}
+
+/* ---------- HINT / SKIP (chat) ---------- */
+.hintbtn{background:#FFF3D6; border:1.5px solid var(--gold); color:#8A6508; border-radius:9px; padding:5px 11px; font-size:.74rem; font-weight:700; margin-bottom:6px;}
+.skipbtn{background:#FBFDFF; border:1.5px solid var(--line); color:var(--mut); border-radius:9px; padding:8px 12px; font-weight:700; font-size:.8rem;}
+.flagnote{color:var(--sunset); font-style:italic;}
+
+/* ---------- BRANCHING FLOWCHART ---------- */
+.flowbranch{display:grid; grid-template-columns:1fr 1fr; gap:11px; margin:4px 0;}
+@media (max-width:640px){.flowbranch{grid-template-columns:1fr;}}
+.flowcol{display:flex; flex-direction:column; gap:0;}
+.flowcol .colhead{text-align:center; font-size:.78rem; font-weight:700; padding:5px; border-radius:8px 8px 0 0;}
+.flowcol.v1 .colhead{background:#1B5E8C; color:#fff;}
+.flowcol.v2 .colhead{background:#C05621; color:#fff;}
+.flowmini{border:2px solid var(--line); border-radius:0 0 10px 10px; padding:8px 10px; font-size:.78rem; background:#fff;}
+.flowmini + .flowmini{border-top:none; border-radius:0;}
+.flowmini:last-child{border-radius:0 0 10px 10px;}
+.flowmini b{display:block; font-size:.68rem; color:var(--mut); text-transform:uppercase;}
+.flowmerge{text-align:center; font-size:1.3rem; margin:4px 0; color:var(--mut);}
+.flowop{border-radius:12px; padding:10px 13px; font-size:.83rem; margin-bottom:0;}
+.flowop.side-Global{border:2.5px solid #1B5E8C; background:#E3F0FC;}
+.flowop.side-Local{border:2.5px solid #C05621; background:#FFEAD0;}
+.flowop.side-Both{border:2.5px solid #7C3AED; background:#F0E9FE;}
+
+/* ---------- SUCCESS CELEBRATION POP-UP ---------- */
+.successpop-wrap{position:fixed; inset:0; background:rgba(0,0,0,.55); z-index:300; display:none; align-items:center; justify-content:center; padding:20px;}
+.successpop-wrap.show{display:flex; animation:fadein .3s ease;}
+.successpop{background:linear-gradient(135deg,#FFD93D 0%, #FF6B9D 50%, #6BCB77 100%); border-radius:20px; max-width:480px; width:100%; padding:28px 24px; text-align:center; color:#000; box-shadow:0 20px 60px rgba(0,0,0,.4); animation:pop-in .4s cubic-bezier(.34,1.56,.64,1); position:relative; overflow:hidden;}
+.successpop::before, .successpop::after{content:''; position:absolute; width:80px; height:80px; border-radius:50%; opacity:.3;}
+.successpop::before{background:#fff; top:-20px; left:-20px;}
+.successpop::after{background:#fff; bottom:-30px; right:-30px;}
+.successpop .emoji{font-size:3.5rem; margin-bottom:8px; display:block; animation:bounce .6s ease infinite alternate;}
+.successpop h3{font-family:'Mitr',sans-serif; font-size:1.3rem; margin-bottom:8px; color:#000;}
+.successpop .msg{font-size:1rem; line-height:1.6; margin-bottom:14px; color:#000; font-weight:600;}
+.successpop .next{background:#000; color:#fff; border:none; border-radius:14px; padding:11px 26px; font-weight:700; font-size:.95rem; cursor:pointer; font-family:inherit; margin-top:6px;}
+.successpop .next:hover{transform:scale(1.05);}
+@keyframes fadein{from{opacity:0}to{opacity:1}}
+@keyframes pop-in{0%{transform:scale(.5); opacity:0} 60%{transform:scale(1.05); opacity:1} 100%{transform:scale(1); opacity:1}}
+@keyframes bounce{from{transform:translateY(0)} to{transform:translateY(-8px)}}
+/* Floe (learning path box) success highlight animation */
+.floe.ok{animation:floe-glow 1.5s ease infinite alternate;}
+@keyframes floe-glow{
+  from{box-shadow:0 0 0 0 rgba(11,122,102,.15);}
+  to{box-shadow:0 0 0 6px rgba(11,122,102,.3);}
+}
+
+/* ---------- FLOWCHART CONTAINER (warm cream — visually distinct from chatbox) ---------- */
+#flowResult{background:linear-gradient(180deg,#FFF9F0 0%, #FFF6E3 100%); border:2px solid #F0DFB8; border-radius:12px; padding:12px 14px 14px; margin-top:12px;}
+#flowResult > p{color:#000 !important;}
+/* ---------- AVATAR PICKER ---------- */
+.avatarpick{background:#FBFDFF; border:1.5px solid var(--line); border-radius:12px; padding:11px 13px; margin-top:10px;}
+.avatarpick .apq{font-size:.85rem; font-weight:700; margin-bottom:9px; line-height:1.5;}
+.avgrid{display:grid; grid-template-columns:repeat(10,1fr); gap:6px;}
+@media (max-width:640px){.avgrid{grid-template-columns:repeat(6,1fr);}}
+.avitem{background:#fff; border:2px solid var(--line); border-radius:10px; font-size:1.5rem; padding:7px 0; cursor:pointer; transition:transform .15s, border-color .15s, background .15s; line-height:1;}
+.avitem:hover{transform:scale(1.1); border-color:var(--acc);}
+.avitem.sel{background:var(--acc-l); border-color:var(--acc); transform:scale(1.15); box-shadow:0 3px 10px rgba(0,0,0,.15);}
+.avlabel{font-size:.75rem; color:var(--mut); margin-top:8px; text-align:center;}
+.avhero{font-size:2.6rem; margin-bottom:6px; line-height:1;}
+/* ============ BATCH 2 ADDITIONS ============ */
+
+/* --- Task palettes (rotated within one activity) --- */
+.task-A{background:#EFF6FF; border:2px solid #2563EB; border-radius:12px; padding:12px 14px; margin:10px 0;}
+.task-A > p:first-child, .task-A > .taskh{color:#000; font-weight:700;}
+.task-B{background:#FEF3C7; border:2px solid #D97706; border-radius:12px; padding:12px 14px; margin:10px 0;}
+.task-B > p:first-child, .task-B > .taskh{color:#000; font-weight:700;}
+.task-C{background:#F3E8FF; border:2px solid #7C3AED; border-radius:12px; padding:12px 14px; margin:10px 0;}
+.task-C > p:first-child, .task-C > .taskh{color:#000; font-weight:700;}
+.task-D{background:#DCFCE7; border:2px solid #16A34A; border-radius:12px; padding:12px 14px; margin:10px 0;}
+.task-D > p:first-child, .task-D > .taskh{color:#000; font-weight:700;}
+.taskh{font-size:.83rem; font-weight:700; margin-bottom:8px;}
+
+/* --- Chatbox Activity 5: pale mint + green border (was ฟ้าอ่อนกลืน) --- */
+.chatbox{background:#ECFDF5 !important; border:2px solid #059669 !important;}
+
+/* --- Bigger avatar picker (moved to learner section) --- */
+.avatarpick-big{background:#FFFBEB; border:2px solid #F59E0B; border-radius:12px; padding:12px 14px; margin-top:10px;}
+.avatarpick-big .apq{font-size:.88rem; font-weight:700; margin-bottom:10px; line-height:1.5; color:#000;}
+.avgrid-big{display:grid; grid-template-columns:repeat(10,1fr); gap:8px;}
+@media (max-width:640px){.avgrid-big{grid-template-columns:repeat(5,1fr);}}
+.avitem-big{background:#fff; border:2.5px solid var(--line); border-radius:12px; font-size:2.3rem; padding:10px 0; cursor:pointer; transition:transform .15s, border-color .15s, background .15s; line-height:1; text-align:center;}
+.avitem-big:hover{transform:scale(1.12); border-color:var(--acc);}
+.avitem-big.sel{background:var(--acc-l); border-color:var(--acc); transform:scale(1.18); box-shadow:0 4px 14px rgba(0,0,0,.18);}
+.avlabel-big{font-size:.82rem; color:#000; margin-top:9px; text-align:center; font-weight:700;}
+
+/* --- Explanation pop-up (Activity 3) --- */
+.explpop-wrap{position:fixed; inset:0; background:rgba(0,0,0,.4); z-index:200; display:none; align-items:center; justify-content:center; padding:20px;}
+.explpop-wrap.show{display:flex;}
+.explpop{background:#fff; border-radius:16px; max-width:520px; width:100%; padding:20px 22px; box-shadow:0 20px 60px rgba(0,0,0,.3); animation:pop .3s ease;}
+.explpop.correct{border:3px solid #16A34A;}
+.explpop.incorrect{border:3px solid #DC2626;}
+.explpop h3{font-family:'Mitr',sans-serif; font-size:1.1rem; margin-bottom:8px;}
+.explpop.correct h3{color:#15803D;}
+.explpop.incorrect h3{color:#B91C1C;}
+.explpop .expl-a{background:#F0FDF4; border-left:4px solid #16A34A; padding:9px 12px; border-radius:8px; margin:10px 0; font-size:.85rem;}
+.explpop .expl-a b{display:inline; color:#15803D;}
+.explpop .expl-y{background:#FEF2F2; border-left:4px solid #DC2626; padding:9px 12px; border-radius:8px; margin:10px 0; font-size:.85rem;}
+.explpop .expl-y b{display:inline; color:#B91C1C;}
+.explpop .expl-body{background:#FEF3C7; border-left:4px solid #D97706; padding:10px 13px; border-radius:8px; margin-top:10px; font-size:.85rem; line-height:1.6;}
+.explpop .expl-body b{display:inline; color:#92400E;}
+.explpop button.explok{border:none; background:#0E7490; color:#fff; border-radius:10px; padding:9px 20px; font-weight:700; font-size:.85rem; margin-top:12px; cursor:pointer;}
+
+/* --- Single-attempt lock: show correct answer highlighted after answer --- */
+.opt.reveal-correct{background:#DCFCE7 !important; border-color:#16A34A !important; color:#15803D !important; font-weight:700; box-shadow:0 0 0 3px rgba(22,163,74,.2);}
+.opt.reveal-correct::after{content:' ✓'; font-weight:900;}
+.opt.locked-single{opacity:.75; cursor:not-allowed; pointer-events:none;}
+
+.flowop b{display:block; font-size:.72rem; color:var(--mut); text-transform:uppercase;}
+
+/* ---------- LIMITED-ATTEMPT QUIZ ---------- */
+.q.limited{position:relative;}
+.attemptbadge{font-size:.68rem; font-weight:700; color:var(--mut); position:absolute; top:9px; right:11px;}
+.opt.reveal{border-color:var(--aurora); background:var(--aurora-l); color:var(--aurora); font-weight:700;}
+.opt.locked{opacity:.5; pointer-events:none;}
+.q.loadgate .opt{opacity:.4; pointer-events:none;}
+
+/* ---------- PLAYFUL SUMMARY ---------- */
+.sumhero{background:linear-gradient(135deg,#7C3AED 0%, #0E7490 50%, #0B7A66 100%); border-radius:18px; padding:22px 16px; text-align:center; color:#fff; margin-bottom:14px; position:relative; overflow:hidden;}
+.sumhero .conf{position:absolute; font-size:1.3rem; opacity:.5;}
+.sumhero h2{font-family:'Mitr',sans-serif; font-size:1.4rem; margin-bottom:4px;}
+.sumhero .sub2{font-size:.85rem; opacity:.95;}
+/* ---------- WALK-RALLY TRAIL ---------- */
+.walkrally{margin:14px 0 6px; position:relative;}
+.walkrally svg{width:100%; height:auto; display:block; max-width:100%;}
+
+.ladder{display:flex; align-items:flex-end; justify-content:center; gap:6px; margin:16px 0 6px;}
+.ladderstep{width:15%; border-radius:8px 8px 0 0; display:flex; align-items:flex-start; justify-content:center; padding-top:6px; font-size:1.1rem; transition:.3s;}
+.ladderstep.on{background:linear-gradient(180deg,#FFE9A8,#FFC94D);}
+.ladderstep.off{background:rgba(255,255,255,.18);}
+.rocket{font-size:1.6rem; margin-top:-6px;}
+.vibrant .obj{background:linear-gradient(90deg,#F0F7FD,#E3F0FC);}
+.colorpop{background:linear-gradient(135deg,#FFEAD0,#FFD6E8); border-radius:12px; padding:9px 12px; font-size:.8rem; margin-bottom:9px;}
+
+
+.floe.locked{opacity:.45; filter:grayscale(65%); cursor:not-allowed;}
+.floe.locked:hover{transform:none;}
+.tab.locked{opacity:.4; pointer-events:none; cursor:not-allowed;}
+.toastwrap{position:fixed; bottom:22px; left:50%; transform:translateX(-50%); z-index:120; display:flex; flex-direction:column; gap:8px; align-items:center; pointer-events:none;}
+.toastmsg{background:#0E3A57; color:#fff; padding:10px 18px; border-radius:99px; font-size:.82rem; font-weight:700; box-shadow:0 6px 18px rgba(0,0,0,.25); animation:toastin .25s ease, toastout .25s ease 1.8s forwards;}
+@keyframes toastin{from{opacity:0; transform:translateY(10px);} to{opacity:1; transform:none;}}
+@keyframes toastout{to{opacity:0; transform:translateY(-8px);}}
+
+
+.master-back-link{
+  position:fixed; top:14px; right:14px; z-index:99;
+  background:linear-gradient(135deg,#F59E0B,#D97706); color:#fff;
+  border:none; padding:8px 16px; border-radius:99px;
+  font-family:'Mitr',sans-serif; font-weight:600; font-size:.85rem;
+  cursor:pointer; box-shadow:0 4px 12px rgba(245,158,11,.35);
+  text-decoration:none; display:inline-block;
+}
+.master-back-link:hover{transform:translateY(-1px); box-shadow:0 6px 18px rgba(245,158,11,.5);}
+
+
+.microgoals{background:#FFFDF8; border:1.5px solid #F59E0B; border-radius:12px; padding:12px 14px; margin:10px 0;}
+.microgoals .mg-head{font-family:'Mitr',sans-serif; font-weight:600; font-size:.92rem; color:#B45309; margin-bottom:8px; padding-bottom:6px; border-bottom:1.5px dashed #F59E0B;}
+.microgoals .mg-item{background:#fff; border-left:3px solid #1B5E8C; border-radius:6px; padding:7px 10px; margin-bottom:5px; font-size:.85rem; color:#000; line-height:1.55; display:flex; align-items:flex-start; gap:8px;}
+.microgoals .mg-item b{color:#1B5E8C; display:inline; font-family:'Mitr',sans-serif; font-weight:600;}
+.microgoals .mg-item i{color:#374151; font-style:italic;}
+.microgoals .mg-num{background:linear-gradient(135deg,#F59E0B,#D97706); color:#fff; width:24px; height:24px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-family:'Mitr',sans-serif; font-weight:600; font-size:.78rem; flex:0 0 auto;}
+
+
+.nav-back-group{position:fixed; top:14px; right:14px; z-index:99; display:flex; gap:6px;}
+.nav-back-group .master-back-link{position:static;}
+.master-back-link.back-state{background:linear-gradient(135deg,#0F4C5C,#093542);}
+.master-back-link.back-hub{background:linear-gradient(135deg,#F59E0B,#D97706); font-size:.78rem; padding:6px 12px;}
+
+</style>
+</head>
+<body>
+<div class="nav-back-group"><a href="Cycle1_State1_Beginner.html" class="master-back-link back-state">← กลับหน้า State 1</a> <a href="Cycle1_Master_Hub.html" class="master-back-link back-hub">🏠 Master Hub</a></div>
+
+
+<header>
+  <div class="hero">
+    <div class="kicker">Differentiated Digital Writing Task Card · CbKST-Based</div>
+    <h1>Cycle 1 · Part 1: <span class="em">Gear Up!</span> 🧊 ❄️ Alaska Is Melting</h1>
+    <div class="sub">กิจกรรมเตรียมความพร้อมก่อนการเขียนย่อหน้าแบบ Discuss Both Views and Give an Opinion · ระยะเวลา 60 นาที (1 คาบ)</div>
+    <div class="statechip">🧊 State 1 · Beginner — ระดับเริ่มต้น</div>
+  </div>
+  <div class="bg-ice"></div>
+</header>
+
+<div class="wrap">
+
+  <section class="trail homeonly">
+    <h2>🧭 เส้นทางการเรียนรู้ / Learning Path
+      <span class="done-count"><span id="doneN">0</span> / 6 สำเร็จ</span></h2>
+    <div class="floes" id="floes"></div>
+    <div class="note">💡 ปฏิบัติตามลำดับ ① → ⑥ (รวม 60 นาที) · Part 1 เน้นการวิเคราะห์และเตรียมความพร้อม ส่วนการลงมือเขียนจริงอยู่ใน Part 2 · ครบแต่ละขั้นได้รับเหรียญ 🏅 · ตอบถูกมีเสียงเชียร์ 🔊</div>
+    <button class="btn p" data-go="1" style="margin-top:11px; width:100%;">🚀 เริ่มปฏิบัติกิจกรรมที่ 1 · Warm-Up Games →</button>
+  </section>
+
+  <section class="howto homeonly">
+    <h2>📖 แนวทางการใช้ใบงาน · Microlearning Objectives</h2>
+    <div class="goalbar"><b>🏁 เป้าหมายภาพรวมของ Part 1 (60 นาที):</b> นักเรียนมีความพร้อมด้านการวิเคราะห์ครบทุกมิติเพื่อเข้าสู่การลงมือเขียนจริงใน Part 2: Write &amp; Fight! อย่างมั่นใจ</div>
+    <div class="microgoals">
+      <div class="mg-head">🎯 เป้าหมายย่อย 6 กิจกรรม (Microlearning · ทำทีละก้าว 8-18 นาที)</div>
+      <div class="mg-item"><span class="mg-num">①</span><b>Warm-Up Games ×5</b> (~18 นาที) · <i>ทบทวนภาษาจากบทอ่าน 5 ระดับ bottom-up · คำศัพท์ → Tense → คำเชื่อม → จับใจความ → คัดแยกความคิด</i></div>
+      <div class="mg-item"><span class="mg-num">②</span><b>Analyze the Task</b> (~12 นาที) · <i>วิเคราะห์โจทย์การเขียน 5 มิติ · Signal words · 2 มุมมอง · Genre · Contract</i></div>
+      <div class="mg-item"><span class="mg-num">③</span><b>Rubric Ranger</b> (~16 นาที) · <i>เข้าใจเกณฑ์ประเมิน 5 มิติ · TR · CC · LR · GRA · ME</i></div>
+      <div class="mg-item"><span class="mg-num">④</span><b>Model Paragraph: X-Ray</b> (~16 นาที) · <i>วิเคราะห์ย่อหน้าต้นแบบตามโครง 5 ส่วน</i></div>
+      <div class="mg-item"><span class="mg-num">⑤</span><b>Socratic Dialogue</b> (~10 นาที) · <i>สนทนากับ AI เพื่อสร้างจุดยืนเริ่มต้น</i></div>
+      <div class="mg-item"><span class="mg-num">⑥</span><b>Self-Assessment</b> (~8 นาที) · <i>ประเมินความพร้อมของตนเองก่อนไป Part 2</i></div>
+    </div>
+    <div class="modeline"><b>🏠 Flipped:</b> ศึกษาปฏิบัติด้วยตนเองล่วงหน้าได้ทุกที่ทุกเวลา · <b>🏫 ในชั้นเรียน:</b> ปฏิบัติโดยมีครูกำกับ พบสัญลักษณ์ 👥 ให้จับคู่/รวมกลุ่ม · <b>🔁 ทบทวน:</b> กลับมาปฏิบัติซ้ำได้ไม่จำกัด</div>
+  </section>
+
+  <section class="coachcard homeonly">
+    <div class="cico">🧊🤖</div>
+    <div class="ctxt"><b>สวัสดีค่ะ! ฉันชื่อ "โค้ชไอซ์" (Coach Ice) 🧊</b>ฉันจะคอยแวะมาให้กำลังใจและติชมสั้น ๆ ตลอดการทำกิจกรรม โดยดูจากคำตอบจริงของนักเรียนแต่ละกิจกรรม — พร้อมลุยกันหรือยังคะ?</div>
+  </section>
+
+  <section class="finish homeonly" id="finish">
+    <h3>🎉 นักเรียนปฏิบัติกิจกรรมครบถ้วนทั้ง 6 ขั้นแล้ว</h3>
+    <a href="javascript:void(0)" data-go="sum">📊 ดูสรุปผลการเรียนรู้</a>
+    <a id="part2link" href="#" style="display:none;">➡️ ไปยัง Part 2: Write &amp; Fight!</a>
+  </section>
+  <!-- ===================== ① WARM-UP GAMES ×5 ===================== -->
+  <section class="step" id="st1">
+    <div class="card ac1">
+      <div class="stephead"><div class="stepnum">①</div>
+        <div><h2>กิจกรรมที่ 1 · Warm-Up Games ×5 <span class="en">/ อุ่นเครื่องด้วย 5 เกมจากบทอ่าน Alaska Is Melting</span></h2></div></div>
+      <div class="meta"><span class="chip time">⏱ 18 นาที</span><span class="chip pair">👥 เกม 1–2 เป็นคู่ · เกม 3–5 เป็นคู่/กลุ่ม</span></div>
+      <div class="obj"><b>🎯 จุดประสงค์:</b> ทบทวนภาษาจากบทอ่านตามลำดับ 5 ระดับแบบ bottom-up — คำศัพท์ → Tense → คำเชื่อม → จับใจความ → คัดแยกความคิด เพื่อเตรียมพร้อมสู่การวิเคราะห์โจทย์ใน Activity ②<br><b>📌 คำชี้แจง:</b> เล่นให้ครบทั้ง 5 เกมตามลำดับที่กำหนด (เกม 1 → เกม 5) — ตอบถูกมีเสียงเชียร์ 🔊 ตอบผิดมีเสียงเตือนและสามารถแก้ไขได้ทันทีจนกว่าจะถูกต้อง เมื่อครบทุกเกมจะได้รับเหรียญประจำกิจกรรม 🏅</div>
+      <details class="stp"><summary>🪜 ดูขั้นตอนโดยละเอียด</summary>
+        <ol>
+          <li>จับคู่กับเพื่อน 1 คน (หากศึกษาด้วยตนเอง ปฏิบัติคนเดียวได้ทุกเกม)</li>
+          <li>เกม 1 · <b>Vocab</b> — แตะคำศัพท์ (ซ้าย) → แตะนิยามภาษาอังกฤษ (ขวา) ให้เข้าคู่กันครบ 15 คู่</li>
+          <li>เกม 2 · <b>Tense</b> — เลือกรูปกริยาที่ถูกต้อง 10 ข้อ ทบทวน Present Simple และ Present Continuous</li>
+          <li>เกม 3 · <b>Linking Words</b> — เปิดแผ่นป้ายทีละ 2 ใบ จับคู่คำเชื่อมกับหน้าที่ให้ครบ 6 คู่ (เกมความจำ)</li>
+          <li>เกม 4 · <b>Reading Quiz</b> — ตอบคำถามภาษาอังกฤษ 10 ข้อ แล้ว Pair-Share อธิบายคำตอบที่ชอบให้คู่ฟัง (~1 นาที)</li>
+          <li>เกม 5 · <b>Sort Global/Local</b> — แตะบัตรข้อความ → แตะกล่อง 🌍 Global หรือ 🏔️ Local ให้ถูกต้องครบ 12 ใบ (คัดแยกความคิดเตรียมสำหรับ Activity ②)</li>
+        </ol>
+      </details>
+
+      <div class="tabs">
+        <button class="tab on" data-t="g2">📚 เกม 1 · Vocab Match (15 คู่)</button>
+        <button class="tab" data-t="g5">⏰ เกม 2 · Tense Review (10 ข้อ)</button>
+        <button class="tab" data-t="g4">🃏 เกม 3 · Linking Words (6 คู่)</button>
+        <button class="tab" data-t="g3">🏆 เกม 4 · Reading Quiz (10 ข้อ)</button>
+        <button class="tab" data-t="g1">🌍 เกม 5 · Sort Global/Local (12 ใบ)</button>
+      </div>
+
+      <div class="pane" id="g1">
+        <p style="font-size:.8rem;">ผลกระทบนี้เป็นระดับโลก 🌍 หรือเกิดเฉพาะในอะแลสกา 🏔️ — แตะบัตร → แตะกล่อง (12 ใบ)</p>
+        <div class="pool" id="g1pool"></div>
+        <div class="buckets">
+          <div class="bucket" data-b="G"><h4>🌍 Global — กระทบทั้งโลก</h4><div class="drop"></div></div>
+          <div class="bucket" data-b="L"><h4>🏔️ Local — เฉพาะอะแลสกา</h4><div class="drop"></div></div>
+        </div>
+        <div class="fb" id="g1fb"></div>
+      </div>
+
+      <div class="pane show" id="g2">
+        <p style="font-size:.8rem;">แตะคำศัพท์ (ซ้าย) → แตะนิยามภาษาอังกฤษ (ขวา) ที่ตรงกัน (15 คู่)</p>
+        <div class="matchgrid">
+          <div class="mcol" id="g2L"></div>
+          <div class="mcol" id="g2R"></div>
+        </div>
+        <div class="fb" id="g2fb"></div>
+      </div>
+
+      <div class="pane" id="g3">
+        <p style="font-size:.8rem;">Answer in English — read each question carefully. (10 items)</p>
+        <div class="quiz" id="g3quiz"></div>
+        <div class="fb" id="g3fb"></div>
+        <div class="pairshare"><b>🐻‍❄️ Pair-Share:</b> เลือกคำถาม 1 ข้อที่สนใจที่สุด แล้วผลัดกันอธิบายให้คู่ฟังเป็นภาษาอังกฤษหรือไทยว่า "เหตุใดคำตอบข้อนี้จึงถูกต้อง" — ใช้เวลาประมาณ 1 นาที</div>
+      </div>
+
+      <div class="pane" id="g4">
+        <p style="font-size:.8rem;">เกมความจำ 🧠 — แตะเปิดแผ่นป้ายทีละ 2 ใบ จับคู่ <b style="display:inline;">Linking Word</b> กับ<b style="display:inline;">หน้าที่</b>ของมัน ถ้าไม่เข้าคู่ ป้ายจะพลิกกลับ จำตำแหน่งให้ดี!</p>
+        <div class="memgrid" id="memgrid"></div>
+        <div class="fb" id="g4fb"></div>
+      </div>
+
+      <div class="pane" id="g5">
+        <p style="font-size:.8rem;">เลือกรูปกริยาที่ถูกต้อง — <b style="display:inline;">Present Continuous</b> (กำลังเกิดขึ้นตอนนี้: is/are + V-ing) หรือ <b style="display:inline;">Present Simple</b> (ความจริงทั่วไป/เกิดเป็นประจำ) (10 ข้อ)</p>
+        <div class="quiz" id="g5quiz"></div>
+        <div class="fb" id="g5fb"></div>
+      </div>
+    </div>
+    <div class="navrow"><div class="navL"><button class="btn o" data-go="0">🏠 หน้าแรก</button></div><button class="btn p" data-go="2">ต่อไป กิจกรรมที่ 2 · Analyze the Task →</button></div>
+  </section>
+
+  <!-- ===================== ② ANALYZE THE TASK ===================== -->
+  <section class="step" id="st2">
+    <div class="card ac2">
+      <div class="stephead"><div class="stepnum">②</div>
+        <div><h2>กิจกรรมที่ 2 · Analyze the Task <span class="en">/ วิเคราะห์โจทย์ 3 ชั้น พร้อมซ้อมตอบเหตุผลและตัวอย่างของทั้งสองมุมมอง (2 ชุด ฝึกจนชำนาญ)</span></h2></div></div>
+      <div class="meta"><span class="chip time">⏱ 12 นาที</span><span class="chip pair">👥 ปฏิบัติเป็นคู่ · ปรึกษากันได้</span></div>
+      <div class="obj"><b>🎯 จุดประสงค์:</b> วิเคราะห์โจทย์ด้วยเทคนิค <b>3-Layer Analysis</b> และซ้อมเลือก <b>Reason และ Example</b> ที่เหมาะสมสำหรับทั้ง View 1 และ View 2 อย่างชำนาญผ่านการฝึก 2 ชุด<br><b>📌 คำชี้แจง:</b> อ่านโจทย์ในกรอบสีน้ำเงินกับคู่ 1 รอบ แล้วตอบคำถามชุดที่ 1 (7 ข้อ) ให้ถูกต้องครบทุกข้อก่อน จากนั้นชุดที่ 2 (7 ข้อ อีกรอบเพื่อความชำนาญ) จะปลดล็อกให้ทำต่อโดยอัตโนมัติ</div>
+      <details class="stp"><summary>🪜 ดูขั้นตอนโดยละเอียด</summary>
+        <ol>
+          <li>อ่านโจทย์ออกเสียงเบา ๆ กับคู่ 1 รอบ สลับกันอ่านคนละท่อน</li>
+          <li>ชุดที่ 1 ข้อ 1–3 · วิเคราะห์ 3 ชั้น: General Topic → Specific Issue → Task</li>
+          <li>ชุดที่ 1 ข้อ 4–5 · เลือก Reason และ Example ที่สนับสนุน View 1 (global danger)</li>
+          <li>ชุดที่ 1 ข้อ 6–7 · เลือก Reason และ Example ที่สนับสนุน View 2 (local problem)</li>
+          <li>เมื่อชุดที่ 1 ถูกครบทุกข้อ ชุดที่ 2 จะปลดล็อก — ทำแบบเดียวกันอีกรอบด้วยตัวเลือกที่ท้าทายขึ้น เพื่อฝึกจนชำนาญ</li>
+        </ol>
+      </details>
+
+      <div class="writebox" style="background:#E9F2FB; border-color:var(--glacier);">
+        <div class="wq">✍️ Writing Task:</div>
+        <div style="font-size:.85rem;">"Some people believe the melting of Alaska is a <u>global danger</u>, while others think it is <u>only a local problem</u> for Alaska. Discuss both views and give your opinion."</div>
+      </div>
+
+      <div class="task-A"><div class="taskh">🔎 Task Analysis — ชุดที่ 1 (7 ข้อ)</div>
+      <div class="quiz" id="q2quiz"></div>
+      <div class="fb" id="q2fb"></div></div>
+
+      <div id="q2round2wrap" style="display:none; margin-top:14px;">
+        <div class="task-B"><div class="taskh">🔎 Task Analysis — ชุดที่ 2 (7 ข้อ · ฝึกซ้ำเพื่อความชำนาญ)</div>
+        <div class="quiz" id="q2quizB"></div>
+        <div class="fb" id="q2fbB"></div></div>
+      </div>
+      <div class="pairshare"><b>👥 ตรวจสอบกับคู่:</b> ผลัดกันสรุปให้กันฟัง 1 รอบว่า View 1 กับ View 2 ต่างกันอย่างไร และแต่ละฝั่งมี Reason + Example อะไรได้บ้าง</div>
+    </div>
+    <div class="navrow"><div class="navL"><button class="btn o" data-go="0">🏠 หน้าแรก</button><button class="btn o" data-go="1">← กลับ ①</button></div><button class="btn p" data-go="3">ต่อไป กิจกรรมที่ 3 · เกณฑ์ 5 มิติ →</button></div>
+  </section>
+  <!-- ===================== ③ RUBRIC RANGER : เกณฑ์ 5 มิติ + Paragraph Duel ===================== -->
+  <section class="step" id="st3">
+    <div class="card ac3">
+      <div class="stephead"><div class="stepnum">③</div>
+        <div><h2>กิจกรรมที่ 3 · Rubric Ranger <span class="en">/ ฝึกวิเคราะห์ตามเกณฑ์ประเมินงานเขียน 5 มิติ + ปะทะย่อหน้า A vs B</span></h2></div></div>
+      <div class="meta"><span class="chip time">⏱ 16 นาที</span><span class="chip pair">👥 ปฏิบัติเป็นคู่ · อภิปรายก่อนตอบ</span></div>
+      <div class="obj"><b>🎯 จุดประสงค์:</b> รู้จักเกณฑ์ประเมินงานเขียน 5 มิติ ฝึกวินิจฉัยตัวอย่างสั้น และเปรียบเทียบย่อหน้าจริง 2 ฉบับเพื่อฝึก "ตาดูออก" ว่าย่อหน้าที่ดีมีลักษณะอย่างไร<br><b>📌 คำชี้แจง:</b> ศึกษากรอบเกณฑ์ 5 มิติกับคู่ (2 นาที) → ตอบคำถามวินิจฉัยข้อ 1–10 (จุดอ่อน/จุดเด่นของตัวอย่างสั้น) → ทำข้อใหญ่ Paragraph Duel 5 ข้อย่อย (เปรียบเทียบย่อหน้า A vs B ทีละมิติ) ให้ถูกต้องครบทุกข้อ</div>
+      <details class="stp"><summary>🪜 ดูขั้นตอนโดยละเอียด</summary>
+        <ol>
+          <li>อ่านกรอบเกณฑ์ 5 มิติ แล้วผลัดกันยกตัวอย่างสั้น ๆ ให้คู่ฟังมิติละ 1 ประโยค</li>
+          <li>ข้อ 1–5 · อ่านตัวอย่างในกรอบเส้นประ แล้ววินิจฉัยว่า "อ่อน" ในมิติใดมากที่สุด</li>
+          <li>ข้อ 6–10 · อ่านคำอธิบาย แล้ววินิจฉัยว่าตัวอย่างนั้น "เด่น" ในมิติใด</li>
+          <li>ข้อใหญ่ Paragraph Duel · อ่านย่อหน้า A และ B ในกรอบด้านล่างให้ครบก่อน</li>
+          <li>ตอบ 5 รอบ (1 รอบ/1 มิติ) ว่าย่อหน้าใด "ดีกว่า" ในมิตินั้น — ตำแหน่ง A/B จะสลับไปมา ต้องอ่านจริงจึงตอบถูก</li>
+        </ol>
+      </details>
+
+      <div class="dimbox"><b>📏 เกณฑ์ประเมินงานเขียน 5 มิติ (Assessment Rubric)</b><br>
+      <b>มิติ 1 · Task Response</b> — ตอบโจทย์ครบ: อภิปราย 2 มุมมอง + ความคิดเห็นของผู้เขียน<br>
+      <b>มิติ 2 · Organization</b> — โครงสร้างครบ 5 ส่วน เรียงลำดับถูกต้อง: Topic → View 1 → View 2 → Opinion → Closing<br>
+      <b>มิติ 3 · Coherence &amp; Cohesion</b> — ใช้คำเชื่อมถูกหน้าที่ ประโยคเชื่อมโยงลื่นไหล<br>
+      <b>มิติ 4 · Vocabulary</b> — ใช้คำศัพท์ตรงเรื่อง เจาะจง หลากหลาย ไม่ใช้คำกว้าง ๆ ซ้ำ ๆ<br>
+      <b>มิติ 5 · Grammar</b> — ไวยากรณ์ถูกต้อง: Tense · ประธาน–กริยาสอดคล้อง · เครื่องหมายวรรคตอน</div>
+
+      <div class="task-A"><div class="taskh">ส่วนที่ 1 · วินิจฉัยตัวอย่างสั้น (10 ข้อ)</div>
+      <div class="quiz" id="q3quiz"></div>
+      <div class="fb" id="q3fb"></div></div>
+
+      <div id="duelWrap" style="display:none; margin-top:14px;">
+        <div class="task-B"><div class="taskh">ส่วนที่ 2 · Paragraph Duel — ย่อหน้าไหนดีกว่า? (5 ข้อ ตาม 5 มิติ)</div>
+        <div class="duelwrap">
+          <div class="duelpara"><h5>📄 ย่อหน้า A</h5><span id="paraA"></span></div>
+          <div class="duelpara"><h5>📄 ย่อหน้า B</h5><span id="paraB"></span></div>
+        </div>
+        <div id="duelQs"></div>
+        <div class="fb" id="duelFb"></div></div>
+      </div>
+
+      <div class="pairshare"><b>👥 ชวนคุยกับคู่:</b> หลังทำ Paragraph Duel แล้ว ถ้าต้องเลือกพัฒนาตนเอง 1 มิติก่อนเขียนจริง นักเรียนจะเลือกมิติใด เพราะอะไร — จำคำตอบนี้ไว้ใช้ตอนประเมินตนเองในกิจกรรมที่ 6</div>
+    </div>
+    <div class="navrow"><div class="navL"><button class="btn o" data-go="0">🏠 หน้าแรก</button><button class="btn o" data-go="2">← กลับ ②</button></div><button class="btn p" data-go="4">ต่อไป กิจกรรมที่ 4 · Paragraph X-Ray →</button></div>
+  </section>
+  <!-- ===================== ④ MODEL PARAGRAPH: PARAGRAPH X-RAY (5 ภารกิจ) ===================== -->
+  <section class="step" id="st4">
+    <div class="card ac4">
+      <div class="stephead"><div class="stepnum">④</div>
+        <div><h2>กิจกรรมที่ 4 · Model Paragraph: Paragraph X-Ray <span class="en">/ ส่องกล้องย่อหน้าต้นแบบทีละภารกิจ (5 ภารกิจ)</span></h2></div></div>
+      <div class="meta"><span class="chip time">⏱ 16 นาที (ภารกิจละ ~4 นาที)</span><span class="chip pair">👨‍👩‍👧‍👦 กลุ่ม 3–4 คน · อ่านออกเสียงและลงมติ</span></div>
+      <div class="obj"><b>🎯 จุดประสงค์:</b> วิเคราะห์ย่อหน้าต้นแบบให้เห็นโครงสร้าง 5 ส่วน ตำแหน่งของความคิดเห็น การใช้คำเชื่อม และความสมดุลของเนื้อหา ทั้งในย่อหน้าสั้น ปานกลาง และยาว<br><b>📌 คำชี้แจง:</b> แตะเปิดกรอบภารกิจที่ 1 ก่อน ทำให้เสร็จจนหุ่นยนต์สรุปแล้วชื่นชม จากนั้นจึงเปิดภารกิจถัดไปตามลำดับ 1 → 2 → 3 → 4 (ห้ามข้ามภารกิจ)</div>
+      <details class="stp"><summary>🪜 ดูขั้นตอนโดยละเอียด</summary>
+        <ol>
+          <li>ภารกิจที่ 1 · Structure Hunt: ลากหรือแตะป้ายทั้ง 5 (Topic/View 1/View 2/Opinion/Closing) ไปวางบนประโยคที่ถูกต้อง ทำให้ครบทั้ง 3 ย่อหน้า (สั้น → ปานกลาง → ยาว)</li>
+          <li>ภารกิจที่ 2 · Pillar Scanning: จำแนกท่อนย่อยของ View 1 และ View 2 เป็น Point/Explanation/Example ด้วยสี</li>
+          <li>ภารกิจที่ 3 · The Transformer: เลือกวิธีอัปเกรดเรื่องส่วนตัวให้เป็นตัวอย่างระดับโลก (5 ข้อ)</li>
+          <li>ภารกิจที่ 4 · Connector Detective: จับคู่คำเชื่อมที่พบในย่อหน้ากับหน้าที่ของมัน (ภารกิจสุดท้าย)</li>
+        </ol>
+      </details>
+
+      <details class="mission m1" id="mis1">
+        <summary>🔎 ภารกิจที่ 1 · Structure Hunt — ลากป้ายหาโครงสร้าง 5 ส่วน (3 ย่อหน้า · ทำสั้นก็ผ่าน · ปานกลาง+ยาว = โบนัส) <span class="mstat" id="mis1stat">พร้อมเริ่ม</span></summary>
+        <div class="mbody">
+          <p style="font-size:.8rem;">แตะป้ายด้านล่าง (หรือลาก) แล้วแตะ/วางบนประโยคที่ตรงกัน ทำให้ครบทั้ง 3 ย่อหน้า</p>
+          <div class="paratabs" id="paratabs">
+            <button class="paratab on" data-p="short">📄 สั้น (ติดป้ายโครงสร้าง)</button>
+            <button class="paratab" data-p="medium">📄 ปานกลาง (ต่อประโยค+คำเชื่อม)</button>
+            <button class="paratab" data-p="long">📄 ยาว (ต่อประโยค+คำเชื่อม)</button>
+          </div>
+          <div id="m1short">
+            <div class="dndlabels" id="dndlabels"></div>
+            <div class="dndpara" id="dndpara"></div>
+          </div>
+          <div id="m1construct" style="display:none;">
+            <p style="font-size:.78rem; color:var(--mut); margin-bottom:6px;">🧩 แตะชิป (ประโยค 🔵 หรือคำเชื่อม 🟠) แล้วแตะช่องว่างที่กะพริบเพื่อวางต่อย่อหน้า ต้องเรียงตามลำดับ ผิดแล้วมีเสียงกวน ๆ ลองใหม่ได้เสมอ!</p>
+            <div class="chippool" id="chippool"></div>
+            <div class="constrpara" id="constrpara"></div>
+          </div>
+          <div class="fb" id="m1fb"></div>
+        </div>
+      </details>
+
+      <details class="mission m2" id="mis2">
+        <summary>🎨 ภารกิจที่ 2 · Pillar Scanning — จำแนก 3 เสาหลักด้วยสี <span class="mstat" id="mis2stat">🔒 ทำภารกิจที่ 1 ก่อน</span></summary>
+        <div class="mbody">
+          <p style="font-size:.8rem;">ท่อนย่อยจากประโยค View 1 และ View 2 ท่อนใดคือเสาหลักใด: <b style="display:inline;">🔵 Point</b> · <b style="display:inline;">🟢 Explanation</b> (because) · <b style="display:inline;">🟠 Example</b> (for example)</p>
+          <div id="x2rows"></div>
+          <div class="fb" id="x2fb"></div>
+        </div>
+      </details>
+
+      <details class="mission m3" id="mis3">
+        <summary>🔄 ภารกิจที่ 3 · The Transformer — อัปเกรดตัวอย่างส่วนตัว (5 ข้อ · เลือกได้ 2 ครั้ง) <span class="mstat" id="mis3stat">🔒 ทำภารกิจที่ 2 ก่อน</span></summary>
+        <div class="mbody">
+          <p style="font-size:.8rem;">เลือกวิธีเปลี่ยนเรื่องส่วนตัวให้เป็นตัวอย่างที่น่าเชื่อถือกว่าเดิม — แต่ละข้อเลือกได้สูงสุด 2 ครั้ง ถ้ายังไม่ถูกจะเฉลยและไปข้อต่อไปให้อัตโนมัติ (ไม่ได้คะแนนข้อนั้น)</p>
+          <div class="quiz" id="x3quiz"></div>
+          <div class="fb" id="x3fb"></div>
+        </div>
+      </details>
+
+      <details class="mission m4" id="mis4">
+        <summary>🔗 ภารกิจที่ 4 · Connector Detective — จับคู่คำเชื่อมกับหน้าที่ (5 คู่ · ภารกิจสุดท้าย) <span class="mstat" id="mis4stat">🔒 ทำภารกิจที่ 3 ก่อน</span></summary>
+        <div class="mbody">
+          <p style="font-size:.8rem;">ย้อนดูย่อหน้ายาวด้านบน (ภารกิจที่ 1 แท็บ "ยาว") แล้วจับคู่คำเชื่อมที่พบ กับหน้าที่ของมัน</p>
+          <div class="matchgrid">
+            <div class="mcol" id="cdL"></div>
+            <div class="mcol" id="cdR"></div>
+          </div>
+          <div class="fb" id="cdFb"></div>
+        </div>
+      </details>
+
+      <div class="pairshare"><b>👨‍👩‍👧‍👦 ประเด็นลงมติกลุ่ม:</b> ย่อหน้าต้นแบบนี้ต่างจากย่อหน้าที่กลุ่มเคยเขียนอย่างไรมากที่สุด</div>
+    </div>
+    <div class="navrow"><div class="navL"><button class="btn o" data-go="0">🏠 หน้าแรก</button><button class="btn o" data-go="3">← กลับ ③</button></div><button class="btn p" data-go="5">ต่อไป กิจกรรมที่ 5 · Socratic Dialogue →</button></div>
+  </section>
+  <!-- ===================== ⑤ SOCRATIC DIALOGUE ===================== -->
+  <section class="step" id="st5">
+    <div class="card" style="border:2.5px solid #7C3AED;">
+      <div class="stephead"><div class="stepnum" style="background:#7C3AED;">⑤</div>
+        <div><h2>กิจกรรมที่ 5 · Socratic Dialogue <span class="en">/ สนทนาไล่เรียงไอเดียตามโครงย่อหน้า แล้วสรุปเป็น Flowchart</span></h2></div></div>
+      <div class="meta"><span class="chip time">⏱ 10 นาที</span><span class="chip solo">👤 สนทนากับบอทรายบุคคล (หรือให้ครู/เพื่อนอ่านบทแทนได้)</span></div>
+      <div class="obj" style="border-left-color:#7C3AED;"><b>🎯 จุดประสงค์:</b> วิเคราะห์โจทย์และทดลองไอเดียของตนเองผ่านบทสนทนาแบบถาม-ตอบ (Socratic) ไล่เรียงตามโครงสร้างย่อหน้า — ถามหาทั้งเหตุผลและตัวอย่างของ View 1 และ View 2 แยกกัน เพื่อเตรียมความคิดไว้ล่วงหน้าก่อนลงมือเขียนจริงใน Part 2 — <b style="display:inline;">ขั้นนี้ยังไม่ใช่การเขียนย่อหน้า เป็นเพียงการสนทนาเพื่อทดไอเดีย</b><br><b>📌 คำชี้แจง:</b> อ่านโจทย์และคำถามจากบอท 🧊🤖 แล้วเลือกคำตอบหรือพิมพ์ตอบ หากยังคิดไม่ออกให้แตะ "💡 ดูตัวอย่าง" เพื่อดูแนวคำตอบ หรือแตะ "ข้ามไปก่อน" ได้หากยังตอบไม่ได้ (ระบบจะทำเครื่องหมายจุดนั้นไว้ให้เติมภายหลัง) ทำไปเรื่อย ๆ จนจบบทสนทนา ระบบจะรวบรวมคำตอบเป็น Flowchart แบบแยกสองมุมมองโดยอัตโนมัติ</div>
+      <details class="stp"><summary>🪜 ดูขั้นตอนโดยละเอียด</summary>
+        <ol>
+          <li>อ่านโจทย์ที่บอทแสดงให้ก่อน แล้วช่วยบอทวิเคราะห์โจทย์เบื้องต้น</li>
+          <li>ตอบคำถามเรื่อง View 1 ทั้งเหตุผลและตัวอย่าง จากนั้นตอบ View 2 เช่นเดียวกัน</li>
+          <li>เลือกจุดยืนของตนเอง พร้อมให้เหตุผลและตัวอย่างประกอบความคิดเห็น</li>
+          <li>ตอบคำถามปิดท้าย และเพิ่มเติมสิ่งที่อยากบอกไว้ (ถ้ามี)</li>
+          <li>ถ้าคิดไม่ออก แตะ "💡 ดูตัวอย่าง" หรือ "ข้ามไปก่อน" ได้เสมอ — เมื่อจบบทสนทนา ระบบจะแสดง Outline เป็น Flowchart แยกสองมุมมองให้ตรวจทาน</li>
+        </ol>
+      </details>
+
+      <div class="chatbox" id="chatbox"></div>
+      <div id="chatinputwrap"></div>
+
+      <div id="flowResult" style="display:none;">
+        <p style="font-size:.85rem; font-weight:700; margin-top:6px;">🗺️ Outline ของนักเรียน (Flowchart)</p>
+        <div class="flow" id="flowChart"></div>
+      </div>
+    </div>
+    <div class="navrow"><div class="navL"><button class="btn o" data-go="0">🏠 หน้าแรก</button><button class="btn o" data-go="4">← กลับ ④</button></div><button class="btn p" data-go="6">ต่อไป กิจกรรมที่ 6 · Self-Assessment →</button></div>
+  </section>
+  <!-- ===================== ⑥ SELF-ASSESSMENT + SCORE REPORT ===================== -->
+  <section class="step" id="st6">
+    <div class="card ac6">
+      <div class="stephead"><div class="stepnum">⑥</div>
+        <div><h2>กิจกรรมที่ 6 · Self-Assessment &amp; Score Report <span class="en">/ ประเมินตนเองหลายมิติ + ความพึงพอใจ + รายงานคะแนนรายกิจกรรม</span></h2></div></div>
+      <div class="meta"><span class="chip time">⏱ 8 นาที</span><span class="chip solo">👤 ปฏิบัติรายบุคคล · ตอบตามความรู้สึกจริง</span></div>
+      <div class="obj"><b>🎯 จุดประสงค์:</b> ประเมินความพร้อมของตนเองก่อนเข้าสู่ Part 2 ในหลายมิติ ประเมินความพึงพอใจต่อกิจกรรม Part 1 และตรวจสอบคะแนนความแม่นยำของตนเองรายกิจกรรม<br><b>📌 คำชี้แจง:</b> ตอบแบบประเมินทั้ง 2 ส่วนตามความรู้สึกจริงของตนเอง (ไม่มีถูก–ผิด) แล้วแตะปุ่มยืนยันเพื่อดูรายงานคะแนนและหน้าสรุปผลการเรียนรู้</div>
+
+      <p style="font-size:.83rem; font-weight:700;">ส่วนที่ 1 · ประเมินความพร้อมของตนเอง (Self-Assessment)</p>
+      <div id="likertReady"></div>
+
+      <p style="font-size:.83rem; font-weight:700; margin-top:12px;">ส่วนที่ 2 · ความพึงพอใจต่อกิจกรรม Part 1 (Satisfaction Survey)</p>
+      <div id="likertSat"></div>
+
+      <button class="btn g" id="finishBtn" style="margin-top:11px;" disabled>✔ ยืนยันคำตอบ และดูรายงานคะแนน + สรุปผลการเรียนรู้ (โปรดตอบให้ครบทุกข้อก่อน)</button>
+    </div>
+    <div class="navrow"><div class="navL"><button class="btn o" data-go="0">🏠 หน้าแรก</button><button class="btn o" data-go="5">← กลับ ⑤</button></div><button class="btn p" id="toSum" data-go="sum" style="display:none;">📊 สรุปผล →</button></div>
+  </section>
+
+  <!-- ===================== SUMMARY ===================== -->
+  <section class="step" id="stsum">
+    <div class="card vibrant">
+      <div class="sumhero">
+        <span class="conf" style="top:8px; left:12px;">🎉</span><span class="conf" style="top:14px; right:18px;">✨</span><span class="conf" style="bottom:10px; left:24px;">🌟</span><span class="conf" style="bottom:14px; right:14px;">🎊</span>
+        <h2 id="sumHeroTitle">ภารกิจ Gear Up สำเร็จแล้ว!</h2>
+        <div class="sub2">Cycle 1 · Part 1 — Alaska Is Melting · 🧊 State 1 Beginner</div>
+        <div class="walkrally" id="sumLadder"></div>
+      </div>
+      <div class="suminfo" id="sumLearner"></div>
+      <div class="pctwrap">
+        <div class="pctcard"><div class="lbl">🎮 ความสำเร็จของภารกิจ</div><div class="big" id="sumPct">0%</div>
+          <div class="pctbar"><span id="sumPctBar" style="width:0%"></span></div>
+          <div class="lbl" style="margin-top:5px;"><span id="sumDone">0</span> / 6 ด่านผ่านแล้ว</div></div>
+        <div class="pctcard"><div class="lbl">🎯 ความแม่นยำโดยรวม</div><div class="big" id="sumAcc">–</div>
+          <div class="pctbar"><span id="sumAccBar" style="width:0%"></span></div>
+          <div class="lbl" style="margin-top:5px;">ยิ่งแม่นยำ ยิ่งพร้อมลุย Part 2!</div></div>
+      </div>
+
+      <p style="font-size:.85rem; font-weight:700;">📋 คะแนนแต่ละด่าน (Score Report)</p>
+      <table class="scoretable" id="scoreTable"></table>
+
+      <p style="font-size:.85rem; font-weight:700; margin-top:11px;">🏅 เหรียญที่เก็บได้ / Badges</p>
+      <div class="badgegrid" id="sumBadges"></div>
+      <div class="praise" id="sumPraise"></div>
+      <div class="advice" id="sumAdvice"></div>
+      <div class="mywork"><h3>📝 คลังไอเดียของฉัน — พร้อมหยิบไปใช้ใน Part 2!</h3><div id="sumWork"></div></div>
+      <div class="colorpop">🚀 <b style="display:inline;">พร้อมไปต่อหรือยัง?</b> ข้อมูลทั้งหมดบันทึกไว้ให้แล้ว เปิด Part 2: Write &amp; Fight! จากเว็บไซต์/เบราว์เซอร์เดียวกันได้เลย ระบบจะพาไอเดียของนักเรียนไปด้วย!</div>
+    </div>
+    <div class="navrow"><div class="navL"><button class="btn o" data-go="0">🏠 หน้าแรก</button><button class="btn o" data-go="6">← กลับ ⑥</button></div><span></span></div>
+  </section>
+
+</div>
+
+<div class="robotwrap" id="robotwrap"></div>
+<div class="robot" id="robot" style="display:none;">
+  <div class="rico">🤖</div>
+  <div class="rtxt">
+    <div id="robotmsg"></div>
+    <button id="robotok">รับทราบ ✓</button>
+  </div>
+</div>
+
+<div class="coachwrap" id="coachwrap"></div>
+<div class="coachpop" id="coachpop" style="display:none;">
+  <div class="cico">🧊🤖</div>
+  <div class="ctxt">
+    <div id="coachmsg"></div>
+    <button id="coachok">รับทราบ ✓</button>
+  </div>
+</div>
+
+<div class="toastwrap" id="toastwrap"></div>
+
+<footer>Cycle 1 · Part 1: Gear Up! — Differentiated Digital Writing Task Card · State 1 Beginner · Alaska Is Melting ❄️<br>รองรับการศึกษาด้วยตนเองล่วงหน้า (Flipped) และการปฏิบัติในชั้นเรียนโดยมีครูกำกับ</footer>
+
+<script>
+
+// Auto-sync profile from Master Hub localStorage
+(function(){
+  try {
+    var master = JSON.parse(localStorage.getItem('alaska.profile') || '{}');
+    if(master.state){
+      // Ensure c1p1 has state for getCurrentState()
+      var c1p1 = JSON.parse(localStorage.getItem('alaska.c1p1') || '{}');
+      if(!c1p1.state) c1p1.state = master.state;
+      if(!c1p1.firstName) c1p1.firstName = master.firstName;
+      if(!c1p1.lastName) c1p1.lastName = master.lastName;
+      if(!c1p1.className) c1p1.className = master.className;
+      if(!c1p1.email) c1p1.email = master.email;
+      localStorage.setItem('alaska.c1p1', JSON.stringify(c1p1));
+    }
+  } catch(e){}
+})();
+
+/* ============ STORAGE ============ */
+const mem={};
+const store={
+  set(k,v){ try{ localStorage.setItem(k, JSON.stringify(v)); }catch(e){ mem[k]=v; } },
+  get(k){ try{ const s=localStorage.getItem(k); return s?JSON.parse(s):(mem[k]??null); }catch(e){ return mem[k]??null; } }
+};
+const K_PROFILE='alaska.profile', K_P1='alaska.c1p1';
+
+/* ============ SOUND FX ============ */
+let AC=null;
+function sfx(ok){
+  try{
+    AC = AC || new (window.AudioContext||window.webkitAudioContext)();
+    if(AC.state==='suspended') AC.resume();
+    const t=AC.currentTime;
+    if(ok){
+      [523.25,659.25,783.99,1046.5].forEach((f,i)=>{
+        const o=AC.createOscillator(), g=AC.createGain();
+        o.type='triangle'; o.frequency.value=f;
+        g.gain.setValueAtTime(0.001,t+i*0.06);
+        g.gain.linearRampToValueAtTime(0.14,t+i*0.06+0.02);
+        g.gain.exponentialRampToValueAtTime(0.001,t+i*0.06+0.28);
+        o.connect(g); g.connect(AC.destination);
+        o.start(t+i*0.06); o.stop(t+i*0.06+0.3);
+      });
+    }else{
+      const o=AC.createOscillator(), g=AC.createGain();
+      o.type='sawtooth';
+      o.frequency.setValueAtTime(170,t);
+      o.frequency.exponentialRampToValueAtTime(85,t+0.28);
+      g.gain.setValueAtTime(0.12,t);
+      g.gain.exponentialRampToValueAtTime(0.001,t+0.32);
+      o.connect(g); g.connect(AC.destination);
+      o.start(t); o.stop(t+0.34);
+    }
+  }catch(e){}
+}
+/* เสียงกวน ๆ แบบทรอมโบนเศร้า "แว้ก แว้ก" — ใช้ตอนวางป้าย/ชิปผิดใน Mission 1 */
+function sfxOops(){
+  try{
+    AC = AC || new (window.AudioContext||window.webkitAudioContext)();
+    if(AC.state==='suspended') AC.resume();
+    const t=AC.currentTime;
+    [0,0.16].forEach((dt,i)=>{
+      const o=AC.createOscillator(), g=AC.createGain();
+      o.type='square';
+      const f0=220-i*40;
+      o.frequency.setValueAtTime(f0,t+dt);
+      o.frequency.exponentialRampToValueAtTime(f0*0.6,t+dt+0.14);
+      g.gain.setValueAtTime(0.09,t+dt);
+      g.gain.exponentialRampToValueAtTime(0.001,t+dt+0.16);
+      o.connect(g); g.connect(AC.destination);
+      o.start(t+dt); o.stop(t+dt+0.17);
+    });
+  }catch(e){}
+}
+
+/* ============ STATE ============ */
+const done={1:false,2:false,3:false,4:false,5:false,6:false};
+const sub={
+  g1:false,g2:false,g3:false,g4:false,g5:false,
+  q2a:false,q2b:false,
+  q3:false,duel:false,
+  m1:false,m2:false,m3:false,m4:false,
+  socratic:false
+};
+const ACC={hit:0, err:0};
+const ACT={1:{hit:0,err:0},2:{hit:0,err:0},3:{hit:0,err:0},4:{hit:0,err:0},5:{hit:0,err:0},6:{hit:0,err:0}};
+function hit(a){ ACC.hit++; if(a&&ACT[a]) ACT[a].hit++; sfx(true); }
+function miss(a){ ACC.err++; if(a&&ACT[a]) ACT[a].err++; sfx(false); }
+const texts={selfAssess:{}, satisfaction:{}, socratic:{}};
+
+function metrics(){
+  const n=Object.values(done).filter(Boolean).length;
+  return {n, pct:Math.round(n/6*100), acc:(ACC.hit+ACC.err)?Math.round(ACC.hit/(ACC.hit+ACC.err)*100):null};
+}
+function actAcc(a){ const x=ACT[a]; return (x.hit+x.err)? Math.round(x.hit/(x.hit+x.err)*100) : null; }
+function persist(){
+  const m=metrics();
+  store.set(K_P1,{state:1, stateName:'Beginner', done:{...done},
+    completionPct:m.pct, accuracyPct:m.acc, badges:m.n, texts:JSON.parse(JSON.stringify(texts)),
+    perActivityAcc:{1:actAcc(1),2:actAcc(2),3:actAcc(3),4:actAcc(4),5:actAcc(5),6:actAcc(6)},
+    clicks:{...CLK},
+    finishedAt: done[6]? new Date().toISOString():null, updatedAt:new Date().toISOString()});
+}
+function val(id){ return document.getElementById(id).value.trim(); }
+function persistProfile(){
+  store.set(K_PROFILE,{
+    firstName:val('lnFirst'), lastName:val('lnLast'), number:val('lnNo'),
+    className:val('lnClass'), email:val('lnEmail'), school:val('lnSchool'),
+    stateChoice:document.getElementById('lnState')?.value||null,
+    state:1, updatedAt:new Date().toISOString()});
+}
+
+const floeDefs=[
+  {n:1, nm:'Warm-Up Games ×5', tm:'18 นาที · 👥 คู่/กลุ่ม'},
+  {n:2, nm:'Analyze the Task', tm:'12 นาที · 👥 คู่'},
+  {n:3, nm:'Rubric Ranger', tm:'16 นาที · 👥 คู่'},
+  {n:4, nm:'Model Paragraph: X-Ray', tm:'16 นาที · 👨‍👩‍👧‍👦 กลุ่ม'},
+  {n:5, nm:'Socratic Dialogue', tm:'10 นาที · 👤 เดี่ยว'},
+  {n:6, nm:'Self-Assessment', tm:'8 นาที · 👤 เดี่ยว'},
+];
+const NUM=['','①','②','③','④','⑤','⑥'];
+const floesEl=document.getElementById('floes');
+floeDefs.forEach(f=>{
+  const b=document.createElement('button'); b.className='floe'; b.dataset.go=f.n;
+  b.innerHTML='<div class="no">'+NUM[f.n]+'</div><div class="nm">'+f.nm+'</div><div class="tm">⏱ '+f.tm+'</div>';
+  floesEl.appendChild(b);
+});
+function refresh(){
+  let n=0;
+  document.querySelectorAll('.floe').forEach(f=>{
+    const k=+f.dataset.go; f.classList.toggle('ok',done[k]); if(done[k])n++;
+    f.classList.toggle('locked', !isUnlocked(k));
+  });
+  document.getElementById('doneN').textContent=n;
+  if(n===6) document.getElementById('finish').classList.add('show');
+  updateGameTabLocks();
+}
+function isUnlocked(n){ if(n===1) return true; return !!done[n-1]; }
+const GAME_ORDER=['g2','g5','g4','g3','g1']; /* Vocab → Tense → Linking → Reading → Sort */
+function updateGameTabLocks(){
+  const tabs=[...document.querySelectorAll('#st1 .tab')];
+  tabs.forEach((t,i)=>{
+    if(i===0){ t.classList.remove('locked'); return; }
+    const prevKey=GAME_ORDER[i-1];
+    t.classList.toggle('locked', !sub[prevKey]);
+  });
+}
+const actStartTime={};
+function noteActStart(n){ if(!actStartTime[n]) actStartTime[n]=Date.now(); }
+function markDone(s){ if(!done[s]){ done[s]=true; refresh(); persist(); onActivityDone(s); setTimeout(()=>showSuccessPop(s), 600); } }
+
+/* ============ AI COACH (โค้ชไอซ์) — ป๊อปอัปให้กำลังใจ/ติชมตามความแม่นยำจริงรายกิจกรรม ============ */
+const coachwrap=document.getElementById('coachwrap'), coachpop=document.getElementById('coachpop'), coachmsg=document.getElementById('coachmsg');
+let coachCb=null, coachQueue=[];
+function showCoach(msg, cb){
+  if(coachpop.style.display==='flex'){ coachQueue.push([msg,cb]); return; }
+  coachmsg.innerHTML=msg; coachwrap.classList.add('show'); coachpop.style.display='flex'; coachCb=cb; sfx(true);
+}
+document.getElementById('coachok').addEventListener('click',()=>{
+  coachwrap.classList.remove('show'); coachpop.style.display='none';
+  if(coachCb){ const cb=coachCb; coachCb=null; cb(); }
+  if(coachQueue.length){ const [m,c]=coachQueue.shift(); setTimeout(()=>showCoach(m,c),400); }
+});
+const COACH_ACTIVITIES=[1,2,3,6];
+function onActivityDone(n){
+  if(!COACH_ACTIVITIES.includes(n)) return;
+  const a=actAcc(n);
+  const elapsed = actStartTime[n] ? (Date.now()-actStartTime[n])/1000 : null;
+  let msg;
+  if(a===null){
+    msg='🧊 <b style="display:inline;">โค้ชไอซ์:</b> เยี่ยมมากที่ทำกิจกรรมนี้ครบแล้วนะคะ ไปกิจกรรมต่อไปกันเลย!';
+  } else if(a>=90){
+    msg='🧊 <b style="display:inline;">โค้ชไอซ์:</b> ว้าว! แม่นยำถึง '+a+'% เก่งมากค่ะ 🌟 พร้อมลุยกิจกรรมต่อไปแล้ว!';
+  } else if(a>=70){
+    msg='🧊 <b style="display:inline;">โค้ชไอซ์:</b> ทำได้ดีค่ะ ('+a+'% แม่นยำ) 👍 ลองทบทวนจุดที่พลาดอีกนิดก่อนไป Part 2 นะคะ';
+  } else {
+    msg='🧊 <b style="display:inline;">โค้ชไอซ์:</b> ผ่านไปแล้วนะคะ แต่ความแม่นยำยังอยู่ที่ '+a+'% — ค่อย ๆ อ่านช้าลงและกลับมาทบทวนได้ตลอดนะคะ 💪';
+  }
+  if(elapsed!==null && elapsed<12){
+    msg+='<br><span style="font-size:.76rem; opacity:.85;">🕐 สังเกตว่าใช้เวลาทำค่อนข้างเร็วนะคะ ลองอ่านคำถามให้ครบทุกคำก่อนตอบ จะช่วยให้แม่นยำขึ้นได้ค่ะ</span>';
+  }
+  showCoach(msg,()=>{});
+}
+document.addEventListener('click',e=>{
+  const b=e.target.closest('[data-go]'); if(b){ const v=b.dataset.go; if(v!=='sum'&&v!=='0') noteActStart(+v); }
+});
+/* Count clicks per activity from step containers */
+document.addEventListener('click',e=>{
+  const step=e.target.closest('.step');
+  if(!step) return;
+  const idm=step.id.match(/^st(\d+)$/);
+  if(idm){
+    const n=+idm[1];
+    /* Only count meaningful interactive clicks — buttons/tabs/mitem/opt/dndzone/bucket/dndlabel/mc/xr-s */
+    if(e.target.closest('.opt,.mitem,.mc,.tab,.dndlabel,.dndzone,.bucket,.checkbtn,.xr .s,.paratab,.duelopt,button[data-p]')){
+      countClick(n);
+    }
+  }
+});
+
+/* ============ NAV ============ */
+function go(v){
+  const home=(v===0||v==='0');
+  document.querySelectorAll('.homeonly').forEach(s=>s.style.display=home?'':'none');
+  document.querySelectorAll('.step').forEach(s=>s.classList.remove('show'));
+  if(!home){
+    if(v==='sum') buildSummary();
+    const el=document.getElementById('st'+v); if(el) el.classList.add('show');
+  }
+  window.scrollTo({top:0, behavior:'smooth'});
+}
+function showToast(msg){
+  const wrap=document.getElementById('toastwrap');
+  const t=document.createElement('div'); t.className='toastmsg'; t.textContent=msg;
+  wrap.appendChild(t);
+  setTimeout(()=>t.remove(),2100);
+}
+document.addEventListener('click',e=>{
+  const b=e.target.closest('[data-go]'); if(!b) return;
+  const raw=b.dataset.go;
+  if(raw==='sum'){
+    if(done[6]) go('sum'); else showToast('🔒 โปรดทำกิจกรรมที่ ⑥ ให้เสร็จก่อนนะคะ');
+    return;
+  }
+  const v=+raw;
+  if(v===0){ go(0); return; }
+  if(!isUnlocked(v)){
+    showToast('🔒 โปรดทำกิจกรรมที่ '+NUM[v-1]+' ให้เสร็จก่อนนะคะ');
+    return;
+  }
+  go(v);
+});
+
+/* ============ TABS (scoped) ============ */
+document.querySelectorAll('.tab').forEach(t=>{
+  t.addEventListener('click',()=>{
+    if(t.classList.contains('locked')){ showToast('🔒 โปรดทำเกมก่อนหน้าให้เสร็จก่อนนะคะ'); return; }
+    const card=t.closest('.card');
+    card.querySelectorAll('.tab').forEach(x=>x.classList.remove('on'));
+    t.classList.add('on');
+    card.querySelectorAll('.pane').forEach(p=>p.classList.remove('show'));
+    card.querySelector('#'+t.dataset.t).classList.add('show');
+  });
+});
+
+/* ============ HELPERS ============ */
+const W=s=>s.trim().split(/\s+/).filter(Boolean).length;
+function hasAny(s,list){ const L=s.toLowerCase(); return list.some(w=>L.includes(w)); }
+function makeQuiz(holderId,qs,fbId,onComplete,actNum){
+  const holder=document.getElementById(holderId), fb=document.getElementById(fbId);
+  let answered=0, correct=0;
+  const opts=[]; /* store option refs per question for reveal */
+  qs.forEach((q,qi)=>{
+    const d=document.createElement('div'); d.className='q loadgate';
+    const p=document.createElement('p'); p.textContent=(qi+1)+'. '+q.q; d.appendChild(p);
+    const o=document.createElement('div'); o.className='opts';
+    const order=q.o.map((t,i)=>i); for(let k=order.length-1;k>0;k--){ const r=Math.floor(Math.random()*(k+1)); [order[k],order[r]]=[order[r],order[k]]; }
+    const optBtns=[]; opts.push(optBtns);
+    order.forEach(i=>{
+      const t=q.o[i];
+      const b=document.createElement('button'); b.className='opt'; b.textContent=t; b.dataset.i=i;
+      optBtns.push(b);
+      b.addEventListener('click',()=>{
+        if(d.dataset.locked||d.classList.contains('loadgate'))return;
+        d.dataset.locked='1'; answered++;
+        /* Lock all options */
+        optBtns.forEach(x=>{ x.classList.add('locked-single'); });
+        /* Reveal correct answer */
+        const okBtn=optBtns.find(x=>+x.dataset.i===q.a);
+        if(i===q.a){
+          hit(actNum); b.classList.add('ok'); correct++;
+        }else{
+          miss(actNum); b.classList.add('no');
+          okBtn.classList.add('reveal-correct'); okBtn.classList.remove('locked-single');
+        }
+        /* Update feedback */
+        fb.className=(i===q.a?'fb ok':'fb no');
+        if(answered===qs.length){
+          fb.textContent='🏁 ทำครบทุกข้อแล้ว ('+correct+'/'+qs.length+' ถูก · '+(qs.length-correct)+' ผิด) — ไปกิจกรรมต่อไปได้';
+          if(onComplete) onComplete();
+        }else{
+          fb.textContent='ตอบแล้ว '+answered+'/'+qs.length+' ข้อ ('+correct+' ถูก) — ทำข้อต่อไปได้เลย';
+        }
+        /* Show explanation popup if provided */
+        if(q.expl){
+          showExplPop(i===q.a, q.o[q.a], q.o[i], q.expl);
+        }
+      });
+      o.appendChild(b);
+    });
+    d.appendChild(o); holder.appendChild(d);
+    setTimeout(()=>d.classList.remove('loadgate'), 1100+qi*40);
+  });
+}
+/* --- Explanation popup helper --- */
+function showExplPop(isCorrect, correctAns, chosenAns, explText){
+  let wrap=document.getElementById('explpopWrap');
+  if(!wrap){
+    wrap=document.createElement('div'); wrap.id='explpopWrap'; wrap.className='explpop-wrap';
+    wrap.innerHTML='<div class="explpop"><h3 id="explpopH"></h3><div id="explpopBody"></div><button class="explok" id="explpopOk">เข้าใจแล้ว · ต่อไป</button></div>';
+    document.body.appendChild(wrap);
+    wrap.addEventListener('click',e=>{ if(e.target===wrap) wrap.classList.remove('show'); });
+    document.getElementById('explpopOk').addEventListener('click',()=>wrap.classList.remove('show'));
+  }
+  const pop=wrap.querySelector('.explpop');
+  pop.className='explpop '+(isCorrect?'correct':'incorrect');
+  document.getElementById('explpopH').textContent=isCorrect?'✅ ถูกต้อง!':'❌ ยังไม่ถูก';
+  const body=document.getElementById('explpopBody');
+  let html='';
+  if(!isCorrect){
+    html+='<div class="expl-y"><b>คำตอบที่คุณเลือก:</b> '+chosenAns+'</div>';
+  }
+  html+='<div class="expl-a"><b>คำตอบที่ถูก:</b> '+correctAns+'</div>';
+  html+='<div class="expl-body"><b>💡 คำอธิบาย:</b> '+explText+'</div>';
+  body.innerHTML=html;
+  wrap.classList.add('show');
+}
+/* --- Click counter --- */
+const CLK={1:0,2:0,3:0,4:0,5:0,6:0};
+/* ---------- SUCCESS CELEBRATION MESSAGES (per activity, no repeat) ---------- */
+const SUCCESS_MSGS = {
+  1: {emoji:'🎉', title:'อุ่นเครื่องสำเร็จ!', msg:'คลังคำศัพท์ ไวยากรณ์ คำเชื่อม และการคัดแยกความคิดพร้อมใช้แล้ว · เก่งมาก!'},
+  2: {emoji:'🔍', title:'วิเคราะห์โจทย์ทะลุปรุโปร่ง!', msg:'เข้าใจทั้งหัวข้อทั่วไป ประเด็นเจาะจง และสิ่งที่ต้องทำอย่างชัดเจน · ก้าวสำคัญของนักเขียนที่ดี!'},
+  3: {emoji:'📏', title:'จับเกณฑ์ 5 มิติได้อยู่หมัด!', msg:'รู้แล้วว่าย่อหน้าที่ดีต้องมีอะไรบ้าง · เตรียมเขียนอย่างมีเป้าหมายได้เลย!'},
+  4: {emoji:'🔬', title:'X-Ray ต้นแบบผ่านฉลุย!',    msg:'ค้นพบโครงสร้าง คำเชื่อม และคำศัพท์ในต้นแบบครบทุกภารกิจ · พร้อมประกอบร่างย่อหน้าของตัวเอง!'},
+  5: {emoji:'💭', title:'คิดวิเคราะห์ผ่านการซักถามเสร็จสมบูรณ์!', msg:'Flowchart โครงร่างของคุณพร้อมใช้ใน Part 2 แล้ว · ไอเดียครบ · สู้ต่อ!'},
+  6: {emoji:'🌟', title:'สะท้อนการเรียนรู้ครบถ้วน!', msg:'พร้อมลุยการเขียนจริงใน Part 2 · ขอให้เขียนได้อย่างมั่นใจและสนุก!'},
+};
+function showSuccessPop(actNum){
+  const info=SUCCESS_MSGS[actNum]; if(!info) return;
+  let wrap=document.getElementById('successPopWrap');
+  if(!wrap){
+    wrap=document.createElement('div'); wrap.id='successPopWrap'; wrap.className='successpop-wrap';
+    wrap.innerHTML='<div class="successpop"><span class="emoji" id="spEmoji">🎉</span><h3 id="spTitle"></h3><p class="msg" id="spMsg"></p><button class="next" id="spNext">🏠 กลับหน้าเส้นทางการเรียนรู้</button></div>';
+    document.body.appendChild(wrap);
+    document.getElementById('spNext').addEventListener('click',()=>{
+      wrap.classList.remove('show');
+      go(0); /* return to home */
+      setTimeout(()=>{
+        const floe=document.querySelector('.floe.ok:last-of-type');
+        if(floe) floe.scrollIntoView({behavior:'smooth', block:'center'});
+      }, 400);
+    });
+  }
+  document.getElementById('spEmoji').textContent=info.emoji;
+  document.getElementById('spTitle').textContent=info.title;
+  document.getElementById('spMsg').textContent=info.msg;
+  wrap.classList.add('show');
+}
+function countClick(actNum){ if(actNum&&CLK[actNum]!==undefined) CLK[actNum]++; }
+function actEfficiency(a){
+  const totClicks=CLK[a]||0;
+  const ans=(ACT[a].hit+ACT[a].err);
+  if(!totClicks||!ans) return null;
+  /* Cap at 100% — some games use drag-and-drop which does not trigger click event,
+     so answers can exceed measurable clicks. Cap avoids confusing >100% values. */
+  return Math.min(100, Math.round(ans/totClicks*100));
+}
+/* ============ QUIZ แบบจำกัดจำนวนครั้ง (Mission 3 Transformer): 3 ตัวเลือก เลือกได้สูงสุด maxTry ครั้ง ============ */
+function makeQuizLimited(holderId,qs,fbId,onComplete,actNum,maxTry){
+  /* SINGLE-ATTEMPT VERSION: ignores maxTry, always locks after first click */
+  const holder=document.getElementById(holderId), fb=document.getElementById(fbId);
+  let resolved=0, correct=0;
+  qs.forEach((q,qi)=>{
+    const d=document.createElement('div'); d.className='q limited loadgate';
+    const badge=document.createElement('span'); badge.className='attemptbadge'; badge.textContent='ตอบได้ครั้งเดียว'; d.appendChild(badge);
+    const p=document.createElement('p'); p.textContent=(qi+1)+'. '+q.q; d.appendChild(p);
+    const o=document.createElement('div'); o.className='opts';
+    const order=q.o.map((t,i)=>i); for(let k=order.length-1;k>0;k--){ const r=Math.floor(Math.random()*(k+1)); [order[k],order[r]]=[order[r],order[k]]; }
+    const optBtns=[];
+    order.forEach(i=>{
+      const t=q.o[i];
+      const b=document.createElement('button'); b.className='opt'; b.textContent=t; b.dataset.i=i;
+      optBtns.push(b);
+      b.addEventListener('click',()=>{
+        if(d.dataset.locked||d.classList.contains('loadgate'))return;
+        d.dataset.locked='1'; resolved++;
+        optBtns.forEach(x=>x.classList.add('locked-single'));
+        const okBtn=optBtns.find(x=>+x.dataset.i===q.a);
+        if(i===q.a){
+          hit(actNum); b.classList.add('ok'); correct++;
+        }else{
+          miss(actNum); b.classList.add('no');
+          okBtn.classList.add('reveal-correct'); okBtn.classList.remove('locked-single');
+        }
+        fb.className=(i===q.a?'fb ok':'fb no');
+        if(resolved===qs.length){
+          fb.textContent='🏁 ทำครบทุกข้อ ('+correct+'/'+qs.length+' ถูก) — ไปต่อได้';
+          if(onComplete) onComplete();
+        }else{
+          fb.textContent='ตอบแล้ว '+resolved+'/'+qs.length+' ข้อ ('+correct+' ถูก)';
+        }
+        if(q.expl){ showExplPop(i===q.a, q.o[q.a], q.o[i], q.expl); }
+      });
+      o.appendChild(b);
+    });
+    d.appendChild(o); holder.appendChild(d);
+    setTimeout(()=>d.classList.remove('loadgate'), 1100+qi*40);
+  });
+}
+
+/* ============ ① เกม 1 · SORT (12 ใบ) ============ */
+function chk1(){ updateGameTabLocks(); if(sub.g1&&sub.g2&&sub.g3&&sub.g4&&sub.g5) markDone(1); }
+(function(){
+  const items=[
+    {t:'Sea levels can rise / น้ำทะเลสูงขึ้น', b:'G'},
+    {t:'Roads in Alaska crack / ถนนในอะแลสกาแตกร้าว', b:'L'},
+    {t:'Low islands can flood / เกาะที่อยู่ต่ำอาจถูกน้ำท่วม', b:'G'},
+    {t:'Forests in Alaska are dying / ป่าในอะแลสกากำลังตาย', b:'L'},
+    {t:'Weather changes worldwide / สภาพอากาศทั่วโลกเปลี่ยน', b:'G'},
+    {t:'Village houses sink / บ้านในหมู่บ้านอะแลสกาทรุด', b:'L'},
+    {t:'Coastal cities worldwide face floods / เมืองชายฝั่งทั่วโลกเสี่ยงน้ำท่วม', b:'G'},
+    {t:'Newtok village must move / หมู่บ้าน Newtok ต้องย้ายถิ่น', b:'L'},
+    {t:'Fishing grounds change globally / แหล่งประมงทั่วโลกเปลี่ยนแปลง', b:'G'},
+    {t:'Local hunting grounds disappear / พื้นที่ล่าสัตว์ท้องถิ่นหายไป', b:'L'},
+    {t:'Ocean currents shift worldwide / กระแสน้ำในมหาสมุทรทั่วโลกเปลี่ยน', b:'G'},
+    {t:'Alaskan pipelines are damaged / ท่อส่งน้ำมันในอะแลสกาเสียหาย', b:'L'},
+  ];
+  const pool=document.getElementById('g1pool'), fb=document.getElementById('g1fb');
+  let selected=null, left=items.length;
+  items.slice().sort(()=>Math.random()-.5).forEach(it=>{
+    const c=document.createElement('button'); c.className='tokenchip'; c.textContent=it.t; c.dataset.b=it.b;
+    c.addEventListener('click',()=>{
+      pool.querySelectorAll('.tokenchip').forEach(x=>x.classList.remove('sel'));
+      selected=c; c.classList.add('sel');
+      document.querySelectorAll('#g1 .bucket').forEach(bk=>bk.classList.add('armed'));
+    });
+    pool.appendChild(c);
+  });
+  document.querySelectorAll('#g1 .bucket').forEach(bk=>{
+    bk.addEventListener('click',()=>{
+      if(!selected) return;
+      if(selected.dataset.b===bk.dataset.b){
+        hit(1);
+        const tag=document.createElement('span'); tag.textContent=selected.textContent;
+        bk.querySelector('.drop').appendChild(tag);
+        selected.classList.add('gone'); selected=null; left--;
+        document.querySelectorAll('#g1 .bucket').forEach(x=>x.classList.remove('armed'));
+        fb.className='fb ok';
+        fb.textContent=left===0?'🎉 คัดแยกถูกต้องครบทุกรายการ':'✔ ถูกต้อง เหลืออีก '+left+' รายการ';
+        if(left===0){ sub.g1=true; chk1(); }
+      }else{
+        miss(1);
+        selected.classList.remove('shake'); void selected.offsetWidth; selected.classList.add('shake');
+        fb.className='fb no'; fb.textContent='✖ ยังไม่ถูกต้อง โปรดอภิปรายกับคู่แล้วเลือกใหม่อีกครั้ง';
+      }
+    });
+  });
+})();
+
+/* ============ ① เกม 2 · MATCH ศัพท์ (15 คู่) ============ */
+(function(){
+  const pairs=[
+    {k:'m1', l:'melt', r:'to change from ice into water'},
+    {k:'m2', l:'permafrost', r:'ground that is always frozen'},
+    {k:'m3', l:'sea level', r:'the height of the sea'},
+    {k:'m4', l:'flood', r:'when a lot of water covers dry land'},
+    {k:'m5', l:'glacier', r:'a very large piece of ice'},
+    {k:'m6', l:'thawing', r:'the melting of ice or snow'},
+    {k:'m7', l:'coast', r:'the land next to the sea'},
+    {k:'m8', l:'retreat', r:'to move back or become smaller'},
+    {k:'m9', l:'climate', r:'the usual weather in a place'},
+    {k:'m10', l:'erosion', r:'the wearing away of land'},
+    {k:'m11', l:'wildlife', r:'wild animals'},
+    {k:'m12', l:'temperature', r:'how hot or cold something is'},
+    {k:'m13', l:'shrink', r:'to get smaller'},
+    {k:'m14', l:'damage', r:'harm to something'},
+    {k:'m15', l:'threat', r:'something dangerous'},
+  ];
+  const L=document.getElementById('g2L'), R=document.getElementById('g2R'), fb=document.getElementById('g2fb');
+  let selL=null, left=pairs.length;
+  const mk=(txt,key,col)=>{ const b=document.createElement('button'); b.className='mitem'; b.textContent=txt; b.dataset.k=key; col.appendChild(b); return b; };
+  const ls=pairs.map(p=>mk(p.l,p.k,L));
+  pairs.slice().sort(()=>Math.random()-.5).forEach(p=>mk(p.r,p.k,R));
+  L.addEventListener('click',e=>{
+    const b=e.target.closest('.mitem'); if(!b||b.classList.contains('done'))return;
+    ls.forEach(x=>x.classList.remove('sel')); b.classList.add('sel'); selL=b;
+  });
+  R.addEventListener('click',e=>{
+    const b=e.target.closest('.mitem'); if(!b||b.classList.contains('done')||!selL)return;
+    if(b.dataset.k===selL.dataset.k){
+      hit(1);
+      b.classList.add('done'); selL.classList.add('done'); selL.classList.remove('sel'); selL=null; left--;
+      fb.className='fb ok'; fb.textContent=left===0?'🎉 จับคู่ถูกต้องครบทุกรายการ':'✔ ถูกต้อง เหลืออีก '+left+' คู่';
+      if(left===0){ sub.g2=true; chk1(); }
+    }else{
+      miss(1);
+      b.classList.remove('shake'); void b.offsetWidth; b.classList.add('shake');
+      fb.className='fb no'; fb.textContent='✖ คู่นี้ยังไม่เข้ากัน โปรดพิจารณาใหม่อีกครั้ง';
+    }
+  });
+})();
+
+/* ============ ① เกม 3 · QUIZ ภาษาอังกฤษ (10 ข้อ) ============ */
+makeQuiz('g3quiz',[
+  {q:'According to the reading, what is happening to Alaska?', o:['It is getting colder.','It is melting.','It is growing bigger.'], a:1},
+  {q:'What happens when the permafrost thaws?', o:['Roads and houses are damaged.','More snow falls.','Volcanoes erupt.'], a:0},
+  {q:'Why can melting ice affect the whole world?', o:['Because it can raise the sea level.','Because it makes the Earth spin slower.','Because it heats up the sun.'], a:0},
+  {q:'Who thinks it is only a "local problem"?', o:['People who believe the damage stays inside Alaska.','Tourists who visit Alaska.','People who love winter sports.'], a:0},
+  {q:'Which one is a GLOBAL effect?', o:['Cracked roads in Alaskan villages','Rising sea levels far from Alaska','Dying forests inside Alaska'], a:1},
+  {q:'Which one is a LOCAL effect?', o:['Rising sea levels in the Pacific','A village like Newtok sinking into the ground','Coastal floods in other countries'], a:1},
+  {q:'What is "permafrost"?', o:['Ground that stays frozen all year','A type of Alaskan tree','A kind of Arctic bird'], a:0},
+  {q:'What word describes ice moving backward or disappearing?', o:['retreating','flooding','warming'], a:0},
+  {q:'Why do glaciers matter to sea level?', o:['They store huge amounts of frozen water.','They are very cold to touch.','They attract many tourists.'], a:0},
+  {q:'What must our paragraph include?', o:['Only one view.','Two views and our own opinion.','Only our own opinion.'], a:1},
+],'g3fb',()=>{sub.g3=true; chk1();},1);
+
+/* ============ ① เกม 4 · เปิดแผ่นป้าย LINKING WORDS (6 คู่) ============ */
+(function(){
+  const pairs=[
+    {k:'c1', a:'However,', b:'ขัดแย้ง (Contrast)'},
+    {k:'c2', a:'because', b:'บอกเหตุผล (Reason)'},
+    {k:'c3', a:'For example,', b:'ยกตัวอย่าง (Example)'},
+    {k:'c4', a:'Therefore,', b:'แสดงผลลัพธ์ (Result)'},
+    {k:'c5', a:'Furthermore,', b:'เพิ่มข้อมูล (Addition)'},
+    {k:'c6', a:'In my opinion,', b:'แสดงความคิดเห็น (Opinion)'},
+  ];
+  const cards=[];
+  pairs.forEach(p=>{ cards.push({k:p.k, t:p.a}); cards.push({k:p.k, t:p.b}); });
+  cards.sort(()=>Math.random()-.5);
+  const grid=document.getElementById('memgrid'), fb=document.getElementById('g4fb');
+  let open=[], lock=false, left=pairs.length;
+  cards.forEach(c=>{
+    const b=document.createElement('button'); b.className='mc'; b.textContent='❓'; b.dataset.k=c.k; b.dataset.t=c.t;
+    b.addEventListener('click',()=>{
+      if(lock||b.classList.contains('open')||b.classList.contains('done'))return;
+      b.classList.add('open'); b.textContent=b.dataset.t;
+      open.push(b);
+      if(open.length===2){
+        lock=true;
+        const [x,y]=open;
+        if(x.dataset.k===y.dataset.k){
+          hit(1); left--;
+          fb.className='fb ok';
+          fb.textContent=left===0?'🎉 จับคู่ Linking Words ครบทุกคู่ — ความจำเยี่ยมมาก!':'✔ เข้าคู่! เหลืออีก '+left+' คู่';
+          setTimeout(()=>{ x.classList.add('done'); y.classList.add('done'); open=[]; lock=false;
+            if(left===0){ sub.g4=true; chk1(); }
+          },350);
+        }else{
+          miss(1);
+          fb.className='fb no'; fb.textContent='✖ ยังไม่เข้าคู่ — จำตำแหน่งไว้แล้วลองใหม่';
+          setTimeout(()=>{ x.classList.remove('open'); x.textContent='❓'; y.classList.remove('open'); y.textContent='❓'; open=[]; lock=false; },800);
+        }
+      }
+    });
+    grid.appendChild(b);
+  });
+})();
+
+/* ============ ① เกม 5 · TENSE REVIEW (10 ข้อ) ============ */
+makeQuiz('g5quiz',[
+  {q:'Look! The glacier ______ into the sea right now.', o:['melts','is melting'], a:1},
+  {q:'The ocean ______ every continent. (general fact)', o:['touches','is touching'], a:0},
+  {q:'At this moment, scientists ______ the permafrost in Alaska.', o:['study','are studying'], a:1},
+  {q:'Every winter, snow ______ heavily in Alaska.', o:['falls','is falling'], a:0},
+  {q:'Today, many village houses ______ because the ground is thawing.', o:['sink','are sinking'], a:1},
+  {q:'Water ______ at 0 degrees Celsius. (general fact)', o:['freezes','is freezing'], a:0},
+  {q:'Right now, the ice sheets ______ faster than ever.', o:['retreat','are retreating'], a:1},
+  {q:'The Earth ______ around the sun. (general fact)', o:['moves','is moving'], a:0},
+  {q:'This year, the government ______ a new climate plan.', o:['discusses','is discussing'], a:1},
+  {q:'Cold air ______ down near the poles. (general fact)', o:['sinks','is sinking'], a:0},
+],'g5fb',()=>{sub.g5=true; chk1();},1);
+
+/* ============ ② ANALYZE THE TASK — ชุดที่ 1 และ 2 (7+7 ข้อ) ============ */
+function chk2(){ if(sub.q2a&&sub.q2b) markDone(2); }
+makeQuiz('q2quiz',[
+  {q:'Layer 1 — What is the GENERAL TOPIC of the task?', o:['Tourism in Alaska','The melting of Alaska / climate change','Traditional food in Alaska'], a:1},
+  {q:'Layer 2 — What is the SPECIFIC ISSUE that people debate?', o:['Should Alaska move its capital city?','Is the melting a global danger, or only a local problem?','When is the best time to visit Alaska?'], a:1},
+  {q:'Layer 3 — What does the task ask you to DO?', o:['Summarize the reading passage.','Tell a personal story about winter.','Discuss both views and give your own opinion.'], a:2},
+  {q:'Which is a suitable REASON to support View 1 (global danger)?', o:['because melting ice can raise the sea level','because Alaska is a very big state','because snow is beautiful in winter'], a:0},
+  {q:'Which is a suitable EXAMPLE to support View 1 (global danger)?', o:['For example, many people enjoy winter sports.','For example, low islands far away can flood.','For example, Alaska has very long nights.'], a:1},
+  {q:'Which is a suitable REASON to support View 2 (local problem)?', o:['because the broken roads and dying forests are inside Alaska','because tourists like to visit glaciers','because the ocean touches every continent'], a:0},
+  {q:'Which is a suitable EXAMPLE to support View 2 (local problem)?', o:['For example, sea levels rise in the Pacific islands.','For example, the village of Newtok must move because its ground is sinking.','For example, coastal cities worldwide build sea walls.'], a:1},
+],'q2fb',()=>{
+  sub.q2a=true;
+  document.getElementById('q2round2wrap').style.display='block';
+  makeQuiz('q2quizB',[
+    {q:'Layer 1 — Which sentence best restates the GENERAL TOPIC?', o:['Alaska is a cold, snowy state in the U.S.','Alaska is experiencing rapid melting linked to climate change.','Alaska has many national parks.'], a:1},
+    {q:'Layer 2 — Which sentence best restates the SPECIFIC ISSUE?', o:['People disagree about whether this melting is a worldwide threat or a problem only for Alaska.','People disagree about the best time of year to visit Alaska.','People disagree about how much snow falls each year.'], a:0},
+    {q:'Layer 3 — Which sentence best restates the TASK?', o:['Describe the geography of Alaska in detail.','Present both sides of the debate and state your own view.','List five facts about Alaskan wildlife.'], a:1},
+    {q:'Which is the STRONGEST reason for View 1 (global danger)? (trickier options)', o:['because ocean currents and sea levels connect countries around the world','because Alaska has beautiful mountains','because winter tourism brings income'], a:0},
+    {q:'Which is the STRONGEST example for View 1 (global danger)? (trickier options)', o:['For example, some people enjoy watching documentaries about Alaska.','For example, rising seas already threaten islands thousands of miles from Alaska.','For example, Alaska has a governor.'], a:1},
+    {q:'Which is the STRONGEST reason for View 2 (local problem)? (trickier options)', o:['because most of the physical damage — roads, forests, buildings — happens within Alaska\u2019s borders','because Alaska is far from other countries','because Alaska has an interesting history'], a:0},
+    {q:'Which is the STRONGEST example for View 2 (local problem)? (trickier options)', o:['For example, global temperatures have risen over the past century.','For example, an entire Alaskan village must relocate because its ground is sinking.','For example, many countries have signed climate agreements.'], a:1},
+  ],'q2fbB',()=>{sub.q2b=true; chk2();},2);
+},2);
+
+/* ============ ③ RUBRIC RANGER (10 ข้อ) + PARAGRAPH DUEL (5 ข้อ) ============ */
+function chk3(){ if(sub.q3&&sub.duel) markDone(3); }
+makeQuiz('q3quiz',[
+  {q:'ตัวอย่าง: "Alaska has snow. Some people like it and some do not." — ตัวอย่างนี้อ่อนในมิติใดมากที่สุด', o:['Task Response (ไม่ได้ตอบโจทย์ 2 มุมมอง + ความเห็น)','Grammar (ไวยากรณ์ผิด)','Vocabulary (คำศัพท์ไม่หลากหลาย)'], a:0, expl:'ประโยคเพียงบอกว่า "some like some do not" ยังไม่ได้อภิปรายว่า 2 มุมมองต่างกันด้วยเหตุผลอะไร และไม่มีความคิดเห็นของผู้เขียน — ตอบไม่ครบตามที่โจทย์ discuss both views and give an opinion กำหนดไว้'},
+  {q:'ตัวอย่าง: "First is global. Second is local. Opinion. End." — ตัวอย่างนี้อ่อนในมิติใดมากที่สุด', o:['Task Response','Organization (มีหัวข้อแต่ไม่มีเนื้อหาขยายความ)','Grammar'], a:1, expl:'ตัวอย่างนี้มีโครงสร้าง 5 ส่วนครบ (Topic → View 1 → View 2 → Opinion → Closing) แต่แต่ละหัวข้อเป็นแค่ป้ายชื่อ ไม่มีประโยคเนื้อหาขยายว่ามุมมองนั้นอะไร เหตุผลใด — โครงเรียบร้อยแต่กลวง จึงอ่อนใน Organization'},
+  {q:'ตัวอย่าง: "Global danger. Local problem. Bad. Good. Ice." — ตัวอย่างนี้อ่อนในมิติใดมากที่สุด', o:['Coherence & Cohesion (ไม่มีคำเชื่อมเลย ประโยคขาดจากกัน)','Task Response','Organization'], a:0, expl:'ประโยคทั้งหมดเป็นวลีเดี่ยว ๆ ไม่มีคำเชื่อม (however, because, for example, therefore) ทำให้ผู้อ่านต่อความคิดไม่ได้ — Coherence & Cohesion คือความลื่นไหลระหว่างประโยค ซึ่งขาดไปโดยสิ้นเชิง'},
+  {q:'ตัวอย่าง: "It is bad thing. Many bad thing happen. Very bad." — ตัวอย่างนี้อ่อนในมิติใดมากที่สุด', o:['Grammar','Vocabulary (ใช้คำว่า "bad thing" ซ้ำ ไม่เจาะจง)','Task Response'], a:1, expl:'"bad thing" เป็นคำกว้างมาก และใช้ซ้ำหลายครั้ง แทนที่จะระบุคำเจาะจง เช่น sea level rise, coastal erosion, ecosystem damage — คำศัพท์กว้างและซ้ำเป็นลักษณะเด่นของ Vocabulary ที่อ่อน'},
+  {q:'ตัวอย่าง: "Alaska is melt. Sea is rise. It flood many country." — ตัวอย่างนี้อ่อนในมิติใดมากที่สุด', o:['Grammar (Tense และประธาน–กริยาไม่สอดคล้อง)','Vocabulary','Task Response'], a:0, expl:'"is melt" ควรเป็น "is melting" · "is rise" ควรเป็น "is rising" · "many country" ควรเป็น "many countries" — ทั้งหมดคือ Tense/S-V agreement/plural ที่ผิด ซึ่งเป็นเรื่อง Grammar โดยตรง'},
+  {q:'ตัวอย่าง: "Some believe it is a global danger, while others see it as a local issue; in my opinion, it affects everyone." — ตัวอย่างนี้เด่นในมิติใด', o:['Task Response (ตอบครบ 2 มุมมอง + ความเห็น)','Grammar เท่านั้น','Vocabulary เท่านั้น'], a:0, expl:'ประโยคเดียวครอบคลุมครบ: (1) มุมมองที่ 1 "global danger" (2) มุมมองที่ 2 "local issue" (3) ความคิดเห็น "in my opinion, it affects everyone" — ตอบครบทุกส่วนที่โจทย์ discuss both views and give an opinion ต้องการ'},
+  {q:'ตัวอย่าง: "Topic sentence → View 1 → View 2 → Opinion → Closing เรียงลำดับครบถ้วน" — เด่นในมิติใด', o:['Organization','Task Response','Coherence & Cohesion'], a:0, expl:'Organization วัดเรื่องโครงสร้างและลำดับของย่อหน้า — การมีทั้ง 5 ส่วนเรียงถูกต้องเป็นลักษณะเด่นของ Organization ที่แข็งแรง (ไม่ใช่เรื่องเนื้อหาหรือคำเชื่อม)'},
+  {q:'ตัวอย่าง: "However, ... ; therefore, ... ; for example, ..." เชื่อมทุกประโยคลื่นไหล — เด่นในมิติใด', o:['Coherence & Cohesion','Vocabulary','Grammar'], a:0, expl:'However = ขัดแย้ง · therefore = ผลลัพธ์ · for example = ยกตัวอย่าง — การใช้คำเชื่อมถูกหน้าที่และเชื่อมประโยคให้ต่อเนื่องคือหัวใจของ Coherence & Cohesion'},
+  {q:'ตัวอย่าง: ใช้คำว่า "thawing permafrost", "coastal erosion", "rising sea levels" แทนคำว่า "bad thing" — เด่นในมิติใด', o:['Vocabulary (คำศัพท์เจาะจง ตรงเรื่อง)','Task Response','Organization'], a:0, expl:'thawing permafrost / coastal erosion / rising sea levels เป็นคำศัพท์เฉพาะทางที่ระบุปรากฏการณ์ได้ชัดเจน แทนคำกว้าง "bad thing" — Vocabulary ที่ดีต้องเจาะจง ตรงเรื่อง และหลากหลาย'},
+  {q:'ตัวอย่าง: "Alaska is melting. The sea level rises every year." (Tense ถูกต้อง ประธาน–กริยาสอดคล้อง) — เด่นในมิติใด', o:['Grammar','Coherence & Cohesion','Vocabulary'], a:0, expl:'"is melting" = Present Continuous สำหรับสิ่งที่กำลังเกิด · "rises" = Present Simple สำหรับความจริงที่เกิดซ้ำ · "sea level rises" = ประธาน–กริยาสอดคล้อง — ทั้งหมดคือหลัก Grammar ที่ถูกต้อง'},
+],'q3fb',()=>{
+  sub.q3=true;
+  document.getElementById('duelWrap').style.display='block';
+  runDuel();
+  chk3();
+},3);
+
+const PARA_A='<i>Alaska have big problem. Ice melt and bad thing happen. Some say bad, some say not bad. I think bad. The end.</i>';
+const PARA_B='<i>Alaska is melting, and people around the world are discussing how serious this issue is. Some believe it is a global danger because melting ice can raise sea levels; for example, low islands far away could flood. However, others think it is mainly a local problem, because the damage \u2014 cracked roads and dying forests \u2014 happens inside Alaska itself. In my opinion, this is a danger for everyone, since the ocean connects every country. Therefore, the world should pay attention to what is happening in Alaska.</i>';
+function runDuel(){
+  document.getElementById('paraA').innerHTML=PARA_A;
+  document.getElementById('paraB').innerHTML=PARA_B;
+  window.DUEL_EXPL={
+    'Task Response':'ย่อหน้า B ตอบครบ 3 อย่างชัดเจน: (1) มุมมองที่ 1 "global danger — melting ice can raise sea levels" (2) มุมมองที่ 2 "local problem — cracked roads and dying forests" (3) ความคิดเห็นของผู้เขียน "In my opinion, this is a danger for everyone" — ในขณะที่ย่อหน้า A บอกแค่ "some say bad, some say not bad" ไม่ระบุเหตุผลของแต่ละมุมมอง',
+    'Organization':'ย่อหน้า B มีโครงสร้าง 5 ส่วนครบและเรียงลำดับถูกต้อง: Topic (Alaska is melting) → View 1 (global danger, sea levels) → View 2 (local, roads/forests) → Opinion (danger for everyone) → Closing (world should pay attention) — ในขณะที่ย่อหน้า A ไม่มีลำดับที่ชัดเจน',
+    'Coherence & Cohesion':'ย่อหน้า B ใช้คำเชื่อมถูกหน้าที่ต่อเนื่อง: and (เพิ่มข้อมูล), because (เหตุผล), for example (ยกตัวอย่าง), However (ขัดแย้ง), In my opinion (ความเห็น), Therefore (ผลลัพธ์) — ในขณะที่ย่อหน้า A มีเพียงจุด ๆ ประโยคขาดจากกัน',
+    'Vocabulary':'ย่อหน้า B ใช้คำเฉพาะทาง: melting, sea levels, low islands, cracked roads, dying forests — ในขณะที่ย่อหน้า A ใช้คำกว้างซ้ำ ๆ: "big problem", "bad thing", "bad", "not bad" ไม่เจาะจงและไม่หลากหลาย',
+    'Grammar':'ย่อหน้า B ใช้ tense ถูกต้อง (is melting = Present Continuous, can raise = modal + base, happens = Present Simple), ประธาน–กริยาสอดคล้อง — ในขณะที่ย่อหน้า A มี "Alaska have" (ควรเป็น has), "Ice melt" (ควรเป็น melts/is melting), "bad thing happen" (ควรเป็น happens/happen)',
+  };
+  const Q=[
+    {q:'มิติ 1 · Task Response — ย่อหน้าใดตอบโจทย์ครบ (2 มุมมอง + ความเห็นของผู้เขียน) ชัดเจนกว่า?', o:['Paragraph A','Paragraph B'], a:1,
+      why:'Paragraph B ระบุ View 1, View 2 และความเห็น "In my opinion" ชัดเจน ส่วน A พูดกว้าง ๆ ว่า "some say bad, some say not bad" ไม่ชัดว่าใครคิดอย่างไร'},
+    {q:'มิติ 2 · Organization — ย่อหน้าใดมีโครงสร้าง 5 ส่วนครบและเรียงลำดับดีกว่า?', o:['Paragraph A','Paragraph B'], a:1,
+      why:'Paragraph B เรียง Topic → View 1 → View 2 → Opinion → Closing ชัดเจน ส่วน A มีแต่วลีสั้น ๆ ไม่มีการขยายความ'},
+    {q:'มิติ 3 · Coherence & Cohesion — ย่อหน้าใดใช้คำเชื่อม (However, for example, because, therefore) เชื่อมความคิดลื่นไหลกว่า?', o:['Paragraph A','Paragraph B'], a:1,
+      why:'Paragraph B มีคำเชื่อมครบทุกหน้าที่ ส่วน A ไม่มีคำเชื่อมเลย ประโยคขาดจากกัน'},
+    {q:'มิติ 4 · Vocabulary — ย่อหน้าใดใช้คำศัพท์เจาะจง ตรงเรื่อง มากกว่าการใช้คำกว้าง ๆ ซ้ำ ๆ อย่าง "bad thing"?', o:['Paragraph A','Paragraph B'], a:1,
+      why:'Paragraph B ใช้คำเจาะจงเช่น "cracked roads", "dying forests", "rising sea levels" ส่วน A ใช้คำว่า "bad" ซ้ำหลายครั้งโดยไม่เจาะจง'},
+    {q:'มิติ 5 · Grammar — ย่อหน้าใดมีไวยากรณ์ถูกต้องกว่า (Tense และประธาน–กริยาสอดคล้องกัน)?', o:['Paragraph A','Paragraph B'], a:1,
+      why:'Paragraph A มีข้อผิดพลาด เช่น "Alaska have" และ "Ice melt" (ขาด -s) ส่วน B ใช้ไวยากรณ์ถูกต้องตลอดทั้งย่อหน้า'},
+  ];
+  const holder=document.getElementById('duelQs'); holder.innerHTML='';
+  const fb=document.getElementById('duelFb');
+  let correct=0;
+  let answered=0;
+  Q.forEach((qq,qi)=>{
+    const d=document.createElement('div'); d.className='duelq';
+    const p=document.createElement('p'); p.textContent=(qi+1)+'. '+qq.q; d.appendChild(p);
+    const bt=document.createElement('div'); bt.className='duelbtns';
+    const btns=[];
+    qq.o.forEach((t,i)=>{
+      const b=document.createElement('button'); b.className='duelbtn opt'; b.textContent=t; b.dataset.i=i;
+      btns.push(b);
+      b.addEventListener('click',()=>{
+        if(d.dataset.locked)return;
+        d.dataset.locked='1'; answered++;
+        /* lock all option buttons */
+        btns.forEach(x=>x.classList.add('locked-single'));
+        const okBtn=btns.find(x=>+x.dataset.i===qq.a);
+        if(i===qq.a){
+          hit(3); b.classList.add('ok'); correct++;
+        }else{
+          miss(3); b.classList.add('no');
+          okBtn.classList.add('reveal-correct'); okBtn.classList.remove('locked-single');
+        }
+        fb.className=(i===qq.a?'fb ok':'fb no');
+        if(answered===Q.length){
+          fb.textContent='🏁 วิเคราะห์ครบ 5 มิติแล้ว ('+correct+'/'+Q.length+' ถูก)';
+          sub.duel=true; chk3();
+        }else{
+          fb.textContent='ตอบแล้ว '+answered+'/'+Q.length+' มิติ ('+correct+' ถูก)';
+        }
+        showExplPop(i===qq.a, qq.o[qq.a], qq.o[i], qq.why);
+      });
+      bt.appendChild(b);
+    });
+    d.appendChild(bt); holder.appendChild(d);
+  });
+}
+
+/* ============ ROBOT POP-UP ============ */
+const robotwrap=document.getElementById('robotwrap'), robot=document.getElementById('robot'), robotmsg=document.getElementById('robotmsg');
+let robotCb=null;
+function showRobot(msg, cb){
+  robotmsg.innerHTML=msg; robotwrap.classList.add('show'); robot.style.display='flex'; robotCb=cb; sfx(true);
+}
+document.getElementById('robotok').addEventListener('click',()=>{
+  robotwrap.classList.remove('show'); robot.style.display='none';
+  if(robotCb){ const cb=robotCb; robotCb=null; cb(); }
+});
+
+/* ============ ④ DATA: 3 PARAGRAPHS (short/medium/long) ============ */
+const PARAS={
+  short:[
+    {t:'Alaska is melting, and people around the world are talking about how serious it is.', tag:'Topic'},
+    {t:'Some people believe it is a danger for the whole world because melting ice can raise the sea level, for example, it can flood low islands.', tag:'View 1'},
+    {t:'But others think it is mainly Alaska\u2019s problem, because the broken roads and dying forests are inside Alaska.', tag:'View 2'},
+    {t:'I think it is a danger for everyone, because the sea touches many countries.', tag:'Opinion'},
+    {t:'So, the world should care about Alaska.', tag:'Closing'},
+  ],
+  medium:[
+    {t:'Alaska is melting quickly, and people around the world are discussing how serious this problem really is.', tag:'Topic'},
+    {t:'Some people believe it is a danger for the whole world because melting ice can raise the sea level.', tag:'View 1'},
+    {t:'For example, rising seas can flood low islands far away from Alaska.', tag:'View 1'},
+    {t:'But others think it is mainly Alaska\u2019s problem, because the broken roads and dying forests are inside Alaska.', tag:'View 2'},
+    {t:'For instance, the village of Newtok must move because the ground beneath it is sinking.', tag:'View 2'},
+    {t:'I think it is a danger for everyone, because the sea touches many countries.', tag:'Opinion'},
+    {t:'So, the world should care about Alaska and work together to solve this problem.', tag:'Closing'},
+  ],
+  long:[
+    {t:'Alaska is melting rapidly, and people around the world are debating how serious this change truly is.', tag:'Topic'},
+    {t:'Some people believe it is a danger for the whole world because melting ice can raise the sea level.', tag:'View 1'},
+    {t:'For example, rising seas can flood low islands far from Alaska.', tag:'View 1'},
+    {t:'Also, scientists warn that warmer oceans can change weather patterns everywhere.', tag:'View 1'},
+    {t:'But others think it is mainly Alaska\u2019s problem, because the broken roads and dying forests are inside Alaska.', tag:'View 2'},
+    {t:'For instance, the village of Newtok must move because the ground beneath it is sinking.', tag:'View 2'},
+    {t:'Local damage is serious, but I think it is a danger for everyone, because the sea touches many countries.', tag:'Opinion'},
+    {t:'So, the world should care about Alaska.', tag:'Closing'},
+    {t:'Every country can help by reducing pollution and supporting Alaskan communities.', tag:'Closing'},
+  ],
+};
+const LABELS=['Topic','View 1','View 2','Opinion','Closing'];
+const TAGABBR={'Topic':'TOP','View 1':'V1','View 2':'V2','Opinion':'OP','Closing':'CL'};
+
+function unlockMission(n){
+  const el=document.getElementById('mis'+n); el.style.pointerEvents='auto'; el.style.opacity='1';
+  document.getElementById('mis'+n+'stat').textContent='พร้อมเริ่ม';
+}
+function lockMission(n, label){
+  const el=document.getElementById('mis'+n); el.style.pointerEvents='none'; el.style.opacity='.55'; el.removeAttribute('open');
+  document.getElementById('mis'+n+'stat').textContent=label;
+}
+[2,3,4].forEach(n=>lockMission(n,'🔒 ทำภารกิจก่อนหน้าให้เสร็จก่อน'));
+
+/* ============ ภารกิจ 1 : STRUCTURE HUNT (short=ติดป้าย · medium/long=ต่อประโยค+คำเชื่อม) ============ */
+const CONSTR={
+  medium:[
+    {type:'content', t:'Alaska is melting quickly, and people around the world are discussing how serious this problem really is.'},
+    {type:'content', t:'Some people believe it is a global danger'},
+    {type:'conn', t:'because'},
+    {type:'content', t:'melting ice can raise the sea level.'},
+    {type:'conn', t:'For example,'},
+    {type:'content', t:'rising seas can flood low islands far away.'},
+    {type:'conn', t:'But'},
+    {type:'content', t:'others think it is mainly Alaska\u2019s problem because the broken roads and dying forests are inside Alaska.'},
+    {type:'content', t:'I think it is a danger for everyone, because the sea touches many countries. So, the world should care about Alaska.'},
+  ],
+  long:[
+    {type:'content', t:'Alaska is melting rapidly, and people around the world are debating how serious this change truly is.'},
+    {type:'content', t:'Some people believe it is a global danger'},
+    {type:'conn', t:'because'},
+    {type:'content', t:'melting ice can raise the sea level.'},
+    {type:'conn', t:'For example,'},
+    {type:'content', t:'rising seas can flood low islands far from Alaska.'},
+    {type:'conn', t:'Also,'},
+    {type:'content', t:'scientists warn that warmer oceans can change weather patterns everywhere.'},
+    {type:'conn', t:'But'},
+    {type:'content', t:'others think it is mainly Alaska\u2019s problem because the broken roads and dying forests are inside Alaska.'},
+    {type:'conn', t:'For instance,'},
+    {type:'content', t:'the village of Newtok must move because the ground beneath it is sinking.'},
+    {type:'content', t:'Local damage is serious, but I think it is a danger for everyone, because the sea touches many countries. So, the world should care about Alaska, and every country can help.'},
+  ],
+};
+const CONSTR_DISTRACT={
+  medium:[{type:'conn', t:'Therefore,'},{type:'conn', t:'Although'}],
+  long:[{type:'conn', t:'Therefore,'},{type:'conn', t:'Meanwhile,'},{type:'conn', t:'Although'}],
+};
+
+(function(){
+  const state={short:{}, medium:{}, long:{}};
+  const doneP={short:false, medium:false, long:false};
+  let selectedLabel=null;
+  const labelsEl=document.getElementById('dndlabels');
+  LABELS.forEach(lb=>{
+    const chip=document.createElement('button'); chip.className='dndlabel'; chip.textContent=lb; chip.dataset.tag=lb; chip.draggable=true;
+    chip.addEventListener('click',()=>{
+      labelsEl.querySelectorAll('.dndlabel').forEach(x=>x.classList.remove('sel'));
+      selectedLabel=lb; chip.classList.add('sel');
+    });
+    chip.addEventListener('dragstart',e=>{ e.dataTransfer.setData('text/plain',lb); });
+    labelsEl.appendChild(chip);
+  });
+
+  function renderShortPara(){
+    const box=document.getElementById('dndpara'); box.innerHTML='';
+    PARAS.short.forEach((s,i)=>{
+      const sp=document.createElement('span'); sp.className='dndzone'; sp.dataset.tag=s.tag; sp.dataset.idx=i;
+      sp.textContent=(i?' ':'')+s.t;
+      if(state.short[i]){ sp.classList.add('placed'); sp.innerHTML='<span class="dndtag">'+TAGABBR[s.tag]+'</span>'+(i?' ':'')+s.t; }
+      sp.addEventListener('click',()=>tryPlaceShort(i,sp,selectedLabel));
+      sp.addEventListener('dragover',e=>{ e.preventDefault(); sp.classList.add('over'); });
+      sp.addEventListener('dragleave',()=>sp.classList.remove('over'));
+      sp.addEventListener('drop',e=>{ e.preventDefault(); sp.classList.remove('over'); const lb=e.dataTransfer.getData('text/plain'); tryPlaceShort(i,sp,lb); });
+      box.appendChild(sp);
+    });
+  }
+  function tryPlaceShort(i,sp,label){
+    if(state.short[i]||!label) return;
+    const correctTag=PARAS.short[i].tag;
+    if(label===correctTag){
+      hit(4); state.short[i]=true;
+      sp.classList.add('placed'); sp.innerHTML='<span class="dndtag">'+TAGABBR[correctTag]+'</span>'+(i?' ':'')+PARAS.short[i].t;
+      const fb=document.getElementById('m1fb'); fb.className='fb ok';
+      const left=PARAS.short.filter((s,ix)=>!state.short[ix]).length;
+      fb.textContent = left===0? '🎉 ย่อหน้าสั้นติดป้ายครบแล้ว!' : '✔ ถูกต้อง! เหลืออีก '+left+' ประโยค';
+      if(left===0) markParaDone('short');
+    }else{
+      miss(4); sfxOops();
+      sp.classList.remove('wrong'); void sp.offsetWidth; sp.classList.add('wrong');
+      const fb=document.getElementById('m1fb'); fb.className='fb no';
+      fb.textContent='✖ ยังไม่ถูกต้อง — เลือกป้ายใหม่แล้วลองอีกครั้ง';
+    }
+  }
+
+  function renderConstruct(key){
+    const paraBox=document.getElementById('constrpara'); paraBox.innerHTML='';
+    const poolBox=document.getElementById('chippool'); poolBox.innerHTML='';
+    if(!state[key].placed) state[key].placed=[];
+    if(!state[key].pool){
+      const items=CONSTR[key].map((it,idx)=>({...it, idx}));
+      const distract=CONSTR_DISTRACT[key].map((it,idx)=>({...it, idx:-1-idx}));
+      state[key].pool=items.concat(distract).sort(()=>Math.random()-.5);
+    }
+    // render blanks/paragraph
+    CONSTR[key].forEach((s,idx)=>{
+      const placedItem=state[key].placed[idx];
+      if(placedItem){
+        const sp=document.createElement('span'); sp.className='blank filled'+(s.type==='conn'?' conn':'');
+        sp.textContent=s.t; paraBox.appendChild(sp); paraBox.appendChild(document.createTextNode(' '));
+      }else{
+        const nextIdx = CONSTR[key].findIndex((x,ix)=>!state[key].placed[ix]);
+        const sp=document.createElement('span'); sp.className='blank'+(idx===nextIdx?' active':'');
+        sp.textContent = s.type==='conn' ? '(คำเชื่อม)' : '(ประโยค)'; sp.dataset.idx=idx;
+        sp.addEventListener('click',()=>tryFill(key,idx,selectedChip));
+        sp.addEventListener('dragover',e=>{ if(idx===nextIdx) e.preventDefault(); });
+        sp.addEventListener('drop',e=>{ e.preventDefault(); const val=e.dataTransfer.getData('text/plain'); tryFill(key,idx,{t:val}); });
+        paraBox.appendChild(sp); paraBox.appendChild(document.createTextNode(' '));
+      }
+    });
+    // render pool chips (excluding used)
+    let selectedChip=null;
+    state[key].pool.forEach(item=>{
+      if(state[key].used && state[key].used.has(item.idx)) return;
+      const chip=document.createElement('button');
+      chip.className = item.type==='conn' ? 'chip-conn' : 'chip-content';
+      chip.textContent=item.t; chip.draggable=true;
+      chip.addEventListener('click',()=>{
+        poolBox.querySelectorAll('.chip-conn,.chip-content').forEach(x=>x.style.outline='');
+        selectedChip=item; chip.style.outline='3px solid '+(item.type==='conn'?'#8A6508':'#1B5E8C');
+        const zones=[...paraBox.querySelectorAll('.blank.active')];
+        zones.forEach(z=>z.addEventListener('click',()=>{}, {once:true}));
+      });
+      chip.addEventListener('dragstart',e=>{ e.dataTransfer.setData('text/plain', item.t); e.dataTransfer.setData('application/idx', String(item.idx)); });
+      poolBox.appendChild(chip);
+    });
+    // rewire blank click handlers to use current selectedChip via closure workaround
+    paraBox.querySelectorAll('.blank.active').forEach(sp=>{
+      sp.onclick=()=>{ if(selectedChip) tryFill(key, +sp.dataset.idx, selectedChip); };
+      sp.ondrop=(e)=>{ e.preventDefault(); const val=e.dataTransfer.getData('text/plain'); tryFill(key, +sp.dataset.idx, {t:val}); };
+    });
+  }
+  function tryFill(key, idx, chipItem){
+    if(!chipItem) return;
+    const expected=CONSTR[key][idx];
+    const nextIdx = CONSTR[key].findIndex((x,ix)=>!state[key].placed[ix]);
+    if(idx!==nextIdx) return;
+    if(chipItem.t===expected.t){
+      hit(4);
+      state[key].placed[idx]=true;
+      if(!state[key].used) state[key].used=new Set();
+      const poolItem=state[key].pool.find(p=>p.t===chipItem.t && !state[key].used.has(p.idx));
+      if(poolItem) state[key].used.add(poolItem.idx);
+      const fb=document.getElementById('m1fb'); fb.className='fb ok';
+      const left=CONSTR[key].length-state[key].placed.filter(Boolean).length;
+      fb.textContent = left===0? '🎉 ต่อย่อหน้า'+(key==='medium'?'ปานกลาง':'ยาว')+'สำเร็จแล้ว!' : '✔ ถูกต้อง! เหลืออีก '+left+' ช่อง';
+      renderConstruct(key);
+      if(left===0) markParaDone(key);
+    }else{
+      miss(4); sfxOops();
+      const fb=document.getElementById('m1fb'); fb.className='fb no';
+      fb.textContent='✖ ยังไม่ใช่ชิ้นนี้ — ลองดูความหมายให้เข้ากับช่องถัดไปอีกครั้งนะคะ 😆';
+    }
+  }
+  function markParaDone(key){
+    doneP[key]=true;
+    document.querySelector('.paratab[data-p="'+key+'"]').classList.add('done');
+    /* When SHORT (label sentences) is done → unlock Mission 2 immediately (minimum bar) */
+    if(doneP.short && !sub.m1){
+      sub.m1=true;
+      document.getElementById('mis1stat').textContent='✅ ผ่านแล้ว (ทำ medium/long เพื่อโบนัส)';
+      showRobot('🤖 <b>เยี่ยม!</b> ระบุโครง 5 ส่วนของย่อหน้าสั้นได้แล้ว — ปลดล็อกภารกิจ 2 ให้ · ทำย่อหน้าปานกลาง/ยาวต่อเพื่อเก็บโบนัสฝึกต่อประโยค+คำเชื่อมได้ค่ะ',()=>{ unlockMission(2); chk4(); persist(); });
+    }
+    /* When ALL 3 done → celebrate mastery */
+    if(doneP.short && doneP.medium && doneP.long){
+      document.getElementById('mis1stat').textContent='🏆 สำเร็จครบ 3/3 ย่อหน้า';
+      document.getElementById('mis1').removeAttribute('open');
+      showRobot('🤖 <b>ยอดเยี่ยม!</b> ล่าโครงสร้างและต่อย่อหน้าสำเร็จครบทั้ง 3 แบบ! ทุกย่อหน้า ไม่ว่าจะสั้นหรือยาว มีโครง 5 ส่วนเสมอ และต่อกันด้วยคำเชื่อมที่ถูกหน้าที่',()=>{ persist(); });
+    }
+  }
+  document.querySelectorAll('.paratab').forEach(t=>{
+    t.addEventListener('click',()=>{
+      document.querySelectorAll('.paratab').forEach(x=>x.classList.remove('on'));
+      t.classList.add('on');
+      const p=t.dataset.p;
+      document.getElementById('m1short').style.display = p==='short' ? 'block' : 'none';
+      document.getElementById('m1construct').style.display = p==='short' ? 'none' : 'block';
+      if(p==='short') renderShortPara(); else renderConstruct(p);
+    });
+  });
+  renderShortPara();
+})();
+
+function chk4(){ if(sub.m1&&sub.m2&&sub.m3&&sub.m4) markDone(4); }
+
+/* ============ ภารกิจ 2 : PILLAR SCANNING (5 ท่อน) ============ */
+(function(){
+  const CHUNKS=[
+    {t:'View 1 · "Some people believe it is a danger for the whole world"', r:'T'},
+    {t:'View 1 · "because melting ice can raise the sea level"', r:'E'},
+    {t:'View 1 · "for example, it can flood low islands"', r:'X'},
+    {t:'View 2 · "others think it is mainly Alaska\u2019s problem"', r:'T'},
+    {t:'View 2 · "because the broken roads and dying forests are inside Alaska"', r:'E'},
+  ];
+  const LABEL={T:'🔵 Point', E:'🟢 Explanation', X:'🟠 Example'};
+  const CLS={T:'cT', E:'cE', X:'cX'};
+  const holder=document.getElementById('x2rows');
+  let left=CHUNKS.length;
+  CHUNKS.forEach((c,idx)=>{
+    const row=document.createElement('div'); row.className='crow';
+    const tx=document.createElement('div'); tx.className='stext'; tx.textContent=(idx+1)+'. '+c.t; row.appendChild(tx);
+    const bt=document.createElement('div'); bt.className='rbtns';
+    ['T','E','X'].forEach(r=>{
+      const b=document.createElement('button'); b.className='rb'; b.textContent=LABEL[r];
+      b.addEventListener('click',()=>{
+        if(row.dataset.locked)return;
+        if(r===c.r){
+          hit(4); row.dataset.locked='1'; row.classList.add(CLS[r]); b.classList.add('ok'); left--;
+          const fb=document.getElementById('x2fb'); fb.className='fb ok';
+          fb.textContent=left===0?'🎉 โค้ดสีครบทุกท่อน':'✔ ถูกต้อง เหลืออีก '+left+' ท่อน';
+          if(left===0){
+            sub.m2=true; document.getElementById('mis2stat').textContent='✅ สำเร็จ'; document.getElementById('mis2').removeAttribute('open');
+            showRobot('🤖 <b>สรุป:</b> ประโยคเนื้อหาที่ดีมี 3 ส่วน: 🔵 ประเด็น → 🟢 เหตุผล (because) → 🟠 ตัวอย่าง (for example) — ใช้ได้ทั้ง View 1 และ View 2<br>👏 สแกนได้แม่นยำมาก!',()=>{ unlockMission(3); chk4(); persist(); });
+          }
+        }else{
+          miss(4); b.classList.remove('shake'); void b.offsetWidth; b.classList.add('shake');
+          const fb=document.getElementById('x2fb'); fb.className='fb no';
+          fb.textContent='✖ ยังไม่ถูกต้อง — สังเกตคำนำหน้า: because = Explanation · for example = Example';
+        }
+      });
+      bt.appendChild(b);
+    });
+    row.appendChild(bt); holder.appendChild(row);
+  });
+})();
+
+/* ============ ภารกิจ 3 : THE TRANSFORMER (5 ข้อ) ============ */
+makeQuizLimited('x3quiz',[
+  {q:'Upgrade: "I do not like plastic bags because they are messy." — Which is the best general example?', o:['"Plastic bags are yucky and everyone hates them."','"Many countries, such as Kenya, have banned plastic bags because they pollute rivers and oceans."','"Plastic bags come in many different colors."'], a:1},
+  {q:'Upgrade: "I like cola, but it is expensive now." — Which is the best general example?', o:['"Cola tastes great, so the price does not matter to me."','"The sugar tax on soft drinks in the UK has raised prices to reduce consumption."','"I drink cola every day after school."'], a:1},
+  {q:'Upgrade: "My family turns off lights to save money." — Which is the best general example?', o:['"Many governments encourage energy-saving habits through national campaigns."','"Turning off lights makes our house dark and boring."','"Light bulbs are expensive to buy at the store."'], a:0},
+  {q:'Upgrade: "I recycle bottles at my house." — Which is the best general example?', o:['"Recycling is fun to do on weekends with my family."','"Countries like Sweden have built recycling systems that reuse most household waste."','"Bottles can be made of glass or plastic."'], a:1},
+  {q:'Upgrade: "I feel hot in summer now." — Which is the best general example?', o:['"Records show that global average temperatures have risen over the past decades."','"I prefer winter because summer makes me sweat."','"Summer is my favorite season of the year."'], a:0},
+],'x3fb',()=>{
+  sub.m3=true; document.getElementById('mis3stat').textContent='✅ สำเร็จ'; document.getElementById('mis3').removeAttribute('open');
+  showRobot('🤖 <b>สรุป:</b> เปลี่ยนเรื่องส่วนตัว ("ฉันไม่ชอบ...") ให้เป็นตัวอย่างระดับประเทศ/โลก จะทำให้งานเขียนน่าเชื่อถือกว่า<br>👏 อัปเกรดได้เก่งมาก!',()=>{ unlockMission(4); chk4(); persist(); });
+},4,2);
+
+/* ============ ภารกิจ 4 : CONNECTOR DETECTIVE (5 คู่) ============ */
+(function(){
+  const pairs=[
+    {k:'d1', l:'But', r:'Contrast (ขัดแย้ง)'},
+    {k:'d2', l:'because', r:'Reason (เหตุผล)'},
+    {k:'d3', l:'For example,', r:'Example (ยกตัวอย่าง)'},
+    {k:'d4', l:'Also,', r:'Addition (เพิ่มข้อมูล)'},
+    {k:'d5', l:'So,', r:'Result (ผลลัพธ์)'},
+  ];
+  const L=document.getElementById('cdL'), R=document.getElementById('cdR'), fb=document.getElementById('cdFb');
+  let selL=null, left=pairs.length;
+  const mk=(txt,key,col)=>{ const b=document.createElement('button'); b.className='mitem'; b.textContent=txt; b.dataset.k=key; col.appendChild(b); return b; };
+  const ls=pairs.map(p=>mk(p.l,p.k,L));
+  pairs.slice().sort(()=>Math.random()-.5).forEach(p=>mk(p.r,p.k,R));
+  L.addEventListener('click',e=>{
+    const b=e.target.closest('.mitem'); if(!b||b.classList.contains('done'))return;
+    ls.forEach(x=>x.classList.remove('sel')); b.classList.add('sel'); selL=b;
+  });
+  R.addEventListener('click',e=>{
+    const b=e.target.closest('.mitem'); if(!b||b.classList.contains('done')||!selL)return;
+    if(b.dataset.k===selL.dataset.k){
+      hit(4);
+      b.classList.add('done'); selL.classList.add('done'); selL.classList.remove('sel'); selL=null; left--;
+      fb.className='fb ok'; fb.textContent=left===0?'🎉 จับคู่คำเชื่อมครบทุกรายการ':'✔ ถูกต้อง เหลืออีก '+left+' คู่';
+      if(left===0){
+        sub.m4=true; document.getElementById('mis4stat').textContent='✅ สำเร็จ'; document.getElementById('mis4').removeAttribute('open');
+        showRobot('🤖 <b>สรุป:</b> ย่อหน้ายาวใช้คำเชื่อมครบ 5 หน้าที่: ขัดแย้ง · เหตุผล · ตัวอย่าง · เพิ่มข้อมูล · ผลลัพธ์<br>👏 เยี่ยมมาก! ครบทั้ง 4 ภารกิจของ X-Ray แล้ว!',()=>{ chk4(); persist(); });
+      }
+    }else{
+      miss(4);
+      b.classList.remove('shake'); void b.offsetWidth; b.classList.add('shake');
+      fb.className='fb no'; fb.textContent='✖ คู่นี้ยังไม่เข้ากัน โปรดพิจารณาใหม่';
+    }
+  });
+})();
+
+
+/* ============ ⑤ SOCRATIC DIALOGUE ============ */
+const chatbox=document.getElementById('chatbox'), chatinputwrap=document.getElementById('chatinputwrap');
+function addMsg(who,html){
+  const m=document.createElement('div'); m.className='msg '+who;
+  const ico=document.createElement('div'); ico.className='ico'; ico.textContent= who==='bot'?'🤖':'🙂';
+  const bub=document.createElement('div'); bub.className='bub'; bub.innerHTML=html;
+  m.appendChild(ico); m.appendChild(bub); chatbox.appendChild(m);
+  chatbox.scrollTop=chatbox.scrollHeight;
+}
+const SOC_STEPS=[
+  {type:'task'},
+  {type:'bot', text:'โจทย์นี้ให้เราทำ 3 อย่างค่ะ 🧊 ลองเลือกดูว่าเราต้องทำอะไรบ้าง?'},
+  {type:'choice', act:5, options:[
+    {t:'อภิปราย View 1, อภิปราย View 2, และให้ความเห็นของเรา', ok:true},
+    {t:'สรุปบทอ่านทั้งหมดให้ครบทุกย่อหน้า', ok:false, why:'โจทย์ไม่ได้ให้สรุปบทอ่านค่ะ ลองใหม่นะคะ'},
+    {t:'เล่าประสบการณ์ส่วนตัวเกี่ยวกับหิมะ', ok:false, why:'โจทย์นี้ไม่ได้ให้เล่าเรื่องส่วนตัวค่ะ ลองใหม่นะคะ'},
+  ], okMsg:'ถูกต้องค่ะ! 👏 จำไว้ 3 อย่างนี้ตลอดบทสนทนานะคะ: View 1 → View 2 → ความเห็นของเรา'},
+
+  {type:'bot', text:'เริ่มจากส่วน <b style="display:inline;">Topic</b> ก่อนเลยค่ะ 📝 ถ้าจะเปิดย่อหน้านี้ ควรเริ่มต้นด้วยประโยคแบบไหนดี?'},
+  {type:'choice', act:5, options:[
+    {t:'บอกว่าอะแลสกากำลังละลาย และคนทั่วโลกกำลังถกเถียงกัน', ok:true},
+    {t:'บอกความเห็นของตัวเองทันทีว่าเป็นอันตราย', ok:false, why:'ยังไม่ควรเลือกข้างตั้งแต่ประโยคแรกค่ะ ลองใหม่นะคะ 🤔'},
+    {t:'เล่าประสบการณ์ส่วนตัวเกี่ยวกับหิมะ', ok:false, why:'Topic sentence ควรพูดถึงหัวข้อของบทความค่ะ ลองใหม่นะคะ'},
+  ], okMsg:'ถูกต้องค่ะ! 👏 เปิดแบบนี้บอกหัวข้อโดยยังไม่เอนเอียงไปทางใด'},
+  {type:'text', key:'topic', placeholder:'พิมพ์ 1 วลีสั้น ๆ ที่จะใช้เป็น Topic ของคุณ...', prompt:'เขียนสั้น ๆ 1 วลีที่นักเรียนจะใช้เป็น Topic ของตัวเอง (ภาษาอังกฤษหรือไทยก็ได้)', hint:'ตัวอย่าง: "Alaska is melting fast, and people are talking about it."'},
+
+  {type:'bot', text:'ต่อไปมาคุยเรื่อง <b style="display:inline;">View 1 (global danger)</b> กันค่ะ 🌍'},
+  {type:'text', key:'view1Reason', placeholder:'พิมพ์เหตุผลของคุณ...', prompt:'ทำไมบางคนถึงคิดว่านี่เป็นอันตรายระดับโลก? (เหตุผล 1 ข้อ)', hint:'ตัวอย่าง: "เพราะน้ำแข็งละลายทำให้ระดับน้ำทะเลทั่วโลกสูงขึ้น"'},
+  {type:'text', key:'view1Example', placeholder:'พิมพ์ตัวอย่างของคุณ...', prompt:'มีตัวอย่างเหตุการณ์จริงอะไรบ้างที่สนับสนุนเหตุผลนี้?', hint:'ตัวอย่าง: "เกาะที่อยู่ต่ำในมหาสมุทรแปซิฟิกอาจถูกน้ำท่วม"'},
+
+  {type:'bot', text:'ตอนนี้มาคุยเรื่อง <b style="display:inline;">View 2 (local problem)</b> กันบ้างค่ะ 🏔️'},
+  {type:'text', key:'view2Reason', placeholder:'พิมพ์เหตุผลของคุณ...', prompt:'ทำไมบางคนถึงมองว่าเป็นแค่ปัญหาของอะแลสกาเอง? (เหตุผล 1 ข้อ)', hint:'ตัวอย่าง: "เพราะถนนพังและป่าตายเกิดขึ้นภายในอะแลสกาเท่านั้น"'},
+  {type:'text', key:'view2Example', placeholder:'พิมพ์ตัวอย่างของคุณ...', prompt:'มีตัวอย่างเหตุการณ์จริงอะไรบ้างที่สนับสนุนเหตุผลนี้?', hint:'ตัวอย่าง: "หมู่บ้าน Newtok ต้องย้ายถิ่นเพราะพื้นดินทรุด"'},
+
+  {type:'bot', text:'ถึงเวลาสำคัญแล้วค่ะ 🎯 นักเรียนเข้าข้างมุมมองไหน?'},
+  {type:'choice', act:5, options:[
+    {t:'🌍 ฉันคิดว่าเป็นอันตรายระดับโลก (Global)', ok:true, tag:'Global'},
+    {t:'🏔️ ฉันคิดว่าเป็นแค่ปัญหาของอะแลสกา (Local)', ok:true, tag:'Local'},
+    {t:'🌍🏔️ ฉันคิดว่าทั้งสองฝั่งมีส่วนถูก (Both)', ok:true, tag:'Both'},
+  ], okMsg:null, isOpinionPick:true},
+  {type:'text', key:'opinionReason', placeholder:'พิมพ์เหตุผลของคุณ...', prompt:'อธิบายเหตุผลสั้น ๆ ว่าทำไมนักเรียนถึงเลือกแบบนี้', hint:'ตัวอย่าง: "เพราะมหาสมุทรเชื่อมทุกประเทศเข้าด้วยกัน จึงกระทบทุกคน"'},
+  {type:'text', key:'opinionExample', placeholder:'พิมพ์ตัวอย่างของคุณ...', prompt:'มีตัวอย่างอะไรที่ช่วยสนับสนุนความเห็นของคุณ?', hint:'ตัวอย่าง: อ้างอิงตัวอย่างที่คุณให้ไว้ข้างต้นก็ได้ค่ะ'},
+
+  {type:'bot', text:'สุดท้ายค่ะ 🏁 ย่อหน้าควรจบด้วยอะไรดี?'},
+  {type:'choice', act:5, options:[
+    {t:'สรุปว่าโลกควรทำอะไรต่อไป', ok:true},
+    {t:'เล่าเรื่องตลกปิดท้าย', ok:false, why:'ย่อหน้าเชิงวิชาการไม่ควรจบด้วยเรื่องตลกค่ะ ลองใหม่นะคะ'},
+    {t:'ทิ้งท้ายไว้แบบไม่มีบทสรุป', ok:false, why:'ย่อหน้าที่ดีควรมีบทสรุปชัดเจนค่ะ ลองใหม่นะคะ'},
+  ], okMsg:'เยี่ยมมากค่ะ! 👏 ประโยคปิดท้ายที่ดีจะสรุปสิ่งที่ควรทำต่อไป'},
+  {type:'text', key:'closing', placeholder:'พิมพ์ประโยคปิดท้ายของคุณ...', prompt:'เขียนประโยคปิดท้ายสั้น ๆ ของนักเรียนเอง', hint:'ตัวอย่าง: "So, the world should care about Alaska and act together."'},
+
+  {type:'text', key:'extra', placeholder:'พิมพ์ (ถ้ามี) หรือข้ามได้เลย...', prompt:'มีอะไรอยากเพิ่มเติมอีกไหมคะ ก่อนไปเขียนจริงใน Part 2? (ข้อนี้ข้ามได้)', optional:true},
+];
+let socIdx=0;
+function renderSocStep(){
+  chatinputwrap.innerHTML='';
+  if(socIdx>=SOC_STEPS.length){
+    sub.socratic=true; markDone(5);
+    addMsg('bot','🎉 <b style="display:inline;">คุยกันครบทุกช่วงแล้ว!</b> ขอบคุณที่แบ่งปันความคิดนะคะ ดูสรุป Outline ของคุณด้านล่างนี้ได้เลยค่ะ 🗺️');
+    renderFlowchart();
+    return;
+  }
+  const step=SOC_STEPS[socIdx];
+  if(step.type==='task'){
+    addMsg('bot','สวัสดีค่ะ 🧊🤖 ก่อนไปเขียนจริงใน Part 2 มาดูโจทย์ของเรากันก่อนนะคะ:');
+    addMsg('bot','<b style="display:inline;">Writing Task:</b><br>"Some people believe the melting of Alaska is a <u>global danger</u>, while others think it is <u>only a local problem</u> for Alaska. Discuss both views and give your opinion."');
+    socIdx++; renderSocStep(); return;
+  }
+  if(step.type==='bot'){ addMsg('bot', step.text); socIdx++; renderSocStep(); return; }
+  if(step.type==='choice'){
+    const wrap=document.createElement('div'); wrap.className='chatopts';
+    step.options.forEach(opt=>{
+      const b=document.createElement('button'); b.className='chatopt'; b.textContent=opt.t;
+      b.addEventListener('click',()=>{
+        addMsg('me', opt.t); chatinputwrap.innerHTML='';
+        if(opt.ok){
+          hit(5);
+          if(step.isOpinionPick){ texts.socratic.opinionTag=opt.tag; addMsg('bot','รับทราบค่ะ 👍'); }
+          else { addMsg('bot', step.okMsg); }
+          socIdx++; setTimeout(renderSocStep,300);
+        }else{
+          miss(5); addMsg('bot', '🤔 '+opt.why); setTimeout(renderSocStep,300);
+        }
+      });
+      wrap.appendChild(b);
+    });
+    chatinputwrap.appendChild(wrap);
+    return;
+  }
+  if(step.type==='text'){
+    addMsg('bot', step.prompt);
+    const row=document.createElement('div'); row.className='chatinput';
+    const inp=document.createElement('input'); inp.placeholder=step.placeholder;
+    const btn=document.createElement('button'); btn.textContent='ส่ง';
+    function submit(skip){
+      const v=skip? '' : inp.value.trim();
+      if(!skip && !v){ return; }
+      texts.socratic[step.key]=v;
+      if(!texts.socratic.skipped) texts.socratic.skipped={};
+      texts.socratic.skipped[step.key] = !v;
+      addMsg('me', v || '(ข้ามข้อนี้ไปก่อน)');
+      if(!v) addMsg('bot','ไม่เป็นไรค่ะ 😊 ไว้ค่อยคิดต่อตอนร่าง Outline ก็ได้ ระบบจะทำเครื่องหมายจุดนี้ไว้ให้นะคะ');
+      chatinputwrap.innerHTML=''; socIdx++; persist();
+      setTimeout(renderSocStep,300);
+    }
+    btn.addEventListener('click',()=>submit(false));
+    inp.addEventListener('keydown',e=>{ if(e.key==='Enter') submit(false); });
+    row.appendChild(inp); row.appendChild(btn);
+    chatinputwrap.appendChild(row);
+    const btnRow=document.createElement('div'); btnRow.style.cssText='display:flex; gap:8px; margin-top:7px;';
+    if(step.hint){
+      const hb=document.createElement('button'); hb.className='hintbtn'; hb.textContent='💡 ดูตัวอย่าง';
+      hb.addEventListener('click',()=>{ addMsg('bot','💡 '+step.hint); });
+      btnRow.appendChild(hb);
+    }
+    const sk=document.createElement('button'); sk.className='skipbtn'; sk.textContent='ข้ามไปก่อน ⏭';
+    sk.addEventListener('click',()=>submit(true));
+    btnRow.appendChild(sk);
+    chatinputwrap.appendChild(btnRow);
+    return;
+  }
+}
+function flowBox(lbl, reason, example){
+  const rFlag = !reason ? '<span class="flagnote">⚠️ ยังไม่ได้เติม — เติมตอนร่าง Outline นะคะ</span>' : esc(reason);
+  const eFlag = !example ? '<span class="flagnote">⚠️ ยังไม่ได้เติม — เติมตอนร่าง Outline นะคะ</span>' : esc(example);
+  return '<div class="flowmini"><b>Reason</b>'+rFlag+'</div><div class="flowmini"><b>Example</b>'+eFlag+'</div>';
+}
+function renderFlowchart(){
+  const t=texts.socratic;
+  const flowEl=document.getElementById('flowChart'); flowEl.innerHTML='';
+  const topicFlag = t.topic || '<span class="flagnote">⚠️ ยังไม่ได้เติม — เติมตอนร่าง Outline นะคะ</span>';
+  flowEl.innerHTML =
+    '<div class="flownode n1"><b>Topic / Introduction</b>'+(t.topic?esc(t.topic):topicFlag)+'</div>'
+    +'<div class="flowarrow">⬇</div>'
+    +'<div class="flowbranch">'
+      +'<div class="flowcol v1"><div class="colhead">🌍 View 1 — Global Danger</div>'+flowBox('View1', t.view1Reason, t.view1Example)+'</div>'
+      +'<div class="flowcol v2"><div class="colhead">🏔️ View 2 — Local Problem</div>'+flowBox('View2', t.view2Reason, t.view2Example)+'</div>'
+    +'</div>'
+    +'<div class="flowmerge">🔽 &nbsp; เลือกข้าง &nbsp; 🔽</div>'
+    +'<div class="flowop side-'+(t.opinionTag||'Both')+'"><b>My Opinion: '+(t.opinionTag||'—')+'</b>'
+      +'<div style="margin-top:5px;"><b style="display:inline; font-size:.72rem; color:var(--mut);">Reason:</b> '+(t.opinionReason?esc(t.opinionReason):'<span class="flagnote">⚠️ ยังไม่ได้เติม</span>')+'</div>'
+      +'<div style="margin-top:3px;"><b style="display:inline; font-size:.72rem; color:var(--mut);">Example:</b> '+(t.opinionExample?esc(t.opinionExample):'<span class="flagnote">⚠️ ยังไม่ได้เติม</span>')+'</div>'
+    +'</div>'
+    +'<div class="flowarrow">⬇</div>'
+    +'<div class="flownode n5"><b>Conclusion / Closing</b>'+(t.closing?esc(t.closing):'<span class="flagnote">⚠️ ยังไม่ได้เติม — เติมตอนร่าง Outline นะคะ</span>')+'</div>'
+    +(t.extra? '<div class="flowarrow">⬇</div><div class="flownode n3"><b>หมายเหตุเพิ่มเติม</b>'+esc(t.extra)+'</div>' : '');
+  document.getElementById('flowResult').style.display='block';
+}
+renderSocStep();
+
+/* ============ ⑥ SELF-ASSESSMENT + SATISFACTION (Likert) ============ */
+const READY_ITEMS=[
+  {k:'vocab', q:'ฉันมีคลังคำศัพท์และคำเชื่อมพร้อมใช้ในการเขียน'},
+  {k:'task', q:'ฉันเข้าใจโจทย์และแยกได้ว่า View 1 กับ View 2 ต่างกันอย่างไร'},
+  {k:'rubric', q:'ฉันรู้จักเกณฑ์ประเมิน 5 มิติ และใช้ตรวจสอบงานตนเองได้'},
+  {k:'structure', q:'ฉันเข้าใจโครงสร้างย่อหน้า 5 ส่วนจากย่อหน้าต้นแบบ'},
+  {k:'idea', q:'ฉันมีไอเดียเริ่มต้นของตนเองครบทั้ง 5 ส่วนจากบทสนทนา'},
+  {k:'overall', q:'โดยรวมฉันพร้อมที่จะเขียนย่อหน้าจริงใน Part 2'},
+];
+const SAT_ITEMS=[
+  {k:'fun', q:'กิจกรรมในคาบนี้สนุกและน่าสนใจ'},
+  {k:'clear', q:'คำชี้แจงและขั้นตอนในแต่ละกิจกรรมชัดเจน เข้าใจง่าย'},
+  {k:'useful', q:'กิจกรรมช่วยให้ฉันเตรียมตัวเขียนได้ดีขึ้น'},
+];
+const SCALE=['1 น้อยที่สุด','2 น้อย','3 ปานกลาง','4 มาก','5 มากที่สุด'];
+function buildLikert(holderId, items, store){
+  const holder=document.getElementById(holderId);
+  items.forEach(it=>{
+    const box=document.createElement('div'); box.className='likert';
+    const p=document.createElement('p'); p.textContent=it.q; box.appendChild(p);
+    const row=document.createElement('div'); row.className='lkrow';
+    for(let i=1;i<=5;i++){
+      const b=document.createElement('button'); b.className='lk'; b.textContent=i; b.dataset.v=i;
+      b.addEventListener('click',()=>{
+        row.querySelectorAll('.lk').forEach(x=>x.classList.remove('on'));
+        b.classList.add('on');
+        store[it.k]=i;
+        checkAllAnswered();
+        persist();
+      });
+      row.appendChild(b);
+    }
+    box.appendChild(row);
+    const sc=document.createElement('div'); sc.className='lkscale'; sc.textContent=SCALE.join(' · ');
+    box.appendChild(sc);
+    holder.appendChild(box);
+  });
+}
+buildLikert('likertReady', READY_ITEMS, texts.selfAssess);
+buildLikert('likertSat', SAT_ITEMS, texts.satisfaction);
+/* ---------- AVATAR PICKER (in learner section) ---------- */
+const AVATARS = ['🧊','🐧','🐻‍❄️','🐺','🦊','🦭','🐋','🦉','🌲','🏔️','⛄','❄️','🌟','🦅','🐯','🦁','🐼','🦄','🌈','🚀'];
+const avatarGridEl = document.getElementById('avatarGrid');
+const avatarLabelEl = document.getElementById('avatarLabel');
+AVATARS.forEach(e => {
+  const b = document.createElement('button');
+  b.className = 'avitem-big';
+  b.type = 'button';
+  b.textContent = e;
+  b.addEventListener('click', ()=> {
+    avatarGridEl.querySelectorAll('.avitem-big').forEach(x=>x.classList.remove('sel'));
+    b.classList.add('sel');
+    texts.avatar = e;
+    avatarLabelEl.textContent = '✅ เลือกแล้ว: ' + e + ' — จะแสดงบนหน้าสรุปผลของคุณ';
+    persist();
+  });
+  avatarGridEl.appendChild(b);
+});
+function checkAllAnswered(){
+  const total = READY_ITEMS.length + SAT_ITEMS.length;
+  const answered = Object.keys(texts.selfAssess).length + Object.keys(texts.satisfaction).length;
+  const btn=document.getElementById('finishBtn');
+  btn.disabled = answered<total;
+  btn.textContent = answered<total ? '✔ ยืนยันคำตอบ และดูรายงานคะแนน + สรุปผลการเรียนรู้ (ตอบแล้ว '+answered+'/'+total+' ข้อ)' : '✔ ยืนยันคำตอบ และดูรายงานคะแนน + สรุปผลการเรียนรู้ — แตะเลย';
+}
+document.getElementById('finishBtn').addEventListener('click',()=>{
+  document.getElementById('finishBtn').disabled=true;
+  markDone(6);
+  document.getElementById('toSum').style.display='inline-block';
+  go('sum');
+});
+
+/* ============ PROFILE ============ */
+(function(){
+  const saved=store.get(K_PROFILE)||{};
+  const map={lnFirst:'firstName',lnLast:'lastName',lnNo:'number',lnClass:'className',lnEmail:'email',lnSchool:'school'};
+  if(saved.stateChoice && document.getElementById('lnState')) document.getElementById('lnState').value = saved.stateChoice;
+  Object.keys(map).forEach(id=>{
+    if(saved[map[id]]) document.getElementById(id).value=saved[map[id]];
+    document.getElementById(id).addEventListener('input',persistProfile);
+  });
+})();
+
+/* ============ SUMMARY ============ */
+function esc(s){ return (s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;'); }
+function avg(obj){ const v=Object.values(obj); return v.length? (v.reduce((a,b)=>a+b,0)/v.length).toFixed(1) : '–'; }
+function buildSummary(){
+  const m=metrics(), p=store.get(K_PROFILE)||{};
+  const nm=[p.firstName,p.lastName].filter(Boolean).join(' ');
+  const heroTitles=[
+    [100,'🏆 สุดยอด! พร้อม 100% ลุย Part 2 เลย!'],
+    [80,'🚀 เกือบสุดแล้ว! ใกล้พร้อมมาก ๆ!'],
+    [50,'⭐ มาไกลมากแล้ว! ไปต่อกันเถอะ!'],
+    [0,'🌱 เริ่มต้นได้ดีมาก! สู้ ๆ นะคะ!'],
+  ];
+  document.getElementById('sumHeroTitle').innerHTML = (texts.avatar? '<div class="avhero">'+texts.avatar+'</div>' : '') + (heroTitles.find(x=>m.pct>=x[0])||heroTitles[3])[1];
+  /* Walk-Rally SVG trail: START flag → 6 activity stops → FINISH flag */
+  const ladderEl=document.getElementById('sumLadder'); ladderEl.innerHTML='';
+  const stops=floeDefs.map(f=>({n:f.n, nm:f.nm, done:!!done[f.n]}));
+  const doneCount=stops.filter(s=>s.done).length;
+  const av = texts.avatar || '🚶';
+  /* Trail geometry: 8 nodes total (start + 6 + finish), horizontal path with vertical wiggle */
+  const W=760, H=180;
+  const startX=32, endX=W-32;
+  const totalNodes=stops.length; /* 6 */
+  /* positions for each stop */
+  const xs=[]; for(let i=0;i<totalNodes;i++){ xs.push(startX + 40 + (endX-startX-80) * (i+1)/(totalNodes+1)); }
+  const ys=stops.map((_,i)=> H/2 + (i%2===0 ? -22 : 22));
+  /* Build curved trail path */
+  let dPath = `M ${startX} ${H/2}`;
+  const pts=[[startX,H/2], ...xs.map((x,i)=>[x,ys[i]]), [endX,H/2]];
+  for(let i=1;i<pts.length;i++){
+    const [px,py]=pts[i-1], [cx,cy]=pts[i];
+    const midX=(px+cx)/2;
+    dPath += ` Q ${midX} ${py} ${midX} ${(py+cy)/2} T ${cx} ${cy}`;
+  }
+  /* Progress path (portion up to last completed stop) */
+  const lastDoneIdx = doneCount>0 ? doneCount-1 : -1;
+  const avPos = lastDoneIdx>=0 ? {x:xs[lastDoneIdx], y:ys[lastDoneIdx]} : {x:startX, y:H/2};
+  /* Compose SVG */
+  let svg = `<svg viewBox="0 0 ${W} ${H}" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="เส้นทางการเรียนรู้">`;
+  /* Trail base */
+  svg += `<defs>
+    <linearGradient id="trailGrad" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#F59E0B"/>
+      <stop offset="50%" stop-color="#EC4899"/>
+      <stop offset="100%" stop-color="#10B981"/>
+    </linearGradient>
+    <filter id="glow"><feGaussianBlur stdDeviation="3"/></filter>
+  </defs>`;
+  /* Background dotted trail */
+  svg += `<path d="${dPath}" stroke="rgba(255,255,255,.35)" stroke-width="6" stroke-dasharray="4 8" fill="none" stroke-linecap="round"/>`;
+  /* Solid completed trail (drawn on top for progress up to lastDoneIdx) */
+  if(lastDoneIdx>=0){
+    let doneD = `M ${startX} ${H/2}`;
+    const donePts = [[startX,H/2], ...xs.slice(0,lastDoneIdx+1).map((x,i)=>[x,ys[i]])];
+    for(let i=1;i<donePts.length;i++){
+      const [px,py]=donePts[i-1], [cx,cy]=donePts[i];
+      const midX=(px+cx)/2;
+      doneD += ` Q ${midX} ${py} ${midX} ${(py+cy)/2} T ${cx} ${cy}`;
+    }
+    svg += `<path d="${doneD}" stroke="url(#trailGrad)" stroke-width="6" fill="none" stroke-linecap="round" filter="url(#glow)"/>`;
+    svg += `<path d="${doneD}" stroke="#fff" stroke-width="3" fill="none" stroke-linecap="round"/>`;
+  }
+  /* START flag */
+  svg += `<g transform="translate(${startX-14},${H/2-14})">
+    <text x="0" y="20" font-size="26">🚩</text>
+    <text x="-4" y="42" font-size="10" fill="#fff" font-weight="700">START</text>
+  </g>`;
+  /* Activity stops */
+  stops.forEach((s,i)=>{
+    const cx=xs[i], cy=ys[i];
+    const okColor = s.done ? '#FCD34D' : 'rgba(255,255,255,.25)';
+    const strokeColor = s.done ? '#F59E0B' : 'rgba(255,255,255,.5)';
+    svg += `<circle cx="${cx}" cy="${cy}" r="15" fill="${okColor}" stroke="${strokeColor}" stroke-width="2.5"/>`;
+    svg += `<text x="${cx}" y="${cy+5}" font-size="14" text-anchor="middle" font-weight="700" fill="${s.done?'#78350F':'#fff'}">${s.done?'🏅':(i+1)}</text>`;
+    /* Label below/above alternately */
+    const labelY = cy < H/2 ? cy-22 : cy+30;
+    svg += `<text x="${cx}" y="${labelY}" font-size="9" text-anchor="middle" fill="#fff" font-weight="600">${s.nm.substring(0,14)}</text>`;
+  });
+  /* FINISH flag */
+  svg += `<g transform="translate(${endX-14},${H/2-14})">
+    <text x="0" y="20" font-size="26">🏁</text>
+    <text x="-6" y="42" font-size="10" fill="#fff" font-weight="700">FINISH</text>
+  </g>`;
+  /* Avatar at current position */
+  svg += `<g transform="translate(${avPos.x-14},${avPos.y-28})">
+    <circle cx="14" cy="14" r="16" fill="#fff" stroke="#F59E0B" stroke-width="2.5"/>
+    <text x="14" y="21" font-size="22" text-anchor="middle">${av}</text>
+  </g>`;
+  /* Progress label */
+  svg += `<text x="${W/2}" y="${H-6}" font-size="12" text-anchor="middle" fill="#fff" font-weight="700">🎯 ผ่านแล้ว ${doneCount} / ${totalNodes} ด่าน · เส้นทางการเรียนรู้ Cycle 1 · Part 1</text>`;
+  svg += `</svg>`;
+  ladderEl.innerHTML = svg;
+  document.getElementById('sumLearner').innerHTML=
+    (texts.avatar? texts.avatar+' ' : '👤 ')+'<b style="display:inline;">'+esc(nm||'(ยังไม่ได้กรอกชื่อ)')+'</b>'
+    +(p.className?' · ชั้น '+esc(p.className):'')+(p.number?' · เลขที่ '+esc(p.number):'')
+    +(p.school?' · '+esc(p.school):'')+(p.email?' · '+esc(p.email):'')
+    +' · 🧊 State 1 Beginner (ระดับเริ่มต้น)';
+  document.getElementById('sumPct').textContent=m.pct+'%';
+  document.getElementById('sumPctBar').style.width=m.pct+'%';
+  document.getElementById('sumDone').textContent=m.n;
+  document.getElementById('sumAcc').textContent=m.acc===null?'–':m.acc+'%';
+  document.getElementById('sumAccBar').style.width=(m.acc||0)+'%';
+
+  const tbl=document.getElementById('scoreTable');
+  let rows='<tr><th>กิจกรรม</th><th>สถานะ</th><th>ความแม่นยำ</th><th>คลิกทั้งหมด</th><th>Efficiency</th></tr>';
+  let totClk=0;
+  floeDefs.forEach(f=>{
+    const a=actAcc(f.n), eff=actEfficiency(f.n);
+    const clk=CLK[f.n]||0; totClk+=clk;
+    rows+='<tr><td>'+NUM[f.n]+' '+f.nm+'</td><td class="num">'+(done[f.n]?'✅ สำเร็จ':'⬜ ยังไม่เสร็จ')+'</td><td class="num">'+(a===null?'–':a+'%')+'</td><td class="num">'+(clk||'–')+'</td><td class="num">'+(eff===null?'–':eff+'%')+'</td></tr>';
+  });
+  rows+='<tr class="total"><td>รวมทั้งหมด</td><td class="num">'+m.n+' / 6</td><td class="num">'+(m.acc===null?'–':m.acc+'%')+'</td><td class="num">'+totClk+'</td><td class="num">—</td></tr>';
+  tbl.innerHTML=rows;
+  /* Add note about efficiency */
+  let noteEl=document.getElementById('effNote');
+  if(!noteEl){ noteEl=document.createElement('div'); noteEl.id='effNote'; noteEl.style.cssText='font-size:.75rem; color:var(--mut); margin-top:6px; padding:8px 10px; background:#FEF3C7; border-left:3px solid #D97706; border-radius:6px;'; tbl.parentNode.insertBefore(noteEl, tbl.nextSibling); }
+  noteEl.innerHTML='<b>💡 Efficiency = จำนวนคำตอบ ÷ คลิกทั้งหมด × 100%</b> — ค่าใกล้ 100% หมายถึง คลิกอย่างมีสติ อ่านก่อนตอบ · ค่าต่ำแสดงว่ามีการคลิกเยอะกว่าที่จำเป็น';
+
+  const bg=document.getElementById('sumBadges'); bg.innerHTML='';
+  floeDefs.forEach(f=>{
+    const d=document.createElement('div'); d.className='bdg'+(done[f.n]?' got':'');
+    d.innerHTML='<span class="ic">'+(done[f.n]?'🏅':'⬜')+'</span>'+NUM[f.n]+' '+f.nm;
+    bg.appendChild(d);
+  });
+  let praise;
+  if(m.pct===100&&(m.acc??0)>=85) praise='🌟 ยอดเยี่ยมมาก! นักเรียนปฏิบัติครบทั้ง 6 กิจกรรมด้วยความแม่นยำสูง มีความเข้าใจโจทย์ เกณฑ์ประเมิน โครงสร้างย่อหน้า และมีไอเดียเริ่มต้นของตนเองครบถ้วน — พร้อมเข้าสู่การเขียนจริงใน Part 2 อย่างเต็มที่';
+  else if(m.pct===100) praise='🎉 ยอดเยี่ยม! นักเรียนปฏิบัติครบทั้ง 6 กิจกรรม ความมุ่งมั่นในการวิเคราะห์และฝึกฝนน่าชื่นชมอย่างยิ่ง';
+  else if(m.pct>=60) praise='👍 ดีมาก! นักเรียนมีความก้าวหน้าชัดเจน เหลืออีกเพียงเล็กน้อยก็จะครบถ้วน ขอเป็นกำลังใจให้ปฏิบัติต่อจนสำเร็จ';
+  else praise='🌱 เป็นจุดเริ่มต้นที่ดี! ค่อย ๆ ปฏิบัติทีละกิจกรรมตามเส้นทางการเรียนรู้ ทุกความพยายามมีคุณค่า';
+  document.getElementById('sumPraise').textContent=praise;
+  const missing=floeDefs.filter(f=>!done[f.n]);
+  let advice='<b style="display:inline;">📌 คำแนะนำ:</b> ';
+  if(missing.length){
+    advice+='ควรกลับไปปฏิบัติกิจกรรมต่อไปนี้ให้ครบก่อนเข้าสู่ Part 2<ul>'+missing.map(f=>'<li>'+NUM[f.n]+' '+f.nm+'</li>').join('')+'</ul>';
+  } else {
+    const weakest=floeDefs.map(f=>({f,a:actAcc(f.n)})).filter(x=>x.a!==null).sort((a,b)=>a.a-b.a)[0];
+    if((m.acc??100)<70 && weakest){
+      advice+='ปฏิบัติครบทุกกิจกรรมแล้ว แต่ความแม่นยำยังควรพัฒนา — แนะนำให้ทบทวนกิจกรรม '+NUM[weakest.f.n]+' '+weakest.f.nm+' อีกครั้งก่อนเขียนจริง (ความแม่นยำ '+weakest.a+'%)';
+    } else if((m.acc??100)<85){
+      advice+='ปฏิบัติครบทุกกิจกรรมด้วยความแม่นยำระดับดี นักเรียนพร้อมเข้าสู่ Part 2 ได้อย่างมั่นใจ';
+    } else {
+      advice+='นักเรียนมีความพร้อมครบถ้วนทุกด้าน พร้อมเข้าสู่ Part 2: Write & Fight! ได้ทันที';
+    }
+  }
+  document.getElementById('sumAdvice').innerHTML=advice;
+
+  const w=document.getElementById('sumWork');
+  const readyAvg=avg(texts.selfAssess), satAvg=avg(texts.satisfaction);
+  let rows2='';
+  rows2+='<div class="wk"><b>📈 ค่าเฉลี่ยความพร้อมตนเอง (Self-Assessment):</b> '+readyAvg+' / 5</div>';
+  rows2+='<div class="wk"><b>😊 ค่าเฉลี่ยความพึงพอใจ (Satisfaction):</b> '+satAvg+' / 5</div>';
+  const t=texts.socratic||{};
+  if(t.topic||t.view1||t.view2||t.opinionWhy||t.closing){
+    rows2+='<div class="wk"><b>🗺️ Outline จากบทสนทนา (Socratic Dialogue):</b><br>'
+      +'1. Topic — '+esc(t.topic||'—')+'<br>'
+      +'2. View 1 — '+esc(t.view1||'—')+'<br>'
+      +'3. View 2 — '+esc(t.view2||'—')+'<br>'
+      +'4. Opinion ('+esc(t.opinionTag||'—')+') — '+esc(t.opinionWhy||'—')+'<br>'
+      +'5. Closing — '+esc(t.closing||'—')+'</div>';
+  }
+  w.innerHTML=rows2;
+  persist();
+}
+
+/* ============ RESTORE ============ */
+(function(){
+  const saved=store.get(K_P1);
+  if(saved&&saved.state===1){
+    if(saved.done) Object.keys(saved.done).forEach(k=>{ if(saved.done[k]) done[k]=true; });
+    if(saved.texts){ Object.assign(texts, saved.texts); if(!texts.socratic) texts.socratic={}; }
+    if(saved.clicks){ Object.assign(CLK, saved.clicks); }
+  }
+  /* restore avatar picker selection visually */
+  if(texts.avatar){
+    setTimeout(()=>{
+      const btns = document.querySelectorAll('#avatarGrid .avitem-big');
+      btns.forEach(x=>{ if(x.textContent===texts.avatar){ x.classList.add('sel'); }});
+      const lbl = document.getElementById('avatarLabel');
+      if(lbl) lbl.textContent = '✅ เลือกแล้ว: ' + texts.avatar + ' — จะแสดงบนหน้าสรุปผลของคุณ';
+    }, 50);
+  }
+  if(done[6]) document.getElementById('toSum').style.display='inline-block';
+  refresh();
+  go(0);
+})();
+</script>
+</body>
+</html>

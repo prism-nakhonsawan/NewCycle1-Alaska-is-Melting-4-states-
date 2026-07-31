@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cycle 1 · Master Hub · Alaska Is Melting</title>
+<link href="https://fonts.googleapis.com/css2?family=Mitr:wght@400;500;600;700&family=IBM+Plex+Sans+Thai:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --primary:#0F4C5C; --primary-dark:#093542; --primary-light:#E6F0F3;
+  --amber:#F59E0B; --amber-dark:#B45309; --amber-light:#FEF3C7;
+  --success:#16A34A; --success-dark:#15803D; --success-light:#DCFCE7;
+  --n-900:#0F172A; --n-700:#334155; --n-500:#64748B; --n-300:#CBD5E1; --n-100:#F1F5F9; --n-50:#F8FAFC;
+  --blue:#1E40AF; --blue-light:#DBEAFE; --blue-dark:#1E3A8A;
+  --orange:#EA580C; --orange-light:#FED7AA; --orange-dark:#C2410C;
+  --purple:#7C3AED; --purple-light:#EDE9FE; --purple-dark:#5B21B6;
+  --pink:#DB2777; --pink-light:#FCE7F3; --pink-dark:#9F1239;
+  --shadow-sm:0 2px 8px rgba(15,76,92,.08);
+  --shadow-md:0 8px 24px rgba(15,76,92,.12);
+  --shadow-lg:0 16px 48px rgba(15,76,92,.18);
+  --radius-sm:8px; --radius:12px; --radius-lg:18px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:'IBM Plex Sans Thai',system-ui,sans-serif;background:linear-gradient(180deg,#DFF0FA 0%,#EAF4FB 320px,#F8FAFC 100%);color:var(--n-900);min-height:100vh;line-height:1.65;padding-bottom:60px}
+h1,h2,h3{font-family:'Mitr',sans-serif;font-weight:600;line-height:1.25}
+
+header.hero{background:linear-gradient(135deg,#A78BFA 0%,#60A5FA 25%,#34D399 50%,#FBBF24 75%,#F472B6 100%);color:#fff;padding:32px 20px 68px;position:relative;overflow:hidden}
+header.hero .bg-ice{position:absolute;inset:auto 0 -2px 0;height:52px;background:radial-gradient(60px 40px at 12% 100%,#EAF4FB 98%,transparent),radial-gradient(90px 52px at 34% 100%,#EAF4FB 98%,transparent),radial-gradient(70px 44px at 58% 100%,#EAF4FB 98%,transparent),radial-gradient(110px 56px at 85% 100%,#EAF4FB 98%,transparent)}
+header.hero .hero-inner{max-width:960px;margin:0 auto;position:relative}
+.kicker{font-family:'Mitr',sans-serif;font-size:.78rem;letter-spacing:.14em;text-transform:uppercase;color:#fff;opacity:.95;margin-bottom:8px;text-shadow:0 1px 2px rgba(0,0,0,.25)}
+h1.hero-title{font-family:'Mitr',sans-serif;font-weight:600;font-size:clamp(1.55rem,4.6vw,2.2rem);color:#fff;line-height:1.22;text-shadow:0 2px 6px rgba(0,0,0,.3)}
+h1.hero-title .em{color:#FEF3C7;text-shadow:0 2px 6px rgba(0,0,0,.4)}
+.hero-sub{margin-top:8px;font-size:.95rem;color:#fff;opacity:.95;text-shadow:0 1px 3px rgba(0,0,0,.25)}
+
+.wrap{max-width:960px;margin:-36px auto 0;padding:0 20px;position:relative;z-index:5}
+
+.card{background:#fff;border-radius:var(--radius-lg);padding:26px 28px;margin-bottom:22px;box-shadow:var(--shadow-md);border:1px solid rgba(15,76,92,.08)}
+.card-head{display:flex;align-items:center;gap:14px;margin-bottom:18px;padding-bottom:14px;border-bottom:2px solid var(--n-100)}
+.card-head .icon{width:44px;height:44px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-family:'Mitr',sans-serif;font-weight:600;font-size:1.15rem;color:#fff;flex-shrink:0}
+.card-head .icon.i1{background:linear-gradient(135deg,var(--amber),var(--amber-dark))}
+.card-head .icon.i2{background:linear-gradient(135deg,var(--success),var(--success-dark))}
+.card-head .icon.i3{background:linear-gradient(135deg,var(--primary),var(--primary-dark))}
+.card-head .icon.i4{background:linear-gradient(135deg,var(--purple),var(--purple-dark))}
+.card-head h2{font-size:1.25rem;color:var(--n-900)}
+.card-head .subtitle{font-size:.82rem;color:var(--n-500);font-family:'IBM Plex Sans Thai',sans-serif;font-weight:400;display:block;margin-top:2px}
+
+/* Course info grid - styled like mode-cards with distinct colored borders */
+.course-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px;margin-bottom:20px}
+@media(max-width:680px){.course-grid{grid-template-columns:1fr}}
+.course-item{border-radius:var(--radius);padding:16px 18px;display:flex;gap:12px;align-items:flex-start;border:2px solid;background:#fff;transition:.2s}
+.course-item:hover{transform:translateY(-2px);box-shadow:var(--shadow-md)}
+.course-item.subject{border-color:var(--amber);background:linear-gradient(160deg,var(--amber-light) 0%,#fff 65%)}
+.course-item.level{border-color:var(--success);background:linear-gradient(160deg,var(--success-light) 0%,#fff 65%)}
+.course-item.school{border-color:var(--primary);background:linear-gradient(160deg,var(--primary-light) 0%,#fff 65%)}
+.course-item .course-icon{width:40px;height:40px;border-radius:11px;display:flex;align-items:center;justify-content:center;font-size:1.35rem;color:#fff;flex-shrink:0;box-shadow:0 3px 10px rgba(0,0,0,.12)}
+.course-item.subject .course-icon{background:linear-gradient(135deg,var(--amber),var(--amber-dark))}
+.course-item.level .course-icon{background:linear-gradient(135deg,var(--success),var(--success-dark))}
+.course-item.school .course-icon{background:linear-gradient(135deg,var(--primary),var(--primary-dark))}
+.course-item b{display:block;font-family:'Mitr',sans-serif;font-weight:600;font-size:.88rem;margin-bottom:3px}
+.course-item.subject b{color:var(--amber-dark)}
+.course-item.level b{color:var(--success-dark)}
+.course-item.school b{color:var(--primary-dark)}
+.course-item span{font-size:.88rem;color:var(--n-700);display:block;line-height:1.5;font-weight:500}
+
+/* Section title */
+.section-title{font-family:'Mitr',sans-serif;font-weight:600;color:var(--primary-dark);font-size:1.05rem;margin:20px 0 12px;display:flex;align-items:center;gap:8px}
+
+/* Goal box - styled with distinct border */
+.goal-banner{background:linear-gradient(135deg,var(--primary-light),#fff);border:2px solid var(--primary);border-radius:var(--radius);padding:16px 20px;font-size:.93rem;margin-bottom:14px;line-height:1.75;box-shadow:var(--shadow-sm)}
+.goal-banner b{color:var(--primary);font-family:'Mitr',sans-serif;font-weight:600}
+
+/* Objectives - matching style with sharp border */
+.objectives{background:linear-gradient(135deg,var(--amber-light),#FFFEF5);border:2px solid var(--amber);border-radius:var(--radius);padding:16px 22px;box-shadow:var(--shadow-sm)}
+.objectives ol{padding-left:22px;font-size:.9rem;line-height:1.85;color:var(--n-900)}
+.objectives ol li{margin-bottom:6px}
+.objectives ol li b{color:var(--amber-dark);font-family:'Mitr',sans-serif;font-weight:600}
+
+/* Mode cards (Hybrid/Flipped) */
+.mode-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px}
+@media(max-width:780px){.mode-grid{grid-template-columns:1fr}}
+.mode-card{border-radius:var(--radius);padding:18px 20px;border:2px solid;background:#fff;transition:.2s}
+.mode-card:hover{transform:translateY(-2px);box-shadow:var(--shadow-md)}
+.mode-card.home{border-color:var(--success);background:linear-gradient(160deg,#F0FDF4 0%,#fff 60%)}
+.mode-card.school{border-color:var(--primary);background:linear-gradient(160deg,#E6F0F3 0%,#fff 60%)}
+.mode-card.review{border-color:var(--purple);background:linear-gradient(160deg,#F3F0FF 0%,#fff 60%)}
+.mode-header{display:flex;align-items:center;gap:10px;margin-bottom:10px}
+.mode-icon{width:44px;height:44px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:1.55rem;color:#fff;flex-shrink:0}
+.mode-card.home .mode-icon{background:linear-gradient(135deg,var(--success),var(--success-dark))}
+.mode-card.school .mode-icon{background:linear-gradient(135deg,var(--primary),var(--primary-dark))}
+.mode-card.review .mode-icon{background:linear-gradient(135deg,var(--purple),var(--purple-dark))}
+.mode-title{font-family:'Mitr',sans-serif;font-weight:600;font-size:.98rem;color:var(--n-900);line-height:1.3}
+.mode-title small{display:block;font-family:'IBM Plex Sans Thai',sans-serif;font-weight:400;font-size:.72rem;color:var(--n-500);letter-spacing:.05em;text-transform:uppercase;margin-top:2px}
+.mode-desc{font-size:.85rem;color:var(--n-700);line-height:1.6}
+
+/* Instruction box */
+.instruction{
+  background:linear-gradient(135deg,var(--blue-light),#fff);
+  border-left:5px solid var(--blue);border-radius:var(--radius);
+  padding:16px 20px;font-size:.93rem;line-height:1.8;color:var(--n-900);
+}
+.instruction b{color:var(--blue-dark);font-family:'Mitr',sans-serif;font-weight:600}
+
+/* 4 State Buttons */
+.state-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+@media(max-width:720px){.state-grid{grid-template-columns:1fr}}
+.state-btn{
+  border-radius:var(--radius-lg);padding:22px 24px;border:2.5px solid;
+  background:#fff;text-decoration:none;color:var(--n-900);
+  display:flex;flex-direction:column;gap:6px;
+  transition:.25s;box-shadow:var(--shadow-sm);position:relative;overflow:hidden;
+}
+.state-btn:hover{transform:translateY(-3px);box-shadow:var(--shadow-lg)}
+.state-btn.s1{border-color:var(--success);background:linear-gradient(160deg,var(--success-light) 0%,#fff 60%)}
+.state-btn.s2{border-color:var(--blue);background:linear-gradient(160deg,var(--blue-light) 0%,#fff 60%)}
+.state-btn.s3{border-color:var(--amber);background:linear-gradient(160deg,var(--amber-light) 0%,#fff 60%)}
+.state-btn.s4{border-color:var(--purple);background:linear-gradient(160deg,var(--purple-light) 0%,#fff 60%)}
+.state-btn-head{display:flex;align-items:center;gap:14px;margin-bottom:8px}
+.state-emoji{
+  width:56px;height:56px;border-radius:14px;
+  display:flex;align-items:center;justify-content:center;
+  font-size:2rem;color:#fff;flex-shrink:0;
+  box-shadow:0 4px 14px rgba(0,0,0,.15);
+}
+.state-btn.s1 .state-emoji{background:linear-gradient(135deg,var(--success),var(--success-dark))}
+.state-btn.s2 .state-emoji{background:linear-gradient(135deg,var(--blue),var(--blue-dark))}
+.state-btn.s3 .state-emoji{background:linear-gradient(135deg,var(--amber),var(--amber-dark))}
+.state-btn.s4 .state-emoji{background:linear-gradient(135deg,var(--purple),var(--purple-dark))}
+.state-num{font-family:'Mitr',sans-serif;font-weight:600;font-size:.7rem;letter-spacing:.14em;text-transform:uppercase;color:var(--n-500)}
+.state-name{font-family:'Mitr',sans-serif;font-weight:600;font-size:1.28rem;color:var(--n-900);line-height:1.2}
+.state-desc{font-size:.85rem;color:var(--n-700);line-height:1.55;margin-top:4px}
+.state-cta{
+  display:inline-flex;align-items:center;gap:6px;
+  font-family:'Mitr',sans-serif;font-weight:600;font-size:.88rem;
+  color:var(--n-900);margin-top:10px;padding-top:10px;
+  border-top:1.5px dashed rgba(0,0,0,.12);
+}
+.state-cta::after{content:'→';transition:.2s;margin-left:4px}
+.state-btn:hover .state-cta::after{transform:translateX(4px)}
+
+.foot{text-align:center;color:var(--n-500);font-size:.8rem;margin-top:36px;padding-top:22px;border-top:1px dashed var(--n-300)}
+.foot b{color:var(--primary);font-family:'Mitr',sans-serif;font-weight:600}
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="hero-inner">
+    <div class="kicker">Differentiated Digital Writing Task Card · CbKST-Based</div>
+    <h1 class="hero-title">Cycle 1 · <span class="em">Alaska Is Melting</span> 🧊 ❄️</h1>
+    <div class="hero-sub">Master Hub · หน้าศูนย์กลาง · เลือกสถานะการเรียนรู้ตามระดับของนักเรียน</div>
+  </div>
+  <div class="bg-ice"></div>
+</header>
+
+<div class="wrap">
+
+  <!-- ======= 1. รายวิชา + เป้าหมาย + จุดประสงค์ ======= -->
+  <div class="card">
+    <div class="card-head">
+      <div class="icon i1">1</div>
+      <div>
+        <h2>รายวิชา · เป้าหมาย · จุดประสงค์การเรียนรู้</h2>
+        <span class="subtitle">Course · Goal · Learning Objectives</span>
+      </div>
+    </div>
+
+    <div class="course-grid">
+      <div class="course-item subject">
+        <div class="course-icon">📚</div>
+        <div><b>รายวิชา</b><span>ภาษาอังกฤษอ่านเขียน</span></div>
+      </div>
+      <div class="course-item level">
+        <div class="course-icon">🎓</div>
+        <div><b>ระดับชั้น</b><span>มัธยมศึกษาปีที่ 3</span></div>
+      </div>
+      <div class="course-item school">
+        <div class="course-icon">🏫</div>
+        <div><b>โรงเรียน</b><span>นครสวรรค์</span></div>
+      </div>
+    </div>
+
+    <div class="section-title">🎯 เป้าหมาย (รวม Part 1 + Part 2)</div>
+    <div class="goal-banner">
+      ฝึกกระบวนการเขียนย่อหน้าแบบ <b>Discuss Both Views and Give an Opinion</b> ในหัวข้อ "Alaska Is Melting" ผ่านการเตรียมความพร้อมด้านภาษาและวิเคราะห์โจทย์ (Part 1: Gear Up!) และการลงมือเขียนจริงพร้อมรับ AI feedback ตลอด 3 ร่าง (Part 2: Write &amp; Fight!) · <b>ระยะเวลาเรียนรวม 2 คาบ × 60 นาที</b>
+    </div>
+
+    <div class="section-title">📌 จุดประสงค์การเรียนรู้</div>
+    <div class="objectives">
+      <ol>
+        <li><b>เพื่อเตรียมนักเรียน</b> ให้มีความพร้อมครบทุกมิติก่อนเข้าสู่การลงมือเขียนจริงใน Part 2 อย่างมั่นใจ</li>
+        <li><b>เพื่อลงมือปฏิบัติ</b> การเขียนย่อหน้าแบบ Discuss Both Views and Give an Opinion</li>
+        <li><b>เพื่อส่งเสริม</b> การกำกับการเรียนรู้ด้วยตนเอง (Self-Regulated Learning)</li>
+      </ol>
+    </div>
+  </div>
+
+  <!-- ======= 2. แนวทางการใช้ใบงาน (Hybrid/Flipped) ======= -->
+  <div class="card">
+    <div class="card-head">
+      <div class="icon i2">2</div>
+      <div>
+        <h2>แนวทางการใช้ใบงาน (Hybrid / Flipped Classroom)</h2>
+        <span class="subtitle">How to Use · 3 Modes of Learning</span>
+      </div>
+    </div>
+
+    <div class="mode-grid">
+      <div class="mode-card home">
+        <div class="mode-header">
+          <div class="mode-icon">🏠</div>
+          <div class="mode-title">โหมดศึกษาด้วยตนเองล่วงหน้า<small>Flipped</small></div>
+        </div>
+        <div class="mode-desc">
+          นักเรียนศึกษาปฏิบัติล่วงหน้า<b> ที่บ้าน · ทุกที่ · ทุกเวลา</b> ก่อนถึงคาบเรียน · เริ่มทำ Part 1 ให้ครบ 6 กิจกรรม · จะได้เข้าห้องเรียนพร้อมและมีเวลาซ้อมเขียนใน Part 2 มากขึ้น
+        </div>
+      </div>
+      <div class="mode-card school">
+        <div class="mode-header">
+          <div class="mode-icon">🏫</div>
+          <div class="mode-title">โหมดในชั้นเรียน (คาบที่ 1)<small>In-Class</small></div>
+        </div>
+        <div class="mode-desc">
+          นักเรียนปฏิบัติในห้องเรียน<b>โดยมีครูกำกับ</b> · พบสัญลักษณ์ 👥 ให้จับคู่หรือรวมกลุ่ม · ครูจะเดินตรวจและช่วยเหลือเป็นรายบุคคล · เหมาะสำหรับนักเรียนที่ต้องการการชี้แนะ
+        </div>
+      </div>
+      <div class="mode-card review">
+        <div class="mode-header">
+          <div class="mode-icon">🔁</div>
+          <div class="mode-title">โหมดทบทวน<small>Review</small></div>
+        </div>
+        <div class="mode-desc">
+          นักเรียน<b>กลับมาปฏิบัติซ้ำได้ไม่จำกัด</b> · เพื่อฝึกซ้ำจนชำนาญ · ใช้ทบทวนก่อนสอบ · ระบบจะบันทึกความคืบหน้าไว้ให้อัตโนมัติ · ทำได้ทั้งที่บ้านและในห้องเรียน
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ======= 3. คำชี้แจง ======= -->
+  <div class="card">
+    <div class="card-head">
+      <div class="icon i3">3</div>
+      <div>
+        <h2>คำชี้แจง</h2>
+        <span class="subtitle">Instructions · Choose Your Path</span>
+      </div>
+    </div>
+
+    <div class="instruction">
+      💡 <b>นักเรียนแต่ละคนมีความพร้อมทางการเขียนที่แตกต่างกัน</b> · ครูจึงออกแบบกิจกรรมการเรียนรู้ให้แตกต่าง (Differentiated) ตาม <b>4 สถานะความรู้ (Knowledge States)</b> ตามหลัก Competency-based Knowledge Space Theory (CbKST) เพื่อให้เหมาะสมกับความสามารถของนักเรียนแต่ละคน<br><br>
+      🎯 <b>ให้นักเรียนคลิกเลือกเรียนตามสถานะของตนเอง</b> ที่ครูได้แจ้งไว้ล่วงหน้าจากผลการวินิจฉัย (Diagnostic Test) · หากยังไม่แน่ใจว่าตนเองอยู่สถานะใด ให้ปรึกษาครูก่อนเริ่มเรียน · เมื่อคลิกเลือกแล้วจะพบกิจกรรม Part 1 และ Part 2 ตามระดับของนักเรียนเอง
+    </div>
+  </div>
+
+  <!-- ======= 4. 4 State Buttons ======= -->
+  <div class="card">
+    <div class="card-head">
+      <div class="icon i4">4</div>
+      <div>
+        <h2>เลือกสถานะการเรียนรู้ของฉัน</h2>
+        <span class="subtitle">Choose My Knowledge State</span>
+      </div>
+    </div>
+
+    <div class="state-grid">
+      <a href="Cycle1_State1_Beginner.html" class="state-btn s1">
+        <div class="state-btn-head">
+          <div class="state-emoji">🌱</div>
+          <div>
+            <div class="state-num">State 1</div>
+            <div class="state-name">Beginner</div>
+          </div>
+        </div>
+        <div class="state-desc">ระดับเริ่มต้น · ต้องการ scaffolding สูง · ผสมภาษาไทย-อังกฤษ · เน้นการเตรียมพื้นฐาน</div>
+        <div class="state-cta">เข้าเรียน State 1</div>
+      </a>
+
+      <a href="Cycle1_State2_Developing.html" class="state-btn s2">
+        <div class="state-btn-head">
+          <div class="state-emoji">🌿</div>
+          <div>
+            <div class="state-num">State 2</div>
+            <div class="state-name">Structure OK</div>
+          </div>
+        </div>
+        <div class="state-desc">โครงสร้างมั่นคง · เขียนย่อหน้าครบโครงได้ · ต้องการพัฒนา cohesion + balance</div>
+        <div class="state-cta">เข้าเรียน State 2</div>
+      </a>
+
+      <a href="Cycle1_State3_Proficient.html" class="state-btn s3">
+        <div class="state-btn-head">
+          <div class="state-emoji">🌳</div>
+          <div>
+            <div class="state-num">State 3</div>
+            <div class="state-name">Language Dev</div>
+          </div>
+        </div>
+        <div class="state-desc">พัฒนาภาษา · เขียนได้ดี · ต้องการยกระดับ vocabulary + style + argument depth</div>
+        <div class="state-cta">เข้าเรียน State 3</div>
+      </a>
+
+      <a href="Cycle1_State4_Advanced.html" class="state-btn s4">
+        <div class="state-btn-head">
+          <div class="state-emoji">🏆</div>
+          <div>
+            <div class="state-num">State 4</div>
+            <div class="state-name">Mastery</div>
+          </div>
+        </div>
+        <div class="state-desc">ระดับเชี่ยวชาญ · เขียนใกล้ native · ต้องการ challenge แบบ Socratic + Rhetorical</div>
+        <div class="state-cta">เข้าเรียน State 4</div>
+      </a>
+    </div>
+  </div>
+
+  <div class="foot">
+    <b>ผู้ออกแบบการเรียนรู้:</b> ครูนงลักษณ์ ขันทมาศ · โรงเรียนนครสวรรค์ สำนักงานเขตพื้นที่การศึกษาจังหวัดนครสวรรค์<br>
+    Powered by CbKST + Process-Genre Approach + AI-Assisted Adaptive Feedback
+  </div>
+</div>
+
+</body>
+</html>

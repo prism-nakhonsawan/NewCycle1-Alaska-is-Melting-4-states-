@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cycle 1 · State 1 · Beginner · Alaska Is Melting</title>
+<link href="https://fonts.googleapis.com/css2?family=Mitr:wght@400;500;600;700&family=IBM+Plex+Sans+Thai:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --primary:#0F4C5C; --primary-dark:#093542; --primary-light:#E6F0F3;
+  --amber:#F59E0B; --amber-dark:#B45309; --amber-light:#FEF3C7;
+  --success:#16A34A; --success-dark:#15803D; --success-light:#DCFCE7;
+  --danger:#DC2626;
+  --n-900:#0F172A; --n-700:#334155; --n-500:#64748B; --n-300:#CBD5E1; --n-100:#F1F5F9; --n-50:#F8FAFC;
+  --blue:#1E40AF; --blue-light:#DBEAFE; --blue-dark:#1E3A8A;
+  --orange:#EA580C; --orange-light:#FED7AA; --orange-dark:#C2410C;
+  --purple:#7C3AED; --purple-light:#EDE9FE; --purple-dark:#5B21B6;
+  --shadow-sm:0 2px 8px rgba(15,76,92,.08);
+  --shadow-md:0 8px 24px rgba(15,76,92,.12);
+  --shadow-lg:0 16px 48px rgba(15,76,92,.18);
+  --radius-sm:8px; --radius:12px; --radius-lg:18px;
+  --state-primary:#16A34A;
+  --state-dark:#15803D;
+  --state-light:#DCFCE7;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'IBM Plex Sans Thai',system-ui,sans-serif;background:linear-gradient(180deg,#DFF0FA 0%,#EAF4FB 320px,#F8FAFC 100%);color:#0F172A;min-height:100vh;line-height:1.65;padding-bottom:60px}
+h1,h2,h3{font-family:'Mitr',sans-serif;font-weight:600;line-height:1.25}
+a{text-decoration:none;color:inherit}
+
+header.hero{background:linear-gradient(135deg,#93C5FD 0%,#3B82F6 55%,#1E40AF 100%);color:#fff;padding:32px 20px 68px;position:relative;overflow:hidden}
+header.hero .bg-ice{position:absolute;inset:auto 0 -2px 0;height:52px;background:radial-gradient(60px 40px at 12% 100%,#EAF4FB 98%,transparent),radial-gradient(90px 52px at 34% 100%,#EAF4FB 98%,transparent),radial-gradient(70px 44px at 58% 100%,#EAF4FB 98%,transparent),radial-gradient(110px 56px at 85% 100%,#EAF4FB 98%,transparent)}
+header.hero .hero-inner{max-width:960px;margin:0 auto;position:relative}
+.back-link{display:inline-flex;align-items:center;gap:6px;background:rgba(255,255,255,.9);color:#1E40AF;padding:7px 15px;border-radius:99px;font-family:'Mitr',sans-serif;font-weight:600;font-size:.85rem;margin-bottom:12px;transition:.2s;border:1.5px solid rgba(255,255,255,.5)}
+.back-link:hover{background:#fff;transform:translateX(-2px)}
+.kicker{font-family:'Mitr',sans-serif;font-size:.78rem;letter-spacing:.14em;text-transform:uppercase;color:#fff;opacity:.9;margin-bottom:8px}
+h1.hero-title{font-family:'Mitr',sans-serif;font-weight:600;font-size:clamp(1.55rem,4.6vw,2.2rem);color:#fff;line-height:1.22;text-shadow:0 2px 4px rgba(0,0,0,.25)}
+h1.hero-title .em{color:#FEF3C7;text-shadow:0 2px 4px rgba(0,0,0,.35)}
+.hero-sub{margin-top:8px;font-size:.95rem;color:#fff;opacity:.95}
+.state-badge{display:inline-flex;align-items:center;gap:8px;background:var(--state-primary);color:#fff;font-family:'Mitr',sans-serif;font-weight:600;font-size:.9rem;padding:7px 18px;border-radius:99px;margin-top:14px;box-shadow:0 4px 12px rgba(0,0,0,.25);border:1.5px solid rgba(255,255,255,.4)}
+
+.wrap{max-width:960px;margin:-36px auto 0;padding:0 20px;position:relative;z-index:5}
+.card{background:#fff;border-radius:var(--radius-lg);padding:26px 28px;margin-bottom:22px;box-shadow:var(--shadow-md);border:1px solid rgba(15,76,92,.08)}
+.card-head{display:flex;align-items:center;gap:14px;margin-bottom:18px;padding-bottom:14px;border-bottom:2px solid var(--n-100)}
+.card-head .icon{width:44px;height:44px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-family:'Mitr',sans-serif;font-weight:600;font-size:1.15rem;color:#fff;flex-shrink:0;background:linear-gradient(135deg,var(--state-primary),var(--state-dark))}
+.card-head h2{font-size:1.2rem;color:#0F172A}
+.card-head .subtitle{font-size:.8rem;color:#64748B;font-family:'IBM Plex Sans Thai',sans-serif;font-weight:400;display:block;margin-top:2px}
+
+/* Personal Info Form */
+.form-hint{background:var(--state-light);border-left:4px solid var(--state-primary);border-radius:var(--radius-sm);padding:12px 16px;font-size:.9rem;margin-bottom:18px;line-height:1.65;color:#0F172A}
+.form-hint b{font-family:'Mitr',sans-serif;font-weight:600;color:var(--state-dark)}
+.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+@media(max-width:640px){.form-grid{grid-template-columns:1fr}}
+.form-full{grid-column:1/-1}
+.form-field{display:flex;flex-direction:column;gap:5px}
+.form-field label{font-family:'Mitr',sans-serif;font-weight:500;font-size:.87rem;color:var(--state-dark)}
+.form-field label .req{color:var(--danger);font-weight:600}
+.form-field input,.form-field select{padding:11px 14px;border:1.8px solid var(--n-300);border-radius:var(--radius-sm);font-family:inherit;font-size:.95rem;background:#FFFDF8;color:#0F172A;transition:.2s}
+.form-field input:focus,.form-field select:focus{outline:none;border-color:var(--state-primary);box-shadow:0 0 0 4px rgba(15,76,92,.12)}
+.form-field input:disabled,.form-field select:disabled{background:var(--state-light);cursor:not-allowed;color:var(--state-dark);font-weight:600}
+.save-row{display:flex;align-items:center;gap:16px;margin-top:20px;flex-wrap:wrap}
+.save-btn{background:linear-gradient(135deg,var(--success),var(--success-dark));color:#fff;border:none;padding:12px 28px;border-radius:var(--radius);font-family:'Mitr',sans-serif;font-weight:600;font-size:.95rem;cursor:pointer;box-shadow:0 6px 18px rgba(22,163,74,.3);transition:.2s}
+.save-btn:hover{transform:translateY(-2px);box-shadow:0 10px 26px rgba(22,163,74,.42)}
+.export-btn{background:linear-gradient(135deg,var(--primary),var(--primary-dark));color:#fff;border:none;padding:12px 24px;border-radius:var(--radius);font-family:'Mitr',sans-serif;font-weight:600;font-size:.9rem;cursor:pointer;transition:.2s}
+.export-btn:hover{transform:translateY(-2px);box-shadow:0 8px 22px rgba(15,76,92,.35)}
+.save-note{color:var(--success-dark);font-weight:600;font-size:.88rem;display:none}
+.save-note.show{display:inline-flex;align-items:center;gap:6px}
+
+.state-intro{background:linear-gradient(135deg,var(--state-light),#fff);border-left:5px solid var(--state-primary);border-radius:var(--radius);padding:16px 20px;font-size:.95rem;margin-bottom:20px;line-height:1.75}
+.state-intro b{color:var(--state-dark);font-family:'Mitr',sans-serif;font-weight:600}
+
+.sessions{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+@media(max-width:780px){.sessions{grid-template-columns:1fr}}
+.session-card{border-radius:var(--radius-lg);padding:24px 26px;border:2.5px solid;background:#fff;position:relative;display:flex;flex-direction:column;gap:12px;transition:.25s;box-shadow:0 2px 8px rgba(15,76,92,.08);cursor:pointer}
+.session-card:hover{transform:translateY(-4px);box-shadow:var(--shadow-lg)}
+.session-card.s1{border-color:var(--blue);background:linear-gradient(160deg,#F0F7FD 0%,#fff 60%)}
+.session-card.s2{border-color:var(--orange);background:linear-gradient(160deg,#FFF7ED 0%,#fff 60%)}
+.session-header{display:flex;align-items:center;gap:14px;margin-bottom:4px}
+.session-icon{width:56px;height:56px;border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:1.8rem;color:#fff;flex-shrink:0;box-shadow:0 4px 14px rgba(0,0,0,.15)}
+.session-card.s1 .session-icon{background:linear-gradient(135deg,var(--blue),var(--blue-dark))}
+.session-card.s2 .session-icon{background:linear-gradient(135deg,var(--orange),var(--orange-dark))}
+.session-num{font-family:'Mitr',sans-serif;font-weight:600;font-size:.68rem;letter-spacing:.14em;text-transform:uppercase;color:#64748B;margin-bottom:2px}
+.session-title{font-family:'Mitr',sans-serif;font-weight:600;font-size:1.28rem;color:#0F172A}
+.session-time{display:inline-flex;align-items:center;gap:6px;background:#fff;border:1.5px solid #CBD5E1;padding:5px 12px;border-radius:99px;font-size:.78rem;color:#334155;align-self:flex-start;font-weight:500}
+.session-desc{font-size:.9rem;color:#334155;line-height:1.65}
+.act-list{list-style:none;padding:0;margin:6px 0}
+.act-list li{padding:5px 0 5px 22px;font-size:.85rem;color:#334155;position:relative}
+.act-list li::before{content:'▸';position:absolute;left:6px;color:#64748B;font-weight:600}
+.act-list li.done{color:var(--success-dark)}
+.act-list li.done::before{content:'✓';color:var(--success)}
+.session-btn{background:#fff;color:#0F172A;border:2.5px solid;padding:14px 26px;border-radius:var(--radius);font-family:'Mitr',sans-serif;font-weight:600;font-size:1rem;cursor:pointer;text-decoration:none;display:inline-flex;align-items:center;justify-content:center;gap:8px;margin-top:8px;transition:.2s}
+.session-card.s1 .session-btn{border-color:var(--blue);color:var(--blue-dark)}
+.session-card.s1 .session-btn:hover{background:var(--blue);color:#fff}
+.session-card.s2 .session-btn{border-color:var(--orange);color:var(--orange-dark)}
+.session-card.s2 .session-btn:hover{background:var(--orange);color:#fff}
+.progress-bar{background:#F1F5F9;border-radius:99px;height:8px;margin:6px 0 2px;overflow:hidden}
+.progress-bar-fill{height:100%;border-radius:99px;transition:.3s;width:0%}
+.session-card.s1 .progress-bar-fill{background:linear-gradient(90deg,var(--blue),var(--blue-dark))}
+.session-card.s2 .progress-bar-fill{background:linear-gradient(90deg,var(--orange),var(--orange-dark))}
+.progress-label{font-size:.78rem;color:#64748B;font-weight:500}
+.progress-label b{color:#0F172A}
+
+.hint-box{background:var(--amber-light);border-left:4px solid var(--amber);border-radius:var(--radius);padding:12px 18px;font-size:.87rem;line-height:1.7;color:#0F172A;margin-top:16px}
+.hint-box b{color:var(--amber-dark);font-family:'Mitr',sans-serif;font-weight:600}
+
+.foot{text-align:center;color:#64748B;font-size:.8rem;margin-top:36px;padding-top:22px;border-top:1px dashed #CBD5E1}
+.foot b{color:#0F4C5C;font-family:'Mitr',sans-serif;font-weight:600}
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="hero-inner">
+    <a class="back-link" href="Cycle1_Master_Hub.html">← กลับ Master Hub</a>
+    <div class="kicker">Cycle 1 · Alaska Is Melting</div>
+    <h1 class="hero-title">🌱 State 1: <span class="em">Beginner</span></h1>
+    <div class="hero-sub">ระดับเริ่มต้น · ต้องการ scaffolding สูง · ผสมภาษาไทย-อังกฤษ · เน้นการเตรียมพื้นฐาน</div>
+    <div class="state-badge">🧊 หน้ากิจกรรมของฉัน · เลือก Part ที่จะเริ่มเรียน</div>
+  </div>
+  <div class="bg-ice"></div>
+</header>
+
+<div class="wrap">
+
+  <!-- ============ 1. PERSONAL INFO FORM ============ -->
+  <div class="card">
+    <div class="card-head">
+      <div class="icon">1</div>
+      <div>
+        <h2>ข้อมูลส่วนตัวของฉัน</h2>
+        <span class="subtitle">My Personal Info · Save Once, Sync Everywhere</span>
+      </div>
+    </div>
+    <div class="form-hint">
+      📝 <b>กรอกข้อมูลก่อนเริ่มเรียน</b> · ข้อมูลจะถูกส่งต่อไปยัง Part 1 และ Part 2 อัตโนมัติ · ไม่ต้องกรอกซ้ำ · ข้อมูลบันทึกในเครื่องนักเรียน (localStorage) · สามารถ Export เป็น CSV เพื่อครูรวบรวมข้อมูลได้
+    </div>
+    <div class="form-grid">
+      <div class="form-field"><label>ชื่อ / First Name <span class="req">*</span></label><input type="text" id="firstName" placeholder="เช่น สายฝน"></div>
+      <div class="form-field"><label>นามสกุล / Last Name <span class="req">*</span></label><input type="text" id="lastName" placeholder="เช่น ใจดี"></div>
+      <div class="form-field"><label>ชั้น / Class <span class="req">*</span></label>
+        <select id="className">
+          <option value="">— เลือก —</option>
+          <option>ม.3/1</option><option>ม.3/2</option><option>ม.3/3</option><option>ม.3/4</option>
+          <option>ม.3/5</option><option>ม.3/6</option><option>ม.3/7</option><option>ม.3/8</option><option>ม.3/9</option>
+        </select>
+      </div>
+      <div class="form-field"><label>เลขที่ / No. <span class="req">*</span></label><input type="number" id="number" min="1" max="50" placeholder="เช่น 12"></div>
+      <div class="form-field form-full"><label>อีเมลโรงเรียน / School Email <span class="req">*</span></label><input type="email" id="email" placeholder="example@school.ac.th"></div>
+      <div class="form-field form-full">
+        <label>สถานะความรู้ปัจจุบัน / Knowledge State</label>
+        <input type="text" id="state" value="State 1 · Beginner" disabled>
+      </div>
+    </div>
+    <div class="save-row">
+      <button class="save-btn" onclick="saveProfile()">💾 บันทึกข้อมูล</button>
+      <button class="export-btn" onclick="exportCSV()">📥 Export CSV</button>
+      <div class="save-note" id="saveNote">✅ บันทึกแล้ว · ข้อมูลถูกส่งไป Part 1 &amp; Part 2</div>
+    </div>
+  </div>
+
+  <!-- ============ 2. SESSIONS ============ -->
+  <div class="card">
+    <div class="card-head">
+      <div class="icon">2</div>
+      <div>
+        <h2>ภารกิจการเรียนรู้</h2>
+        <span class="subtitle">Learning Missions · Part 1 → Part 2</span>
+      </div>
+    </div>
+    <div class="state-intro">
+      🎯 <b>ยินดีต้อนรับสู่ State 1 · Beginner</b> · หน้านี้คือหน้ากิจกรรมของนักเรียนตามระดับที่ครูจัดไว้ให้ · ประกอบด้วย <b>2 คาบเรียน</b> คือ Part 1 (Gear Up!) และ Part 2 (Write &amp; Fight!) · ให้เริ่มจาก <b>Part 1 ก่อน</b> · เมื่อทำ Part 1 เสร็จให้กลับมาหน้านี้เพื่อเข้า Part 2 (แยก 2 คาบเรียน)
+    </div>
+
+    <div class="sessions">
+      <a href="Cycle1_Part1_GearUp_State1_Beginner.html" class="session-card s1">
+        <div class="session-header">
+          <div class="session-icon">📦</div>
+          <div>
+            <div class="session-num">Session 1 / คาบที่ 1</div>
+            <div class="session-title">Part 1 · Gear Up! 🎯</div>
+          </div>
+        </div>
+        <div class="session-time">⏱️ 60 นาที · 6 กิจกรรม</div>
+        <div class="session-desc">เตรียมพร้อมเขียนย่อหน้าจริง · ฝึก vocabulary, tense, connectors · วิเคราะห์โจทย์ · วิเคราะห์ Model paragraph · เรียนรู้ Rubric 5 มิติ</div>
+        <ul class="act-list" id="p1acts">
+          <li>Warm-Up Games (5 mini-games)</li>
+          <li>Analyze the Task</li>
+          <li>Rubric Ranger</li>
+          <li>Model Paragraph X-Ray</li>
+          <li>Socratic Dialogue</li>
+          <li>Self-Assessment Check</li>
+        </ul>
+        <div class="progress-bar"><div class="progress-bar-fill" id="p1bar"></div></div>
+        <div class="progress-label">Progress: <b id="p1prog">0 / 6</b> กิจกรรม</div>
+        <div class="session-btn">▶ เริ่ม Part 1</div>
+      </a>
+
+      <a href="Cycle1_Part2_WriteFight_State1_Beginner.html" class="session-card s2">
+        <div class="session-header">
+          <div class="session-icon">🖊️</div>
+          <div>
+            <div class="session-num">Session 2 / คาบที่ 2</div>
+            <div class="session-title">Part 2 · Write &amp; Fight! ✍️</div>
+          </div>
+        </div>
+        <div class="session-time">⏱️ 60 นาที · 4 กิจกรรม</div>
+        <div class="session-desc">ลงมือเขียนย่อหน้าจริง · Task Analysis + Outline · Write 5 parts · Review &amp; Feedback ด้วย AI Coach · Portfolio + Reflection</div>
+        <ul class="act-list" id="p2acts">
+          <li>① Task Analysis (Outline builder)</li>
+          <li>② Write it, part by part</li>
+          <li>③ Review &amp; Feedback (3 drafts + AI)</li>
+          <li>④ My Writing Portfolio</li>
+        </ul>
+        <div class="progress-bar"><div class="progress-bar-fill" id="p2bar"></div></div>
+        <div class="progress-label">Progress: <b id="p2prog">0 / 4</b> กิจกรรม</div>
+        <div class="session-btn">▶ เริ่ม Part 2</div>
+      </a>
+    </div>
+
+    <div class="hint-box">
+      💡 <b>ควรเรียงลำดับ:</b> คาบที่ 1 ทำ Part 1 ให้ครบ 6 กิจกรรม · <b>คาบที่ 2</b> กลับมาหน้านี้เพื่อคลิก Part 2 · ระบบจะบันทึกความคืบหน้าไว้ให้อัตโนมัติ · สามารถกลับมาทำต่อได้ทุกเมื่อ
+    </div>
+  </div>
+
+  <div class="foot">
+    <b>ผู้ออกแบบการเรียนรู้:</b> ครูนงลักษณ์ ขันทมาศ · โรงเรียนนครสวรรค์ สำนักงานเขตพื้นที่การศึกษาจังหวัดนครสวรรค์
+  </div>
+</div>
+
+<script>
+const K_PROFILE='alaska.profile',K_P1='alaska.c1p1',K_P2='alaska.c1p2';
+const CURRENT_STATE='1';
+const CURRENT_STATE_NAME='Beginner';
+
+function loadProfile(){
+  let p={};try{p=JSON.parse(localStorage.getItem(K_PROFILE)||'{}')}catch(e){}
+  if(p.firstName)document.getElementById('firstName').value=p.firstName;
+  if(p.lastName)document.getElementById('lastName').value=p.lastName;
+  if(p.className)document.getElementById('className').value=p.className;
+  if(p.number)document.getElementById('number').value=p.number;
+  if(p.email)document.getElementById('email').value=p.email;
+}
+
+function saveProfile(){
+  const p={
+    firstName:document.getElementById('firstName').value.trim(),
+    lastName:document.getElementById('lastName').value.trim(),
+    className:document.getElementById('className').value.trim(),
+    number:document.getElementById('number').value.trim(),
+    email:document.getElementById('email').value.trim(),
+    state:CURRENT_STATE,
+    stateName:CURRENT_STATE_NAME,
+    updatedAt:new Date().toISOString()
+  };
+  if(!p.firstName||!p.lastName||!p.className||!p.number||!p.email){
+    alert('กรุณากรอกข้อมูลที่จำเป็น (มี * ทุกช่อง)');return;
+  }
+  localStorage.setItem(K_PROFILE,JSON.stringify(p));
+  try{
+    let c=JSON.parse(localStorage.getItem(K_P1)||'{}');
+    c.state=CURRENT_STATE;
+    c.firstName=p.firstName; c.lastName=p.lastName; c.className=p.className;
+    c.number=p.number; c.email=p.email;
+    localStorage.setItem(K_P1,JSON.stringify(c));
+  }catch(e){}
+  document.getElementById('saveNote').classList.add('show');
+  setTimeout(()=>document.getElementById('saveNote').classList.remove('show'),3500);
+}
+
+function exportCSV(){
+  let profile={},p1={},p2={};
+  try{profile=JSON.parse(localStorage.getItem(K_PROFILE)||'{}')}catch(e){}
+  try{p1=JSON.parse(localStorage.getItem(K_P1)||'{}')}catch(e){}
+  try{p2=JSON.parse(localStorage.getItem(K_P2)||'{}')}catch(e){}
+  if(!profile.firstName){alert('กรุณาบันทึกข้อมูลก่อน Export');return}
+  const cd=d=>{if(!d)return 0;if(Array.isArray(d))return d.filter(x=>x).length;if(typeof d==='object')return Object.values(d).filter(x=>x).length;return 0};
+  const p1done=cd(p1.done),p2done=cd(p2.done);
+  // Draft scores
+  const s=(k)=>p2[k]||'';
+  const rows=[
+    ['Timestamp','ชื่อ','นามสกุล','ชั้น','เลขที่','อีเมล','State','State Name',
+     'Part1 Progress','Part2 Progress',
+     'Draft1 TR','Draft1 CC','Draft1 LR','Draft1 GRA','Draft1 ME',
+     'Draft2 TR','Draft2 CC','Draft2 LR','Draft2 GRA','Draft2 ME',
+     'Draft2 Uptake Total','Draft2 Uptake Done','Draft2 Meaning',
+     'Final TR','Final CC','Final LR','Final GRA','Final ME',
+     'Final Uptake Total','Final Uptake Done','Final Meaning'],
+    [new Date().toISOString(),profile.firstName,profile.lastName,profile.className,profile.number,profile.email,
+     profile.state,profile.stateName,`${p1done}/6`,`${p2done}/4`,
+     s('r0_TR'),s('r0_CC'),s('r0_LR'),s('r0_GRA'),s('r0_ME'),
+     s('r1_TR'),s('r1_CC'),s('r1_LR'),s('r1_GRA'),s('r1_ME'),
+     s('r1_total'),s('r1_done'),s('r1_meaning'),
+     s('r2_TR'),s('r2_CC'),s('r2_LR'),s('r2_GRA'),s('r2_ME'),
+     s('r2_total'),s('r2_done'),s('r2_meaning')]
+  ];
+  const csv=rows.map(r=>r.map(v=>'"'+String(v).replace(/"/g,'""')+'"').join(',')).join('\n');
+  const blob=new Blob(['\ufeff'+csv],{type:'text/csv;charset=utf-8'});
+  const url=URL.createObjectURL(blob);
+  const a=document.createElement('a');
+  a.href=url;a.download=`${profile.firstName}_${profile.lastName}_State${profile.state}_${new Date().toISOString().slice(0,10)}.csv`;
+  a.click();URL.revokeObjectURL(url);
+  alert('📥 Export CSV เรียบร้อย · ส่งไฟล์ให้ครูเพื่อรวมใน Google Sheets ได้เลย');
+}
+
+function countDone(d){if(!d)return 0;if(Array.isArray(d))return d.filter(x=>x).length;if(typeof d==='object')return Object.values(d).filter(x=>x).length;return 0}
+
+function updateProgress(){
+  let p1={},p2={};
+  try{p1=JSON.parse(localStorage.getItem(K_P1)||'{}')}catch(e){}
+  try{p2=JSON.parse(localStorage.getItem(K_P2)||'{}')}catch(e){}
+  const d1=countDone(p1.done),t1=6;
+  document.getElementById('p1prog').textContent=`${d1} / ${t1}`;
+  document.getElementById('p1bar').style.width=`${(d1/t1)*100}%`;
+  document.querySelectorAll('#p1acts li').forEach((li,i)=>{if(d1>i)li.classList.add('done');else li.classList.remove('done')});
+  const d2=countDone(p2.done),t2=4;
+  document.getElementById('p2prog').textContent=`${d2} / ${t2}`;
+  document.getElementById('p2bar').style.width=`${(d2/t2)*100}%`;
+  document.querySelectorAll('#p2acts li').forEach((li,i)=>{if(d2>i)li.classList.add('done');else li.classList.remove('done')});
+}
+
+loadProfile();updateProgress();setInterval(updateProgress,2000);
+</script>
+
+</body>
+</html>
